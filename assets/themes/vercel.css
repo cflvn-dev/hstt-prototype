@@ -1,0 +1,161 @@
+/* ==========================================================================
+   DS-005 - VERCEL GRID | Presentation Theme (DEC-006)
+   --------------------------------------------------------------------------
+   Cảm hứng Vercel Dashboard: tối giản, tương phản cao, number-first.
+   Đặc trưng trình bày:
+   - Shell: KHÔNG SIDEBAR - TOP NAVIGATION 2 tầng (hàng brand + hàng tab
+     underline); registry app.js render nav pattern "topnav" cho theme này.
+   - Layout: content bounded rõ ràng, grid là ngôn ngữ chính.
+   - KPI: các tile GHÉP CHUNG VIỀN thành 1 khối grid, nhãn chữ hoa nhỏ,
+     số liệu lớn là nhân vật chính, delta bằng chữ (không lạm dụng màu).
+   - Table: đường kẻ ngang có chủ đích, header chữ hoa, tổng kết viền đậm,
+     trạng thái thể hiện bằng badge OUTLINE (shape thay vì màu nền).
+   - Chart là trọng tâm: gridline + baseline rõ, nhãn giá trị mono trên cột.
+   - Motion: gần như tức thời.
+   ========================================================================== */
+
+/* ---------- 1. TOKENS ---------- */
+[data-theme="vercel"] {
+  --font-sans: "Space Grotesk", "Inter", system-ui, sans-serif;
+  --c-primary-50: #f2f2f2; --c-primary-100: #e5e5e5; --c-primary-200: #cacaca; --c-primary-300: #999999;
+  --c-primary-500: #333333; --c-primary-600: #000000; --c-primary-700: #000000; --c-primary-800: #000000;
+  --c-accent-500: #0070f3; --c-accent-600: #0761d1;
+  --c-bg: #ffffff; --c-surface: #ffffff; --c-surface-2: #fafafa;
+  --c-border: #eaeaea; --c-border-strong: #999999;
+  --c-ink-900: #000000; --c-ink-700: #111111; --c-ink-500: #666666; --c-ink-400: #888888;
+  --c-neutral-50: #fafafa; --c-neutral-600: #666666;
+  --c-on-primary: #ffffff;
+  --r-sm: 5px; --r-md: 6px; --r-lg: 8px;
+  --tbl-py: 12px; --tbl-px: 16px;
+  --sh-xs: none; --sh-sm: none;
+  --sh-md: 0 4px 12px rgba(0,0,0,.08); --sh-lg: 0 8px 30px rgba(0,0,0,.12);
+  --content-max: 1200px;             /* bounded rõ ràng */
+  --topnav-h: 60px;
+  --accent-gradient: linear-gradient(90deg, #0070f3, #00dfd8);
+  /* Topnav dùng nhóm token glass/surface của base (nền đặc) */
+  --nav-active-bg: var(--c-neutral-50); --nav-active-ink: #000000;
+  --focus-ring: 2px solid var(--c-accent-500);
+  --motion-fast: .05s; --motion-base: .08s;
+}
+[data-theme="vercel"][data-mode="dark"] {
+  --c-bg: #000000; --c-surface: #0a0a0a; --c-surface-2: #111111;
+  --c-border: #333333; --c-border-strong: #444444;
+  --c-ink-900: #ededed; --c-ink-700: #c9c9c9; --c-ink-500: #888888; --c-ink-400: #666666;
+  --c-white: #0a0a0a;
+  --c-primary-50: #1a1a1a; --c-primary-100: #222222; --c-primary-500: #cccccc; --c-primary-600: #ffffff; --c-primary-700: #ededed;
+  --c-on-primary: #000000;
+  --c-neutral-50: #111111; --c-neutral-600: #888888;
+  --nav-active-bg: #111111; --nav-active-ink: #ededed;
+  --sh-xs: none; --sh-sm: none; --sh-md: 0 4px 12px rgba(0,0,0,.6); --sh-lg: 0 8px 30px rgba(0,0,0,.7);
+}
+
+/* ---------- 2. LAYOUT RECIPE: topnav 2 tầng, không sidebar ---------- */
+[data-theme="vercel"] .app { grid-template-columns: 1fr; }
+[data-theme="vercel"] .topnav__brand .sidebar__logo {
+  background: var(--c-ink-900); color: var(--c-surface); border-radius: 7px; width: 30px; height: 30px;
+}
+[data-theme="vercel"] .topnav__row { height: var(--topnav-h); }
+[data-theme="vercel"] .topnav__link { font-size: var(--fs-sm); padding: 11px var(--sp-3); }
+[data-theme="vercel"] .topnav__link .ico { display: none; }   /* icon treatment: chữ là chính */
+[data-theme="vercel"] .topbar__period {
+  background: transparent; border-color: var(--c-border); color: var(--c-ink-700);
+}
+[data-theme="vercel"] .content { padding-top: var(--sp-8); }
+[data-theme="vercel"] .page-head {
+  border-bottom: 1px solid var(--c-border); padding-bottom: var(--sp-5); margin-bottom: var(--sp-6);
+}
+[data-theme="vercel"] .page-head h1 { font-size: 26px; letter-spacing: -.02em; }
+[data-theme="vercel"] .breadcrumb { text-transform: uppercase; font-size: 10.5px; letter-spacing: .08em; }
+
+/* ---------- 3. COMPONENT RECIPE: crisp, không bóng, viền có chủ đích ---------- */
+[data-theme="vercel"] .card, [data-theme="vercel"] .stat { box-shadow: none; }
+[data-theme="vercel"] .card { transition: border-color var(--motion-fast) var(--ease-standard); }
+[data-theme="vercel"] .card:hover { border-color: var(--c-border-strong); }
+[data-theme="vercel"] .btn { font-weight: var(--fw-medium); }
+[data-theme="vercel"] .btn-primary:hover {
+  background: var(--c-surface); color: var(--c-ink-900); box-shadow: inset 0 0 0 1px var(--c-ink-900);
+}
+[data-theme="vercel"] .btn-secondary:hover { border-color: var(--c-ink-900); background: var(--c-surface); }
+
+/* KPI: tile ghép chung viền thành một khối grid; số liệu là nhân vật chính */
+[data-theme="vercel"] .grid:has(> .stat) {
+  gap: 1px; background: var(--c-border);
+  border: 1px solid var(--c-border); border-radius: var(--r-lg); overflow: hidden;
+}
+[data-theme="vercel"] .grid:has(> .stat) > .stat { border: none; border-radius: 0; }
+[data-theme="vercel"] .stat {
+  grid-template-columns: 1fr; grid-template-areas: "label" "value" "delta" "spark";
+  padding: var(--sp-5) var(--sp-5) var(--sp-4);
+}
+[data-theme="vercel"] .stat__icon { display: none; }
+[data-theme="vercel"] .stat__label {
+  text-transform: uppercase; font-size: 10.5px; letter-spacing: .07em; font-weight: var(--fw-medium);
+}
+[data-theme="vercel"] .stat__value { font-size: 30px; letter-spacing: -.02em; }
+[data-theme="vercel"] .stat__delta { font-weight: var(--fw-regular); }
+
+/* Badge: OUTLINE - trạng thái bằng shape + chữ, không nền màu */
+[data-theme="vercel"] .badge { background: transparent; box-shadow: inset 0 0 0 1px currentColor; }
+[data-theme="vercel"] .tag { background: transparent; box-shadow: inset 0 0 0 1px var(--c-border-strong); }
+
+/* Tabs/pills: underline đen, tối giản */
+[data-theme="vercel"] .tab.is-active { color: var(--c-ink-900); border-bottom-color: var(--c-ink-900); }
+[data-theme="vercel"] .pills { background: transparent; padding: 0; gap: var(--sp-2); }
+[data-theme="vercel"] .pill { border: 1px solid transparent; border-radius: var(--r-full); }
+[data-theme="vercel"] .pill.is-active {
+  background: transparent; border-color: var(--c-ink-900); color: var(--c-ink-900); box-shadow: none;
+}
+
+/* Form: nhãn chữ hoa nhỏ, focus ring đen, section chia bằng divider đậm */
+[data-theme="vercel"] .label { text-transform: uppercase; font-size: 10.5px; letter-spacing: .06em; }
+[data-theme="vercel"] .input:focus,
+[data-theme="vercel"] .select:focus,
+[data-theme="vercel"] .textarea:focus { border-color: var(--c-ink-900); box-shadow: 0 0 0 1px var(--c-ink-900); }
+[data-theme="vercel"] .form-section { border-top: 2px solid var(--c-ink-900); padding-top: var(--sp-4); }
+[data-theme="vercel"] .form-section__title { text-transform: uppercase; font-size: 11.5px; letter-spacing: .06em; }
+
+/* Modal/Drawer: sắc, viền rõ */
+[data-theme="vercel"] .modal { border-color: var(--c-border-strong); }
+[data-theme="vercel"] .drawer { border-left-color: var(--c-border-strong); }
+
+/* Pager: tối giản */
+[data-theme="vercel"] .pager__btn:hover { border-color: var(--c-ink-900); }
+[data-theme="vercel"] .pager__btn.is-active { background: var(--c-ink-900); color: var(--c-surface); border-color: var(--c-ink-900); }
+
+/* Empty state: khung nét đứt kiểu placeholder Vercel */
+[data-theme="vercel"] .empty__icon {
+  border-radius: var(--r-md); background: transparent; border: 1px dashed var(--c-border-strong);
+}
+
+/* ---------- 4. DATA DISPLAY: kẻ ngang chủ đích, header hoa, tổng viền đậm --- */
+[data-theme="vercel"] .tbl thead th {
+  background: var(--c-surface); text-transform: uppercase; letter-spacing: .04em; font-size: 11px;
+  border-bottom: 1px solid var(--c-border-strong);
+}
+[data-theme="vercel"] .tbl tbody tr:hover { background: var(--c-surface-2); }
+[data-theme="vercel"] .tbl .row-strong td {
+  background: transparent; border-top: 2px solid var(--c-ink-900);
+}
+[data-theme="vercel"] .tbl td.num { font-family: var(--font-mono); font-size: 12.5px; }
+[data-theme="vercel"] .filterbar .label { font-size: 10px; }
+
+/* ---------- 5. CHART RECIPE: gridline + baseline + nhãn giá trị mono ------- */
+[data-theme="vercel"] .barchart {
+  background: repeating-linear-gradient(to top, var(--c-border) 0 1px, transparent 1px 40px);
+  border-bottom: 1px solid var(--c-border-strong); gap: 10px;
+}
+[data-theme="vercel"] .barchart .bar { border-radius: 2px 2px 0 0; background: var(--c-primary-100); position: relative; }
+[data-theme="vercel"] .barchart .bar:hover { background: var(--c-primary-200); }
+[data-theme="vercel"] .barchart .bar.hi { background: var(--c-accent-500); }
+[data-theme="vercel"] .barchart .bar::after {
+  content: attr(data-v); position: absolute; top: -18px; left: 0; right: 0; text-align: center;
+  font-family: var(--font-mono); font-size: 10px; color: var(--c-ink-500);
+}
+[data-theme="vercel"] .donut::after { width: 96px; height: 96px; }
+[data-theme="vercel"] .donut__center b { font-family: var(--font-mono); }
+[data-theme="vercel"] .legend { font-family: var(--font-mono); font-size: 11.5px; }
+[data-theme="vercel"] .legend i { border-radius: 0; width: 8px; height: 8px; }
+[data-theme="vercel"] .stat__spark i { border-radius: 0; }
+
+/* ---------- 6. INTERACTION / MOTION: gần như tức thời ---------- */
+[data-theme="vercel"] .modal, [data-theme="vercel"] .drawer { animation-duration: var(--motion-base); }

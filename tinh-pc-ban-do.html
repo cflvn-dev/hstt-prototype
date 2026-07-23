@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bản đồ quy trình tính Pc | Phú Mỹ 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/design-system.css">
+<link rel="stylesheet" href="assets/themes.css">
+<link rel="stylesheet" href="assets/app.css">
+<script src="assets/theme-init.js"></script>
+</head>
+<body>
+<div class="app"><div class="main">
+<div class="content">
+
+  <div class="page-head">
+    <div class="page-head__titles">
+      <div class="breadcrumb"><a href="tinh-pc.html">Tính Pc</a> <span>›</span> Bản đồ quy trình</div>
+      <h1>Bản đồ quy trình tính Pc</h1>
+      <div class="subtitle">Phú Mỹ 1 · Tháng 05/2026 · Trục A (bước tính) + Trục B (file đối chiếu)</div>
+    </div>
+    <div class="page-head__actions">
+      <label class="inline" style="gap:var(--sp-2); cursor:pointer; font-size:var(--fs-sm)">
+        <input type="checkbox" id="toggle-trucb" onchange="toggleTrucB(this.checked)"> Hiện file đối chiếu (Trục B)</label>
+      <a class="btn btn-secondary" href="tinh-pc.html">← Về Tính Pc</a>
+    </div>
+  </div>
+
+  <div class="alert alert--info" style="margin-bottom:var(--sp-4)"><span class="ico">ℹ</span>
+    <div><b>Dữ liệu thực cụm Phú Mỹ:</b> danh mục bước tính là dữ liệu thực (1 trong 2 nhóm nhà máy - DEC-019); ánh xạ file đối chiếu chờ khách hàng xác nhận (ISS-015). <b>Trục A</b> (bước tính) là mô hình hệ thống tính; <b>Trục B</b> (file/sheet Excel) chỉ là <b>căn cứ đối chiếu</b>, không phải nguồn tính (DEC-016). Khi lệch, hệ thống <b>không mặc định coi Excel là đúng</b> - khảo sát đã tìm thấy lỗi thật trong file hiện trạng (ISS-016).</div></div>
+
+  <div class="row" style="align-items:stretch; gap:var(--sp-4)">
+
+    <!-- ===== Canvas: DAG bước tính (Trục A) + lớp phủ file (Trục B) ===== -->
+    <div class="col" style="flex:2">
+      <div class="card" style="height:100%">
+        <div class="card__head"><h3>Sơ đồ bước tính</h3><span class="tag">Chọn một nút để xem chi tiết</span></div>
+        <div class="card__body" style="overflow-x:auto">
+
+          <!-- Hàng đầu vào -->
+          <div style="font-size:var(--fs-sm); color:var(--c-text-muted); margin-bottom:var(--sp-2)">Chứng từ / đầu vào</div>
+          <div class="inline" style="gap:var(--sp-2); flex-wrap:wrap; margin-bottom:var(--sp-4)">
+            <span class="tag">Phân bổ khí</span><span class="tag">Sản lượng khí</span><span class="tag">Tỷ giá</span><span class="tag">Giá HSFO</span><span class="tag" style="opacity:.6">Đơn giá dầu (chưa có)</span>
+          </div>
+
+          <!-- Chuỗi DAG các bước tính -->
+          <div style="font-size:var(--fs-sm); color:var(--c-text-muted); margin-bottom:var(--sp-2)">Chuỗi bước tính (Trục A)</div>
+          <div class="inline" id="dag" style="gap:0; flex-wrap:wrap; align-items:stretch">
+
+            <button class="node" data-id="b1" onclick="selectNode('b1')" style="text-align:left; cursor:pointer; border:var(--bw) solid var(--c-border); border-left:3px solid var(--c-success); border-radius:var(--r-2); padding:var(--sp-3); background:var(--c-surface); min-width:160px">
+              <div style="font-weight:var(--fw-600)">B1 · Giá khí BQ gia quyền</div>
+              <div class="num" style="font-size:var(--fs-sm)">6,482 USD/MMBTU</div>
+              <span class="badge badge--success">Đã chạy</span>
+              <div class="trucb" style="display:none; margin-top:var(--sp-2); font-size:var(--fs-xs); color:var(--c-text-muted)">PhanBoKhi.xlsb › KD-PM1</div>
+            </button>
+            <span style="align-self:center; padding:0 var(--sp-2); color:var(--c-text-muted)">→</span>
+
+            <button class="node" data-id="b2" onclick="selectNode('b2')" style="text-align:left; cursor:pointer; border:var(--bw) solid var(--c-border); border-left:3px solid var(--c-success); border-radius:var(--r-2); padding:var(--sp-3); background:var(--c-surface); min-width:160px">
+              <div style="font-weight:var(--fw-600)">B2 · Quy đổi giá khí VND</div>
+              <div class="num" style="font-size:var(--fs-sm)">171.038 đ/MMBTU</div>
+              <span class="badge badge--success">Đã chạy</span>
+              <div class="trucb" style="display:none; margin-top:var(--sp-2); font-size:var(--fs-xs); color:var(--c-text-muted)">Thang-05.xlsx › TyGia</div>
+            </button>
+            <span style="align-self:center; padding:0 var(--sp-2); color:var(--c-text-muted)">→</span>
+
+            <button class="node" data-id="b3" onclick="selectNode('b3')" style="text-align:left; cursor:pointer; border:var(--bw) solid var(--c-border); border-left:3px solid var(--c-success); border-radius:var(--r-2); padding:var(--sp-3); background:var(--c-surface); min-width:160px">
+              <div style="font-weight:var(--fw-600)">B3 · Giá NL BQ tháng</div>
+              <div class="num" style="font-size:var(--fs-sm)">2.512,00 đ/kg</div>
+              <span class="badge badge--success">Đã chạy</span>
+              <div class="trucb" style="display:none; margin-top:var(--sp-2); font-size:var(--fs-xs); color:var(--c-text-muted)">Thang-05.xlsx › GiaNL</div>
+            </button>
+            <span style="align-self:center; padding:0 var(--sp-2); color:var(--c-text-muted)">→</span>
+
+            <button class="node" data-id="b4" onclick="selectNode('b4')" style="text-align:left; cursor:pointer; border:var(--bw) solid var(--c-border); border-left:3px solid var(--c-danger); border-radius:var(--r-2); padding:var(--sp-3); background:var(--c-surface); min-width:160px">
+              <div style="font-weight:var(--fw-600)">B4 · Giá biến đổi</div>
+              <div class="num" style="font-size:var(--fs-sm)">—</div>
+              <span class="badge badge--danger">Thiếu đầu vào</span>
+              <div class="trucb" style="display:none; margin-top:var(--sp-2); font-size:var(--fs-xs); color:var(--c-text-muted)">CPKĐ › M34</div>
+            </button>
+            <span style="align-self:center; padding:0 var(--sp-2); color:var(--c-text-muted)">→</span>
+
+            <button class="node" data-id="b5" onclick="selectNode('b5')" style="text-align:left; cursor:pointer; border:var(--bw) solid var(--c-border); border-left:3px solid var(--c-text-muted); border-radius:var(--r-2); padding:var(--sp-3); background:var(--c-surface); min-width:160px">
+              <div style="font-weight:var(--fw-600)">Pc · Tổng hợp giá hợp đồng</div>
+              <div class="num" style="font-size:var(--fs-sm)">—</div>
+              <span class="badge badge--neutral">Chờ</span>
+              <div class="trucb" style="display:none; margin-top:var(--sp-2); font-size:var(--fs-xs); color:var(--c-text-muted)">Pc-tong-hop.xlsx</div>
+            </button>
+
+          </div>
+
+          <div class="hint" style="margin-top:var(--sp-4)">Cùng nguồn dữ liệu với bảng bước tính ở <a href="tinh-pc.html">Tính Pc › Quy trình tính toán</a>. Truy vết ngược: chọn một nút rồi lần theo <b>Phụ thuộc</b> ở panel để về đầu vào và chứng từ gốc.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== Panel chi tiết nút ===== -->
+    <div class="col" style="flex:1; min-width:300px">
+      <div class="card" style="height:100%">
+        <div class="card__head"><h3>Chi tiết bước tính</h3></div>
+        <div class="card__body" id="panel-empty">
+          <div class="empty"><div class="empty__icon">◎</div>
+            <div class="empty__title">Chưa chọn nút</div>
+            <div class="empty__desc">Chọn một nút bước tính trên sơ đồ để xem đầu vào, công thức, kết quả và file đối chiếu.</div></div>
+        </div>
+        <div class="card__body" id="panel-detail" style="display:none">
+          <h3 id="d-name" style="margin-bottom:var(--sp-3)"></h3>
+          <dl class="kv" style="grid-template-columns:130px 1fr">
+            <dt>Trạng thái</dt><dd id="d-status"></dd>
+            <dt>Đầu vào cần</dt><dd id="d-input"></dd>
+            <dt>Phụ thuộc</dt><dd id="d-dep"></dd>
+            <dt>Công thức (hiệu lực)</dt><dd id="d-formula"></dd>
+            <dt>Kết quả</dt><dd id="d-result" class="num"></dd>
+            <dt>File/sheet đối chiếu</dt><dd id="d-file"></dd>
+            <dt>Đối chiếu vs Excel</dt><dd id="d-recon"></dd>
+          </dl>
+          <div class="divider"></div>
+          <div class="inline" style="gap:var(--sp-2); flex-wrap:wrap">
+            <a class="btn btn-secondary btn-sm" href="tinh-pc.html">Xem đầu vào</a>
+            <a class="btn btn-secondary btn-sm" href="tinh-pc-audit.html">Mở file đối chiếu (audit)</a>
+          </div>
+          <div id="d-lech" style="display:none; margin-top:var(--sp-3)">
+            <div class="field"><label class="label">Nguyên nhân + kết luận khi lệch</label>
+              <textarea class="textarea" rows="2" placeholder="Ghi nhận nguyên nhân lệch và kết luận của chuyên viên (không mặc định coi Excel đúng - ISS-016)"></textarea></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</div></div>
+
+<script src="assets/app.js"></script>
+<script>
+App.layout('pc');
+var NODES = {
+  b1: {name:'B1 · Giá khí bình quân gia quyền', status:'<span class="badge badge--success">Đã chạy</span>', input:'Hệ số phân bổ khí, sản lượng khí', dep:'— (đầu vào gốc)', formula:'<code>Pk = Σ(hệ_số × giá_nguồn)</code> v2 · 01/2024→', result:'6,482 USD/MMBTU', file:'PhanBoKhi.xlsb › KD-PM1 (chuyển đổi từ .xlsb)', recon:'<span class="badge badge--warning">Lệch trong ngưỡng</span>', lech:true},
+  b2: {name:'B2 · Quy đổi giá khí sang VND', status:'<span class="badge badge--success">Đã chạy</span>', input:'Kết quả B1, tỷ giá', dep:'B1', formula:'<code>Pk_vnd = Pk × TG</code> v1 · 01/2024→', result:'171.038 đ/MMBTU', file:'Thang-05.xlsx › TyGia', recon:'<span class="badge badge--success">Khớp</span>', lech:false},
+  b3: {name:'B3 · Giá nhiên liệu bình quân tháng', status:'<span class="badge badge--success">Đã chạy</span>', input:'Kết quả B2, giá dầu HSFO', dep:'B2', formula:'<code>Pnl = f(Pk_vnd, HSFO)</code> v3 · 01/2024→', result:'2.512,00 đ/kg', file:'Thang-05.xlsx › GiaNL', recon:'<span class="badge badge--success">Khớp</span>', lech:false},
+  b4: {name:'B4 · Giá biến đổi', status:'<span class="badge badge--danger">Thiếu đầu vào</span>', input:'Kết quả B3, <b>đơn giá dầu xuất kho (chưa có)</b>', dep:'B3', formula:'<code>Pbd = f(Pnl, đơn_giá_dầu)</code> v2 · 01/2024→', result:'—', file:'CPKĐ › M34 <span class="muted">(khảo sát: ô này thừa hệ số x1000 - ISS-016)</span>', recon:'<span class="badge badge--neutral">Chưa đối chiếu</span>', lech:false},
+  b5: {name:'Pc · Tổng hợp giá hợp đồng Pc', status:'<span class="badge badge--neutral">Chờ</span>', input:'Giá cố định (tham số HĐ), kết quả B4', dep:'B4', formula:'<code>Pc = FC + FOMC + VCk</code> v2 · 01/2024→', result:'— (một giá trị/tháng - DEC-018)', file:'Pc-tong-hop.xlsx', recon:'<span class="badge badge--neutral">Chưa đối chiếu</span>', lech:false}
+};
+function selectNode(id){
+  var n = NODES[id]; if(!n) return;
+  document.getElementById('panel-empty').style.display = 'none';
+  document.getElementById('panel-detail').style.display = '';
+  document.getElementById('d-name').textContent = n.name;
+  document.getElementById('d-status').innerHTML = n.status;
+  document.getElementById('d-input').innerHTML = n.input;
+  document.getElementById('d-dep').innerHTML = n.dep;
+  document.getElementById('d-formula').innerHTML = n.formula;
+  document.getElementById('d-result').textContent = n.result;
+  document.getElementById('d-file').innerHTML = n.file;
+  document.getElementById('d-recon').innerHTML = n.recon;
+  document.getElementById('d-lech').style.display = n.lech ? '' : 'none';
+  document.querySelectorAll('#dag .node').forEach(function(el){
+    el.style.outline = el.getAttribute('data-id') === id ? '2px solid var(--c-primary)' : 'none';
+  });
+}
+function toggleTrucB(on){
+  document.querySelectorAll('#dag .trucb').forEach(function(el){ el.style.display = on ? '' : 'none'; });
+}
+</script>
+</body>
+</html>

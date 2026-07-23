@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Giám sát và báo cáo | Vĩnh Tân 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/design-system.css">
+<link rel="stylesheet" href="assets/themes.css">
+<link rel="stylesheet" href="assets/app.css">
+<script src="assets/theme-init.js"></script>
+</head>
+<body>
+<div class="app"><div class="main">
+<div class="content">
+
+  <div class="page-head">
+    <div class="page-head__titles">
+      <div class="breadcrumb">Giám sát &amp; quản trị <span>›</span> Giám sát và báo cáo</div>
+      <h1>Giám sát và báo cáo</h1>
+      <div class="subtitle">Vĩnh Tân 2 · giám sát đồng bộ, lỗi vận hành, tiến độ lập hồ sơ và nhật ký hoạt động người dùng</div>
+    </div>
+    <div class="page-head__actions">
+      <button class="btn btn-secondary" onclick="App.toast('Đang xuất dashboard ra ảnh... (prototype)')">Xuất ảnh</button>
+      <button class="btn btn-primary" onclick="App.toast('Đang xuất báo cáo nhanh PDF... (prototype)')">Xuất PDF</button>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:var(--sp-4)">
+    <div class="card__head" style="padding-bottom:0">
+      <div class="tabs" style="border:none">
+        <div class="tab is-active" onclick="App.tab(this,'tp-sync')">Hiện trạng đồng bộ</div>
+        <div class="tab" onclick="App.tab(this,'tp-err')">Giám sát lỗi <span class="count">5</span></div>
+        <div class="tab" onclick="App.tab(this,'tp-quick')">Báo cáo nhanh</div>
+        <div class="tab" onclick="App.tab(this,'tp-audit')">Nhật ký hoạt động</div>
+      </div>
+    </div>
+    <div class="card__body">
+
+      <!-- Hiện trạng đồng bộ -->
+      <div id="tp-sync" class="tabpanel is-active">
+        <div class="table-wrap"><table class="tbl">
+          <thead><tr><th>Nguồn dữ liệu</th><th>Kết nối</th><th>Lần đồng bộ gần nhất</th><th>Tần suất</th><th class="num">Trễ</th><th>Trạng thái</th></tr></thead>
+          <tbody>
+            <tr><td><b>DIM</b> — Đo đếm</td><td><span class="badge badge--success badge--plain">Online</span></td><td>30/06 02:15</td><td>Hàng ngày 02:00</td><td class="num">0'</td><td><span class="badge badge--success">Bình thường</span></td></tr>
+            <tr><td><b>Web TTĐ</b> — NSMO</td><td><span class="badge badge--success badge--plain">Online</span></td><td>30/06 02:30</td><td>Hàng ngày 02:30</td><td class="num">0'</td><td><span class="badge badge--success">Bình thường</span></td></tr>
+            <tr><td><b>DCS</b> — Sự kiện</td><td><span class="badge badge--warning badge--plain">Thủ công</span></td><td>29/06 23:40</td><td>Theo thao tác</td><td class="num">—</td><td><span class="badge badge--warning">Chờ OCR</span></td></tr>
+            <tr><td><b>NKVH</b></td><td><span class="badge badge--danger badge--plain">Timeout</span></td><td>30/06 02:05</td><td>Hàng ngày 02:00</td><td class="num">7h 37'</td><td><span class="badge badge--danger">Lỗi</span></td></tr>
+          </tbody>
+        </table></div>
+        <div class="alert alert--danger" style="margin-top:var(--sp-4)"><span class="ico">✕</span>
+          <div><b>NKVH mất kết nối 7h37':</b> API trả timeout liên tục. Ảnh hưởng dữ liệu trạng thái tổ máy ngày 28/05. <a href="thu-thap-du-lieu.html">Thử lại kết nối →</a></div></div>
+      </div>
+
+      <!-- Giám sát lỗi -->
+      <div id="tp-err" class="tabpanel">
+        <div class="table-wrap"><table class="tbl tbl--compact">
+          <thead><tr><th>Thời gian</th><th>Mức</th><th>Thành phần</th><th>Thông điệp</th></tr></thead>
+          <tbody>
+            <tr><td class="nowrap">30/06 02:05</td><td><span class="badge badge--danger">FATAL</span></td><td>Thu thập / NKVH</td><td>Connection timeout after 30000ms khi gọi GET /api/operation-log</td></tr>
+            <tr><td class="nowrap">30/06 02:38</td><td><span class="badge badge--warning">WARN</span></td><td>Tính toán</td><td>Doanh thu lệch +0,18% so với số đối chiếu NSMO ngày 22/05</td></tr>
+            <tr><td class="nowrap">29/06 23:41</td><td><span class="badge badge--warning">WARN</span></td><td>OCR</td><td>Độ tin cậy 72% &lt; ngưỡng 80% cho HD-nhapthan-T05.pdf</td></tr>
+            <tr><td class="nowrap">29/06 02:31</td><td><span class="badge badge--warning">WARN</span></td><td>Thu thập / TTĐ</td><td>Giá SMP chu kỳ 18 vượt 95% giá trần — đã gắn cờ kiểm tra</td></tr>
+            <tr><td class="nowrap">28/06 02:00</td><td><span class="badge badge--info">INFO</span></td><td>Lập hồ sơ</td><td>Đã khởi tạo tiến trình lập hồ sơ kỳ 05/2026</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+
+      <!-- Báo cáo nhanh -->
+      <div id="tp-quick" class="tabpanel">
+        <div class="grid grid-4" style="margin-bottom:var(--sp-4)">
+          <div class="stat"><div class="stat__label">Sản lượng kỳ</div><div class="stat__value">712.480<small>MWh</small></div></div>
+          <div class="stat"><div class="stat__label">Doanh thu</div><div class="stat__value">986,4<small>tỷ</small></div></div>
+          <div class="stat"><div class="stat__label">Số lần khởi động</div><div class="stat__value">6</div></div>
+          <div class="stat"><div class="stat__label">Hệ số khả dụng</div><div class="stat__value">94,2<small>%</small></div></div>
+        </div>
+        <div class="row" style="align-items:stretch">
+          <div class="col"><div class="card"><div class="card__head"><h3>Sản lượng theo tổ máy</h3></div><div class="card__body">
+            <div class="barchart" style="height:120px">
+              <div class="bar hi" style="height:96%" data-v="372.000"><span>S1</span></div>
+              <div class="bar hi" style="height:84%" data-v="340.480"><span>S2</span></div>
+            </div>
+            <div class="muted" style="margin-top:26px;font-size:var(--fs-sm)">S1: 372.000 MWh · S2: 340.480 MWh</div>
+          </div></div></div>
+          <div class="col"><div class="card"><div class="card__head"><h3>Tiến độ lập hồ sơ 6 kỳ gần nhất</h3></div><div class="card__body">
+            <div class="barchart" style="height:120px">
+              <div class="bar" style="height:100%" data-v="100%"><span>T12</span></div>
+              <div class="bar" style="height:100%" data-v="100%"><span>T01</span></div>
+              <div class="bar" style="height:100%" data-v="100%"><span>T02</span></div>
+              <div class="bar" style="height:100%" data-v="100%"><span>T03</span></div>
+              <div class="bar" style="height:100%" data-v="100%"><span>T04</span></div>
+              <div class="bar hi" style="height:64%" data-v="64%"><span>T05</span></div>
+            </div>
+            <div class="muted" style="margin-top:26px;font-size:var(--fs-sm)">% hoàn thành hồ sơ · T05 đang xử lý</div>
+          </div></div></div>
+        </div>
+      </div>
+
+      <!-- Nhật ký hoạt động người dùng (FR-049 / Biên bản 03) -->
+      <div id="tp-audit" class="tabpanel">
+        <div class="alert alert--info" style="margin-bottom:var(--sp-4)"><span class="ico">ℹ</span>
+          <div>Hệ thống liên quan tài chính nên các <b>hoạt động nhạy cảm</b> của người dùng được ghi nhật ký để giám sát: sửa tay số liệu, cập nhật công thức, upload chứng từ, tải dữ liệu tháng, kích hoạt gửi email NSMO.</div></div>
+        <div class="grid grid-4" style="margin-bottom:var(--sp-3)">
+          <div class="field" style="margin:0"><label class="label">Người dùng</label><select class="select"><option>(tất cả)</option><option>Trần Khánh Duy</option><option>Lê Thị Hà</option></select></div>
+          <div class="field" style="margin:0"><label class="label">Loại hoạt động</label><select class="select"><option>(tất cả)</option><option>Sửa số liệu</option><option>Cập nhật công thức</option><option>Upload chứng từ</option><option>Tải dữ liệu tháng</option><option>Gửi email NSMO</option></select></div>
+          <div class="field" style="margin:0"><label class="label">Từ ngày</label><input type="date" class="input"></div>
+          <div class="field" style="margin:0"><label class="label">Đến ngày</label><input type="date" class="input"></div>
+        </div>
+        <div class="table-wrap"><table class="tbl tbl--compact">
+          <thead><tr><th>Thời gian</th><th>Người dùng</th><th>Hoạt động</th><th>Đối tượng</th><th>Chi tiết</th></tr></thead>
+          <tbody>
+            <tr><td class="nowrap">30/06 09:12</td><td>Trần Khánh Duy</td><td><span class="badge badge--warning">Sửa số liệu đầu vào</span></td><td>DIM · Qmq 28/05</td><td>17.180 → 17.280 (ghi đè có kiểm soát)</td></tr>
+            <tr><td class="nowrap">30/06 08:47</td><td>Lê Thị Hà</td><td><span class="badge badge--danger">Cập nhật công thức</span></td><td>Chi phí khởi động v1</td><td>Sửa đơn giá nhiên liệu khởi động</td></tr>
+            <tr><td class="nowrap">29/06 16:20</td><td>Trần Khánh Duy</td><td><span class="badge badge--info">Upload chứng từ</span></td><td>HD-nhapthan-T05.pdf</td><td>Hóa đơn nhập than (OCR)</td></tr>
+            <tr><td class="nowrap">29/06 15:05</td><td>Trần Khánh Duy</td><td><span class="badge badge--neutral">Tải dữ liệu tháng</span></td><td>Bảng kê tháng 05/2026</td><td>Xuất Excel</td></tr>
+            <tr><td class="nowrap">28/06 10:33</td><td>Lê Thị Hà</td><td><span class="badge badge--success">Gửi email NSMO</span></td><td>Công bố sự kiện S1</td><td>Kích hoạt gửi tới dieudo@nsmo.vn</td></tr>
+          </tbody>
+        </table></div>
+        <div class="hint" style="margin-top:var(--sp-3)">Danh sách loại hoạt động, chính sách lưu trữ và quyền xem: cần xác nhận (ISS-007).</div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</div></div>
+<script src="assets/app.js"></script>
+<script>App.layout('report');</script>
+</body>
+</html>

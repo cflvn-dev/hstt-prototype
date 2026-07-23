@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tính toán và tổng hợp | Vĩnh Tân 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/design-system.css">
+<link rel="stylesheet" href="assets/themes.css">
+<link rel="stylesheet" href="assets/app.css">
+<script src="assets/theme-init.js"></script>
+</head>
+<body>
+<div class="app"><div class="main">
+<div class="content">
+
+  <div class="page-head">
+    <div class="page-head__titles">
+      <div class="breadcrumb">Quy trình lập hồ sơ <span>›</span> Tính toán và tổng hợp</div>
+      <h1>Tính toán và tổng hợp</h1>
+      <div class="subtitle">Vĩnh Tân 2 · Tháng 05/2026 · Cập nhật 30/06 02:35</div>
+    </div>
+    <div class="page-head__actions">
+      <button class="btn btn-secondary" onclick="App.toast('Đã chạy lại toàn bộ tính toán','success')">↻ Tính lại</button>
+    </div>
+  </div>
+
+  <!-- Điều hướng cấp 2 (SC-004 / TASK-005, DEC-008; tab Pc + nhiên liệu chuyển sang tinh-pc.html theo DEC-013) -->
+  <div class="tabs" style="margin-bottom:var(--sp-4)">
+    <button class="tab is-active" onclick="App.tab(this,'tab-ketqua')">Kết quả tính toán</button>
+    <button class="tab" onclick="App.tab(this,'tab-bangke')">Bảng kê thị trường</button>
+    <button class="tab" onclick="App.tab(this,'tab-thuephi')">Thuế/phí</button>
+  </div>
+
+  <div class="tabpanel is-active" id="tab-ketqua">
+  <div class="row" style="align-items:stretch">
+    <!-- Tiến độ -->
+    <div class="col">
+      <div class="card" style="height:100%">
+        <div class="card__head"><h3>Tiến độ tính toán</h3><span class="badge badge--info">Đang chạy 64%</span></div>
+        <div class="card__body">
+          <ul class="steps">
+            <li class="done"><span class="dot">✓</span><div><div class="step__title">Doanh thu bán điện</div><div class="step__meta">Hoàn tất • 02:36</div></div></li>
+            <li class="done"><span class="dot">✓</span><div><div class="step__title">Tính giá Pc</div><div class="step__meta">Hoàn tất • 02:37</div></div></li>
+            <li class="active"><span class="dot">3</span><div><div class="step__title">Tổng hợp khoản thanh toán thị trường</div><div class="step__meta">Đang chạy...</div></div></li>
+            <li><span class="dot">4</span><div><div class="step__title">Các khoản thanh toán khác</div><div class="step__meta">Chờ</div></div></li>
+            <li><span class="dot">5</span><div><div class="step__title">Chi phí khởi động</div><div class="step__meta">Chờ</div></div></li>
+            <li><span class="dot">6</span><div><div class="step__title">Dịch vụ phụ trợ</div><div class="step__meta">Chờ</div></div></li>
+            <li><span class="dot">7</span><div><div class="step__title">Thuế, phí</div><div class="step__meta">Chờ</div></div></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Kết quả -->
+    <div class="col" style="flex:2.2">
+      <div class="card" style="margin-bottom:var(--sp-4)">
+        <div class="card__head"><h3>Kết quả tính toán theo khoản mục</h3>
+          <div class="pills"><span class="pill is-active" onclick="App.pill(this)">Theo tháng</span><span class="pill" onclick="App.pill(this)">Theo ngày</span><span class="pill" onclick="App.pill(this)">Theo tổ máy</span></div></div>
+        <div class="card__body card__body--flush"><div class="table-wrap">
+          <table class="tbl">
+            <thead><tr><th>Khoản mục</th><th class="num">Sản lượng (MWh)</th><th class="num">Đơn giá (đ/kWh)</th><th class="num">Thành tiền (đ)</th><th>Trạng thái</th></tr></thead>
+            <tbody>
+              <tr><td><b>Doanh thu sản lượng thị trường</b><div class="muted" style="font-size:var(--fs-sm)">Qmq × SMP</div></td><td class="num">712.480,000</td><td class="num">1.247,5</td><td class="num">888.818.800.000</td><td><span class="badge badge--success">Đã tính</span></td></tr>
+              <tr><td>Thanh toán công suất (CAN)</td><td class="num">—</td><td class="num">—</td><td class="num">157.824.000.000</td><td><span class="badge badge--success">Đã tính</span></td></tr>
+              <tr><td>Thanh toán theo giá hợp đồng Pc</td><td class="num">540.000,000</td><td class="num">1.452,318</td><td class="num">784.251.720.000</td><td><span class="badge badge--success">Đã tính</span></td></tr>
+              <tr><td>Chênh lệch hợp đồng sai khác</td><td class="num">—</td><td class="num">—</td><td class="num" style="color:var(--c-danger-600)">−98.640.000.000</td><td><span class="badge badge--success">Đã tính</span></td></tr>
+              <tr><td>Chi phí khởi động</td><td class="num">—</td><td class="num">—</td><td class="num">12.450.000.000</td><td><span class="badge badge--info">Đang tính</span></td></tr>
+              <tr><td>Dịch vụ phụ trợ (chu trình đơn)</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td><span class="badge badge--neutral">Chờ</span></td></tr>
+              <tr><td>Thuế tài nguyên + phí môi trường</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td><span class="badge badge--neutral">Chờ</span></td></tr>
+              <tr class="row-strong"><td>Tổng tạm tính</td><td class="num">—</td><td class="num">—</td><td class="num">986.428.520.000</td><td></td></tr>
+            </tbody>
+          </table>
+        </div></div>
+      </div>
+
+      <div class="alert alert--warning"><span class="ico">⚠</span>
+        <div><b>Sai lệch với NSMO:</b> Doanh thu sản lượng đang lệch <b class="diff-up">+0,18%</b> (≈ 1,6 tỷ đ) so với số liệu đối chiếu của NSMO ngày 22/05.
+          <a href="#" onclick="App.toast('Mở phân tích chênh lệch với NSMO (prototype)');return false">Phân tích sai lệch →</a></div></div>
+    </div>
+  </div>
+
+  <!-- Engine công thức + snapshot -->
+  <div class="row" style="margin-top:var(--sp-4); align-items:stretch">
+    <div class="col" style="flex:1.5">
+      <div class="card" style="height:100%">
+        <div class="card__head"><h3>Engine công thức áp dụng</h3>
+          <a href="cau-hinh-tinh-toan.html" class="btn btn-ghost btn-sm" title="Chỉ đọc tại đây - sửa ở Cấu hình tính toán (DEC-013)">Mở trong Cấu hình tính toán</a></div>
+        <div class="card__body card__body--flush"><div class="table-wrap">
+          <table class="tbl tbl--compact">
+            <thead><tr><th>Công thức</th><th>Biểu thức</th><th>Phiên bản</th><th>Áp dụng</th></tr></thead>
+            <tbody>
+              <tr><td><b>Doanh thu thị trường</b></td><td><code>Rmq = Qmq × SMP × (1+CAN%)</code></td><td><span class="tag">v3</span></td><td>VT2 (than)</td></tr>
+              <tr><td><b>Chi phí khởi động</b></td><td><code>Ckđ = Σ(số lần × đơn giá NL)</code></td><td><span class="tag">v1</span></td><td>Chung (than)</td></tr>
+            </tbody>
+          </table>
+        </div></div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card" style="height:100%">
+        <div class="card__head"><h3>Nguồn số liệu đầu vào</h3></div>
+        <div class="card__body">
+          <dl class="kv" style="grid-template-columns:130px 1fr">
+            <dt>Bộ số liệu</dt><dd>Đã chốt cho kỳ 05/2026</dd>
+            <dt>Cập nhật</dt><dd>30/06 02:35</dd>
+            <dt>Trạng thái</dt><dd><span class="badge badge--info">Đang dùng để tính</span></dd>
+            <dt>Giá Pc của kỳ</dt><dd class="num">1.452,318 đ/kWh <span class="badge badge--warning">Chưa xác nhận</span> <a href="tinh-pc.html">(Tính Pc →)</a></dd>
+          </dl>
+          <div class="muted" style="font-size:var(--fs-sm);margin:var(--sp-2) 0 6px">Thành phần:</div>
+          <ul class="list-check">
+            <li><span class="check-ico ok">✓</span>Dữ liệu vận hành (DIM/DCS)</li>
+            <li><span class="check-ico ok">✓</span>Dữ liệu thị trường (SMP, CAN, QC)</li>
+            <li><span class="check-ico ok">✓</span>Dữ liệu nhiên liệu + hóa đơn</li>
+            <li><span class="check-ico ok">✓</span>Bộ công thức &amp; tham số</li>
+          </ul>
+          <div class="hint">Kết quả tính lưu kèm nguồn (công thức + phiên bản) để truy vết. Cơ chế đóng băng bộ input khi tính đang thiết kế lại (ISS-014). Đóng gói trạng thái hồ sơ để lưu/xem lại: Phiên bản hồ sơ ở màn Chi tiết hồ sơ (FR-016).</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div><!-- /tab-ketqua -->
+
+  <!-- PANEL: Bảng kê thị trường (FR-057 / FL-019) -->
+  <div class="tabpanel" id="tab-bangke">
+    <div class="grid grid-4" style="margin-bottom:var(--sp-4)">
+      <div class="stat"><div class="stat__label">Bảng kê ngày đã tính</div><div class="stat__value">30/31</div></div>
+      <div class="stat"><div class="stat__label">Khớp NSMO</div><div class="stat__value" style="color:var(--c-success-600)">27</div></div>
+      <div class="stat"><div class="stat__label">Cảnh báo lệch NSMO</div><div class="stat__value" style="color:var(--c-warning-600)">2</div></div>
+      <div class="stat"><div class="stat__label">Chờ số liệu</div><div class="stat__value" style="color:var(--c-warning-600)">1</div></div>
+    </div>
+    <div class="card" style="margin-bottom:var(--sp-4)">
+      <div class="card__head"><h3>Cách tính bảng kê thị trường</h3>
+        <a href="cau-hinh-tinh-toan.html" class="btn btn-ghost btn-sm">Cấu hình tính toán →</a></div>
+      <div class="card__body card__body--flush"><div class="table-wrap">
+        <table class="tbl tbl--compact">
+          <thead><tr><th>Khoản bảng kê</th><th>Công thức áp dụng</th><th>Phiên bản</th><th>Nguồn tham số</th></tr></thead>
+          <tbody>
+            <tr><td><b>Thanh toán điện năng thị trường</b></td><td><code>Σ(Qmq_i × SMP_i) theo chu kỳ</code></td><td><span class="tag">v3</span></td><td>DIM, Web TTĐ (SMP)</td></tr>
+            <tr><td><b>Thanh toán công suất thị trường</b></td><td><code>Qc × CAN</code></td><td><span class="tag">v3</span></td><td>Web TTĐ (CAN, Qc)</td></tr>
+            <tr><td><b>Sản lượng điều chỉnh tần số</b></td><td><code>f(sự kiện AGC, sản lượng)</code></td><td><span class="tag">v1</span></td><td>Sự kiện, DIM</td></tr>
+          </tbody>
+        </table>
+      </div></div>
+    </div>
+    <div class="card" style="margin-bottom:var(--sp-4)">
+      <div class="card__head"><h3>Bảng kê ngày hệ thống tính toán — Tháng 05/2026</h3>
+        <div class="inline" style="gap:var(--sp-2)">
+          <span class="badge badge--info">Tính toán bảng kê (FR-057)</span>
+          <button class="btn btn-secondary btn-sm" onclick="App.toast('Đã tính lại bảng kê thị trường','success')">↻ Tính lại bảng kê</button>
+        </div></div>
+      <div class="card__body card__body--flush"><div class="table-wrap">
+        <table class="tbl">
+          <thead><tr><th>Ngày</th><th>Trạng thái tính toán</th><th class="num">Giá trị hệ thống (đ)</th><th>Đối chiếu NSMO</th><th class="num">Chênh %</th><th></th></tr></thead>
+          <tbody>
+            <tr><td class="nowrap">20/05/2026</td><td><span class="badge badge--success">Đã tính</span></td><td class="num">1.046.642.800.000</td><td><span class="badge badge--success">Khớp</span></td><td class="num">0,00</td><td><button class="btn btn-ghost btn-sm" onclick="App.modal('m-bangke-detail')">Chi tiết</button></td></tr>
+            <tr><td class="nowrap">21/05/2026</td><td><span class="badge badge--success">Đã tính</span></td><td class="num">1.051.320.400.000</td><td><span class="badge badge--success">Khớp</span></td><td class="num">0,00</td><td><button class="btn btn-ghost btn-sm" onclick="App.modal('m-bangke-detail')">Chi tiết</button></td></tr>
+            <tr><td class="nowrap">22/05/2026</td><td><span class="badge badge--success">Đã tính</span></td><td class="num">1.046.642.800.000</td><td><span class="badge badge--warning">Lệch +0,18%</span></td><td class="num diff-up">0,18</td><td><button class="btn btn-primary btn-sm" onclick="App.modal('m-bangke-detail')">Chi tiết</button></td></tr>
+            <tr><td class="nowrap">31/05/2026</td><td><span class="badge badge--neutral">Chờ số liệu</span></td><td class="num">—</td><td><span class="muted">—</span></td><td class="num">—</td><td></td></tr>
+          </tbody>
+        </table>
+      </div></div>
+    </div>
+    <div class="card">
+      <div class="card__head"><h3>Bảng kê tháng 05/2026</h3><span class="badge badge--neutral">Chờ đủ bảng kê ngày</span></div>
+      <div class="card__body">
+        <div class="hint">Khi mọi bảng kê ngày trong tháng đã tính toán, hệ thống tính bảng kê tháng theo cùng cơ chế; kết quả làm đầu vào cho tổng hợp các khoản thanh toán thị trường (FL-019 bước 5). Đối chiếu với số liệu NSMO chỉ ở mức cảnh báo sai lệch.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANEL: Thuế/phí (FR-060 / FL-006 precondition) - tach tu FR-058 theo DEC-013 -->
+  <div class="tabpanel" id="tab-thuephi">
+    <div class="card" style="margin-bottom:var(--sp-4)">
+      <div class="card__head"><h3>Thuế/phí đã nộp - tháng 05/2026</h3>
+        <div class="inline" style="gap:var(--sp-2)">
+          <span class="badge badge--warning">Nháp</span>
+          <button class="btn btn-secondary btn-sm" onclick="App.toast('Đã bóc tách file biểu mẫu kế toán - kiểm tra bản xem trước','success')">⬆ Import file biểu mẫu</button>
+          <button class="btn btn-primary btn-sm" onclick="App.toast('Đã xác nhận số liệu thuế/phí tháng','success')">Xác nhận bộ số liệu</button>
+        </div></div>
+      <div class="card__body">
+        <div class="hint" style="margin-bottom:var(--sp-3)">Import biểu mẫu từ kế toán kết hợp nhập tay bổ sung/hiệu chỉnh; file gốc luôn được lưu đính kèm làm căn cứ (FR-060). Dữ liệu nhiên liệu/tỷ giá phục vụ tính Pc nay ở <a href="tinh-pc.html">màn Tính Pc</a> (DEC-013).</div>
+        <div class="row" style="align-items:stretch">
+          <div class="col">
+            <div class="table-wrap"><table class="tbl tbl--compact">
+              <thead><tr><th>Khoản</th><th class="num">Số tiền (đ)</th><th></th></tr></thead>
+              <tbody>
+                <tr><td>Thuế tài nguyên nước</td><td class="num">1.240.000.000</td><td><button class="btn btn-ghost btn-sm" onclick="App.toast('Mở ô nhập tay (prototype)')">Sửa</button></td></tr>
+                <tr><td>Phí cấp quyền khai thác TN nước</td><td class="num">310.000.000</td><td><button class="btn btn-ghost btn-sm" onclick="App.toast('Mở ô nhập tay (prototype)')">Sửa</button></td></tr>
+                <tr><td>Phí BVMT nước thải công nghiệp</td><td class="num">86.000.000</td><td><button class="btn btn-ghost btn-sm" onclick="App.toast('Mở ô nhập tay (prototype)')">Sửa</button></td></tr>
+                <tr class="row-strong"><td>Tổng</td><td class="num">1.636.000.000</td><td></td></tr>
+              </tbody>
+            </table></div>
+          </div>
+          <div class="col" style="flex:.8">
+            <div class="table-wrap"><table class="tbl tbl--compact">
+              <thead><tr><th>File gốc đính kèm</th><th>Nhập lúc</th><th></th></tr></thead>
+              <tbody>
+                <tr><td>Thue-phi-da-nop-T05.xlsx</td><td class="nowrap">03/06 14:20</td><td><button class="btn btn-ghost btn-sm">Tải</button></td></tr>
+              </tbody>
+            </table></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div></div>
+
+<!-- Modal: chi tiết bảng kê thị trường - kết quả tính toán (FR-057 / FL-019 bước 3-4) -->
+<div class="modal-overlay" id="m-bangke-detail"><div class="modal modal--lg">
+  <div class="modal__head"><h3>Chi tiết bảng kê thị trường ngày 22/05/2026 — kết quả tính toán</h3><button class="modal__close" onclick="App.closeModal('m-bangke-detail')">×</button></div>
+  <div class="modal__body">
+    <div class="alert alert--warning" style="margin-bottom:var(--sp-4)"><span class="ico">⚠</span>
+      <div><b>Cảnh báo lệch NSMO:</b> khoản thanh toán điện năng thị trường của hệ thống lệch <b class="diff-up">+1.618.800.000 đ (0,18%)</b> so với số NSMO đối chiếu. Nguyên nhân nghi vấn: bù DIM ngày 22/05 chưa vào lần tính hiện tại.</div></div>
+    <b>1 · Kết quả tính toán từng khoản (đối chiếu NSMO)</b>
+    <div class="table-wrap" style="margin:8px 0 var(--sp-4)"><table class="tbl tbl--compact">
+      <thead><tr><th>Khoản thanh toán</th><th class="num">Số hệ thống tính (đ)</th><th class="num">Số NSMO đối chiếu (đ)</th><th class="num">Chênh lệch</th></tr></thead>
+      <tbody>
+        <tr><td>Thanh toán điện năng thị trường</td><td class="num">888.818.800.000</td><td class="num">890.437.600.000</td><td class="num diff-up">+1.618.800.000</td></tr>
+        <tr><td>Thanh toán công suất thị trường</td><td class="num">157.824.000.000</td><td class="num">157.824.000.000</td><td class="num diff-zero">0</td></tr>
+        <tr><td>Thanh toán sản lượng điều chỉnh tần số</td><td class="num">0</td><td class="num">0</td><td class="num diff-zero">0</td></tr>
+        <tr class="row-strong"><td>Tổng cộng</td><td class="num">1.046.642.800.000</td><td class="num">1.048.261.600.000</td><td class="num diff-up">+1.618.800.000</td></tr>
+      </tbody>
+    </table></div>
+
+    <b>2 · Giải trình tính "Thanh toán điện năng thị trường"</b>
+    <ul class="steps" style="margin:8px 0 var(--sp-4)">
+      <li class="done"><span class="dot">1</span><div><div class="step__title">Đầu vào: sản lượng Qmq theo chu kỳ (DIM) × giá SMP theo chu kỳ (Web TTĐ)</div>
+        <div class="step__meta"><code>48 chu kỳ · Qmq tổng 712.480 MWh · SMP TB 1.247,5 đ/kWh</code></div></div></li>
+      <li class="done"><span class="dot">2</span><div><div class="step__title">Công thức áp dụng <span class="tag">v3</span></div>
+        <div class="step__meta"><code>Σ(Qmq_i × SMP_i) theo 48 chu kỳ</code></div></div></li>
+      <li class="done"><span class="dot">3</span><div><div class="step__title">Kết quả hệ thống tính</div>
+        <div class="step__meta"><code>= 888.818.800.000 đ</code> · NSMO công bố 890.437.600.000 đ ⇒ lệch +1.618.800.000 (0,18%)</div></div></li>
+    </ul>
+    <div class="alert alert--info"><span class="ico">ℹ</span><div>Nguyên nhân nghi vấn chênh lệch: bù DIM ngày 22/05 chưa vào lần tính hiện tại. Bấm <b>Tính lại bảng kê</b> sau khi bổ sung dữ liệu.</div></div>
+    <div class="hint" style="margin-top:var(--sp-3)">Bảng kê do hệ thống tính toán trực tiếp; đối chiếu với NSMO chỉ ở mức cảnh báo. Cấu hình công thức/phiên bản áp dụng tại <a href="cau-hinh-tinh-toan.html">Cấu hình tính toán</a> (PH-008).</div>
+  </div>
+  <div class="modal__foot"><button class="btn btn-secondary" onclick="App.closeModal('m-bangke-detail')">Đóng</button>
+    <button class="btn btn-primary" onclick="App.closeModal('m-bangke-detail');App.toast('Đã tính lại bảng kê ngày 22/05','success')">Tính lại bảng kê</button></div>
+</div></div>
+
+<script src="assets/app.js"></script>
+<script>App.layout('calc');</script>
+</body>
+</html>

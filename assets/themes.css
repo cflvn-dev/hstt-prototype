@@ -1,0 +1,21 @@
+/* ==========================================================================
+   GENCO3 - HSTT | PRESENTATION THEMES (DS-002..005) - aggregator (DEC-006)
+   --------------------------------------------------------------------------
+   Nạp SAU design-system.css. Từ DEC-006, mỗi theme là một PRESENTATION THEME
+   hoàn chỉnh (tokens + layout recipe + component recipe + data display +
+   chart recipe + interaction/motion) đặt trong MỘT FILE RIÊNG ở themes/.
+   File này chỉ gom import - không chứa rule.
+
+   Trục: data-theme = default|carbon|fluent|linear|vercel ; data-mode = light|dark.
+   Default (DS-001) nằm trong design-system.css (:root = light, [data-mode=dark]).
+   Nav pattern từng theme do Theme Registry trong prototype/assets/app.js quyết
+   định (sidebar | topnav) - xem DEC-006 / rules/prototype-conventions.md mục 6.
+
+   Thêm theme thứ 6: tạo themes/<id>.css theo đúng cấu trúc 6 mục của các file
+   hiện có + thêm 1 dòng import ở đây + thêm 1 entry vào registry app.js.
+   ========================================================================== */
+
+@import url("themes/carbon.css");   /* DS-002 Carbon Energy       - IBM Carbon        */
+@import url("themes/fluent.css");   /* DS-003 Fluent Liquid       - Microsoft Fluent 2 */
+@import url("themes/linear.css");   /* DS-004 Linear Energy       - Linear + shadcn/ui */
+@import url("themes/vercel.css");   /* DS-005 Vercel Grid         - Vercel Dashboard   */

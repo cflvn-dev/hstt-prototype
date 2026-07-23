@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cấu hình tính toán | Vĩnh Tân 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/design-system.css">
+<link rel="stylesheet" href="assets/themes.css">
+<link rel="stylesheet" href="assets/app.css">
+<script src="assets/theme-init.js"></script>
+</head>
+<body>
+<div class="app"><div class="main">
+<div class="content">
+
+  <div class="page-head">
+    <div class="page-head__titles">
+      <div class="breadcrumb">Giám sát &amp; quản trị <span>›</span> Cấu hình tính toán</div>
+      <h1>Cấu hình tính toán</h1>
+      <div class="subtitle">Nhóm tính toán nghiệp vụ (FR-024) &amp; cấu hình bộ công thức áp dụng theo từng nhà máy (FR-025) · phân hệ PH-008</div>
+    </div>
+    <div class="page-head__actions">
+      <button class="btn btn-primary" onclick="App.toast('Đã lưu cấu hình tính toán','success')">Lưu cấu hình</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card__head" style="padding-bottom:0">
+      <div class="tabs" style="border:none">
+        <div class="tab is-active" onclick="App.tab(this,'tp-groups')">Nhóm tính toán</div>
+        <div class="tab" onclick="App.tab(this,'tp-formula')">Công thức tính toán</div>
+        <div class="tab" onclick="App.tab(this,'tp-plant')">Cấu hình theo nhà máy</div>
+      </div>
+    </div>
+    <div class="card__body">
+
+      <!-- Nhóm tính toán (FR-024) -->
+      <div id="tp-groups" class="tabpanel is-active">
+        <div class="between" style="margin-bottom:var(--sp-3)">
+          <span class="muted">7 nhóm tính toán nghiệp vụ · bật/tắt và sắp thứ tự chạy · engine tại Tính toán và tổng hợp (PH-003) chạy theo cấu hình này</span>
+        </div>
+        <div class="table-wrap"><table class="tbl">
+          <thead><tr><th class="num">Thứ tự</th><th>Nhóm tính toán</th><th>Logic / mô tả</th><th>Phụ thuộc</th><th>Trạng thái</th></tr></thead>
+          <tbody>
+            <tr><td class="num">1</td><td><b>Doanh thu bán điện</b> <span class="tag">Bắt buộc</span></td><td>Xác định doanh thu bán điện từng nhà máy theo kỳ; lỗi giữa chừng => dừng toàn bộ chu trình (BR-012).</td><td><span class="muted">—</span></td><td><span class="badge badge--success">Bật</span></td></tr>
+            <tr><td class="num">2</td><td><b>Giá Pc</b></td><td>Tính giá Pc theo quy định &amp; công thức thị trường điện.</td><td><span class="muted">—</span></td><td><span class="badge badge--success">Bật</span></td></tr>
+            <tr><td class="num">3</td><td><b>Tổng hợp khoản thanh toán thị trường</b></td><td>Tổng hợp từ doanh thu, giá Pc, kết quả bảng kê thị trường (FR-057).</td><td><span class="tag">1 · 2</span></td><td><span class="badge badge--success">Bật</span></td></tr>
+            <tr><td class="num">4</td><td><b>Các khoản thanh toán khác</b></td><td>Hợp đồng sai khác, ngoài thị trường, chênh lệch sản lượng, thử nghiệm...</td><td><span class="tag">1</span></td><td><span class="badge badge--success">Bật</span></td></tr>
+            <tr><td class="num">5</td><td><b>Thuế, phí</b></td><td>Tự động xác định GTGT, thuế tài nguyên, phí liên quan.</td><td><span class="tag">1</span></td><td><span class="badge badge--success">Bật</span></td></tr>
+            <tr><td class="num">6</td><td><b>Hợp đồng dịch vụ phụ trợ</b></td><td>Thanh toán chu trình đơn/hỗn hợp, điều tần, dự phòng quay...</td><td><span class="muted">—</span></td><td><button class="badge badge--neutral" style="border:none;cursor:pointer" onclick="App.toast('Bật/tắt nhóm (prototype)')">Tắt</button></td></tr>
+            <tr><td class="num">7</td><td><b>Chi phí khởi động</b></td><td>Số lần khởi động hợp lệ trong kỳ &amp; chi phí tương ứng.</td><td><span class="tag">1</span></td><td><span class="badge badge--success">Bật</span></td></tr>
+          </tbody>
+        </table></div>
+        <div class="hint" style="margin-top:var(--sp-3)">Luồng logic chung mỗi nhóm: truy xuất dữ liệu đầu vào => xác định khoản/áp dụng theo nhà máy &amp; kỳ => áp công thức đã cấu hình => lưu kết quả kèm nguồn (truy vết). Nhóm bắt buộc (doanh thu) không tắt được; tắt nhóm là tiền đề của nhóm khác bị chặn (BR-012).</div>
+      </div>
+
+      <!-- Cấu hình theo nhà máy (FR-025) -->
+      <div id="tp-formula" class="tabpanel">
+        <div class="between" style="margin-bottom:var(--sp-3)">
+          <span class="muted">Công thức cấu hình theo từng nhà máy · mỗi lần cập nhật được đánh phiên bản · <b>đây là nơi Write duy nhất</b> (DEC-013)</span>
+          <button class="btn btn-secondary btn-sm" onclick="App.modal('m-formula')">+ Công thức mới</button>
+        </div>
+        <div class="table-wrap"><table class="tbl">
+          <thead><tr><th>Tên công thức</th><th>Biểu thức</th><th>Đơn vị</th><th>Phiên bản</th><th>Áp dụng</th><th></th></tr></thead>
+          <tbody>
+            <tr><td><b>Doanh thu thị trường (Rmq)</b></td><td><code>Qmq × SMP × (1+CAN%)</code></td><td>đồng</td><td><span class="tag">v3</span> · hiện hành</td><td>VT2</td><td><button class="btn btn-ghost btn-sm" onclick="App.modal('m-formula')">Sửa</button></td></tr>
+            <tr><td><b>Giá hợp đồng Pc</b></td><td><code>f(Qc, giá NL tháng, hệ số)</code></td><td>đ/kWh</td><td><span class="tag">v2</span> · hiện hành</td><td>VT2</td><td><button class="btn btn-ghost btn-sm" onclick="App.modal('m-formula')">Sửa</button></td></tr>
+            <tr><td><b>Chi phí khởi động</b></td><td><code>Σ(số lần × đơn giá NL)</code></td><td>đồng</td><td><span class="tag">v1</span></td><td>Chung (than)</td><td><button class="btn btn-ghost btn-sm" onclick="App.modal('m-formula')">Sửa</button></td></tr>
+            <tr><td><b>Thuế tài nguyên</b></td><td><code>Sản lượng × thuế suất</code></td><td>đồng</td><td><span class="tag">v1</span></td><td>Chung</td><td><button class="btn btn-ghost btn-sm" onclick="App.modal('m-formula')">Sửa</button></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+
+
+      <div id="tp-plant" class="tabpanel">
+        <div class="row" style="margin-bottom:var(--sp-4)">
+          <div class="field col" style="max-width:320px;margin:0">
+            <label class="label">Nhà máy</label>
+            <select class="select" onchange="App.toast('Đã nạp cấu hình nhà máy')">
+              <option>Vĩnh Tân 2 (nhiệt điện than)</option>
+              <option>Phú Mỹ 1 (tuabin khí)</option>
+              <option>Phú Mỹ 4 (tuabin khí)</option>
+            </select>
+          </div>
+          <div class="col" style="display:flex;align-items:flex-end">
+            <span class="badge badge--success">Đã cấu hình đủ bộ công thức</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card__head"><h3>Bộ công thức / tham số áp dụng — Vĩnh Tân 2</h3>
+            <a href="cau-hinh.html" class="btn btn-ghost btn-sm">Quản lý công thức →</a></div>
+          <div class="card__body card__body--flush"><div class="table-wrap">
+            <table class="tbl">
+              <thead><tr><th>Khoản mục / nhóm</th><th>Công thức áp dụng</th><th>Phiên bản</th><th>Nguồn tham số</th><th></th></tr></thead>
+              <tbody>
+                <tr><td><b>Doanh thu thị trường</b></td><td><code>Rmq = Qmq × SMP × (1+CAN%)</code></td><td><span class="tag">v3</span> · hiện hành</td><td>DIM, TTĐ</td><td><button class="btn btn-ghost btn-sm" onclick="App.modal('m-assign')">Đổi</button></td></tr>
+                <tr><td><b>Giá Pc</b></td><td><code>Pc = f(Qc, giá NL, hệ số)</code></td><td><span class="tag">v2</span> · hiện hành</td><td>Hợp đồng, nhiên liệu</td><td><button class="btn btn-ghost btn-sm" onclick="App.modal('m-assign')">Đổi</button></td></tr>
+                <tr><td><b>Chi phí khởi động</b></td><td><code>Ckđ = Σ(số lần × đơn giá NL)</code></td><td><span class="tag">v1</span></td><td>Sự kiện, hợp đồng</td><td><button class="btn btn-ghost btn-sm" onclick="App.modal('m-assign')">Đổi</button></td></tr>
+                <tr><td><b>Thuế tài nguyên</b></td><td><code>Sản lượng × thuế suất</code></td><td><span class="tag">v1</span></td><td>Cấu hình thuế</td><td><button class="btn btn-ghost btn-sm" onclick="App.modal('m-assign')">Đổi</button></td></tr>
+              </tbody>
+            </table>
+          </div></div>
+        </div>
+        <div class="hint" style="margin-top:var(--sp-3)">Hệ thống tự chọn bộ công thức phù hợp nhà máy đang xử lý và ghi nhận cấu hình đã áp dụng để truy vết. Mỗi thay đổi được đánh phiên bản (quản lý công thức chi tiết ở Danh mục &amp; cấu hình - SC-008). Nhà máy chưa gán đủ bộ công thức sẽ ở trạng thái "Chưa cấu hình" và bị chặn tính toán.</div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</div></div>
+
+<!-- Modal cấu hình công thức (chuyển từ cau-hinh.html theo DEC-013) -->
+<div class="modal-overlay" id="m-formula"><div class="modal modal--lg">
+  <div class="modal__head"><h3>Cấu hình công thức — Doanh thu thị trường (Rmq)</h3><button class="modal__close" onclick="App.closeModal('m-formula')">×</button></div>
+  <div class="modal__body">
+    <div class="grid grid-2">
+      <div class="field"><label class="label">Tên công thức</label><input class="input" value="Doanh thu thị trường (Rmq)"></div>
+      <div class="field"><label class="label">Đơn vị</label><input class="input" value="đồng"></div>
+    </div>
+    <div class="field"><label class="label">Biểu thức tính toán</label><input class="input mono" value="Qmq * SMP * (1 + CAN_pct)"></div>
+    <div class="field"><label class="label">Biến đầu vào</label>
+      <div class="inline" style="flex-wrap:wrap"><span class="tag">Qmq — DIM</span><span class="tag">SMP — TTĐ</span><span class="tag">CAN_pct — TTĐ</span></div></div>
+    <div class="grid grid-2">
+      <div class="field"><label class="label">Quy tắc làm tròn</label><select class="select"><option>Hàng đơn vị (doanh thu)</option><option>3 chữ số thập phân</option></select></div>
+      <div class="field"><label class="label">Áp dụng cho</label><select class="select"><option>Vĩnh Tân 2</option><option>Tất cả nhà máy than</option></select></div>
+    </div>
+    <div class="alert alert--warning"><span class="ico">⚠</span><div>Lưu thay đổi sẽ tạo <b>phiên bản v4</b>. Các kỳ đã chốt vẫn dùng phiên bản đã snapshot.</div></div>
+  </div>
+  <div class="modal__foot"><button class="btn btn-secondary" onclick="App.closeModal('m-formula')">Hủy</button>
+    <button class="btn btn-primary" onclick="App.closeModal('m-formula');App.toast('Đã lưu công thức (tạo phiên bản v4)','success')">Lưu phiên bản mới</button></div>
+</div></div>
+
+<!-- Modal gán bộ công thức -->
+<div class="modal-overlay" id="m-assign"><div class="modal">
+  <div class="modal__head"><h3>Đổi công thức áp dụng — Vĩnh Tân 2</h3><button class="modal__close" onclick="App.closeModal('m-assign')">×</button></div>
+  <div class="modal__body">
+    <div class="field"><label class="label">Khoản mục</label><input class="input" value="Doanh thu thị trường" disabled></div>
+    <div class="field"><label class="label">Công thức áp dụng</label>
+      <select class="select"><option>Doanh thu thị trường (Rmq) · v3 - hiện hành</option><option>Doanh thu thị trường (Rmq) · v2 - lịch sử</option></select></div>
+    <div class="alert alert--warning"><span class="ico">⚠</span><div>Đổi công thức áp dụng sẽ tạo <b>phiên bản cấu hình mới</b> cho nhà máy; các kỳ đã tạo Phiên bản hồ sơ vẫn giữ số liệu đã đóng gói.</div></div>
+  </div>
+  <div class="modal__foot"><button class="btn btn-secondary" onclick="App.closeModal('m-assign')">Hủy</button>
+    <button class="btn btn-primary" onclick="App.closeModal('m-assign');App.toast('Đã đổi công thức áp dụng (phiên bản cấu hình mới)','success')">Lưu</button></div>
+</div></div>
+
+<script src="assets/app.js"></script>
+<script>App.layout('calc-config');</script>
+</body>
+</html>

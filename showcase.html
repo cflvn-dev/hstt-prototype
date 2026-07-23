@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Theme Showcase | Presentation Theme (review-only)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/design-system.css">
+<link rel="stylesheet" href="assets/themes.css">
+<link rel="stylesheet" href="assets/app.css">
+<script src="assets/theme-init.js"></script>
+<style>
+  /* Style riêng của trang showcase (công cụ review DEC-006, không phải màn nghiệp vụ) */
+  .sc-quickbar { display: flex; flex-wrap: wrap; gap: var(--sp-2); align-items: center;
+    padding: var(--sp-3) var(--sp-4); border: 1px dashed var(--c-border-strong);
+    border-radius: var(--r-md); margin-bottom: var(--sp-5); }
+  .sc-quickbar b { margin-right: var(--sp-2); }
+  .sc-sec { margin-bottom: var(--sp-8); }
+  .sc-sec > h2 { margin-bottom: var(--sp-1); }
+  .sc-sec > .sc-note { color: var(--c-ink-500); font-size: var(--fs-sm); margin-bottom: var(--sp-4); }
+  /* Chế độ so sánh song song (?compare=1): 5 iframe embed, mỗi khung 1 theme */
+  .cmp-item { margin-bottom: var(--sp-6); }
+  .cmp-item h2 { margin-bottom: var(--sp-3); }
+  .cmp-frame { width: 100%; overflow-x: auto; border: 1px solid var(--c-border-strong); border-radius: var(--r-md); }
+  .cmp-frame iframe { display: block; width: 1280px; min-width: 100%; height: 760px; border: none; }
+</style>
+</head>
+<body>
+<div class="app"><div class="main">
+<div class="content" id="sc-root">
+
+  <div class="page-head">
+    <div class="page-head__titles">
+      <div class="breadcrumb">Công cụ review <span>›</span> Theme Showcase</div>
+      <h1>Theme Showcase — 5 Presentation Theme</h1>
+      <div class="subtitle">Cùng một dataset mẫu (Vĩnh Tân 2 · Tháng 05/2026) và cùng một bộ semantic component — khác biệt đến từ Presentation Theme, không phải business logic.</div>
+    </div>
+    <div class="page-head__actions">
+      <button class="btn btn-secondary" onclick="location.href='showcase.html?compare=1'">So sánh song song</button>
+      <button class="btn btn-primary" onclick="App.toast('Đây là trang review-only (DEC-006)','success')">Hành động chính</button>
+    </div>
+  </div>
+
+  <div class="sc-quickbar">
+    <b>Đổi nhanh:</b>
+    <button class="btn btn-secondary btn-sm" onclick="App.setTheme('default')">Default</button>
+    <button class="btn btn-secondary btn-sm" onclick="App.setTheme('carbon')">Carbon Energy</button>
+    <button class="btn btn-secondary btn-sm" onclick="App.setTheme('fluent')">Fluent Liquid</button>
+    <button class="btn btn-secondary btn-sm" onclick="App.setTheme('linear')">Linear Energy</button>
+    <button class="btn btn-secondary btn-sm" onclick="App.setTheme('vercel')">Vercel Grid</button>
+    <span class="muted" style="margin-left:auto;font-size:var(--fs-sm)">Chế độ tối: nút palette trên thanh điều hướng</span>
+  </div>
+
+  <!-- 1. KPI / DASHBOARD GRID -->
+  <section class="sc-sec">
+    <h2>1 · KPI Card &amp; Dashboard Grid</h2>
+    <div class="sc-note">Cùng 4 slot (label / value / delta / icon / sparkline) — mỗi theme tự bố cục: icon phải (Default), accent bar trái (Carbon), icon tile trái + acrylic (Fluent), sparkline điểm nhấn (Linear), tile ghép viền number-first (Vercel).</div>
+    <div class="grid grid-4">
+      <div class="stat">
+        <div class="stat__icon">⚡</div>
+        <div class="stat__label">Sản lượng giao nhận Qmq</div>
+        <div class="stat__value">712.480 <small>MWh</small></div>
+        <div class="stat__delta up">▲ 3,2% so với T04</div>
+        <div class="stat__spark" aria-hidden="true"><i style="height:56%"></i><i style="height:64%"></i><i style="height:52%"></i><i style="height:74%"></i><i style="height:86%"></i><i class="hi" style="height:100%"></i></div>
+      </div>
+      <div class="stat">
+        <div class="stat__icon">₫</div>
+        <div class="stat__label">Doanh thu (tạm tính)</div>
+        <div class="stat__value">986,4 <small>tỷ đ</small></div>
+        <div class="stat__delta down">▼ 1,1% so với T04</div>
+        <div class="stat__spark" aria-hidden="true"><i style="height:62%"></i><i style="height:70%"></i><i style="height:58%"></i><i style="height:81%"></i><i style="height:100%"></i><i class="hi" style="height:92%"></i></div>
+      </div>
+      <div class="stat">
+        <div class="stat__icon" style="background:var(--c-warning-50);color:var(--c-warning-600)">⏱</div>
+        <div class="stat__label">Tiến độ lập hồ sơ</div>
+        <div class="stat__value">64<small>%</small></div>
+        <div class="stat__delta">Đang ở bước Tính toán</div>
+        <div class="stat__spark" aria-hidden="true"><i style="height:100%"></i><i style="height:100%"></i><i style="height:100%"></i><i style="height:100%"></i><i style="height:100%"></i><i class="hi" style="height:64%"></i></div>
+      </div>
+      <div class="stat">
+        <div class="stat__icon" style="background:var(--c-danger-50);color:var(--c-danger-600)">!</div>
+        <div class="stat__label">Cảnh báo cần xử lý</div>
+        <div class="stat__value">3</div>
+        <div class="stat__delta down">1 lỗi đồng bộ · 2 sự kiện chờ duyệt</div>
+        <div class="stat__spark" aria-hidden="true"><i style="height:35%"></i><i style="height:20%"></i><i style="height:50%"></i><i style="height:20%"></i><i style="height:35%"></i><i class="hi" style="height:65%"></i></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. FILTER BAR -->
+  <section class="sc-sec">
+    <h2>2 · Filter Bar &amp; Search</h2>
+    <div class="sc-note">Cách tổ chức vùng lọc: khay nổi (Fluent), flush vuông (Carbon), tan vào nền (Linear), viền sắc nhãn hoa (Vercel).</div>
+    <div class="filterbar">
+      <div class="field"><label class="label">Nguồn dữ liệu</label><select class="select"><option>(tất cả)</option><option>DIM</option><option>Web TTĐ</option><option>NKVH</option></select></div>
+      <div class="field"><label class="label">Trạng thái</label><select class="select"><option>(tất cả)</option><option>Hoàn tất</option><option>Lỗi</option></select></div>
+      <div class="field"><label class="label">Từ ngày</label><input type="date" class="input" value="2026-05-01"></div>
+      <div class="field"><label class="label">Đến ngày</label><input type="date" class="input" value="2026-05-31"></div>
+      <div class="field" style="flex:1.4"><label class="label">Tìm kiếm</label><input class="input" placeholder="Tìm theo tên nguồn, mã tác vụ..."></div>
+      <div class="filterbar__actions">
+        <button class="btn btn-secondary">Xóa lọc</button>
+        <button class="btn btn-primary">Áp dụng</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. DATA TABLE -->
+  <section class="sc-sec">
+    <h2>3 · Data Table (toolbar · trạng thái · tổng kết · phân trang)</h2>
+    <div class="sc-note">Recipe bảng riêng từng theme: zebra + header đậm + hàng cao (Carbon), hover xám ấm (Fluent), header hoa mờ không kẻ (Linear), kẻ ngang chủ đích + badge outline + tổng viền đậm (Vercel).</div>
+    <div class="card">
+      <div class="card__head"><h3>Kết quả tính toán theo khoản mục</h3>
+        <div class="inline" style="gap:var(--sp-2)">
+          <input class="input" placeholder="Tìm khoản mục..." style="max-width:200px">
+          <button class="btn btn-secondary btn-sm">Xuất Excel</button>
+          <button class="btn btn-primary btn-sm">Tính lại</button>
+        </div>
+      </div>
+      <div class="card__body card__body--flush"><div class="table-wrap">
+        <table class="tbl">
+          <thead><tr><th style="width:34px"><input type="checkbox" aria-label="Chọn tất cả"></th><th>Khoản mục</th><th class="num">Sản lượng (MWh)</th><th class="num">Đơn giá (đ/kWh)</th><th class="num">Thành tiền (đ)</th><th>Trạng thái</th><th></th></tr></thead>
+          <tbody>
+            <tr><td><input type="checkbox" checked></td><td><b>Doanh thu sản lượng thị trường</b><div class="muted" style="font-size:var(--fs-sm)">Qmq × SMP</div></td><td class="num">712.480,000</td><td class="num">1.247,5</td><td class="num">888.818.800.000</td><td><span class="badge badge--success">Đã tính</span></td><td><a href="#" onclick="App.toast('Xem chi tiết (prototype)');return false">Chi tiết</a></td></tr>
+            <tr><td><input type="checkbox"></td><td>Thanh toán công suất (CAN)</td><td class="num">—</td><td class="num">—</td><td class="num">157.824.000.000</td><td><span class="badge badge--success">Đã tính</span></td><td><a href="#" onclick="App.toast('Xem chi tiết (prototype)');return false">Chi tiết</a></td></tr>
+            <tr><td><input type="checkbox"></td><td>Thanh toán theo giá hợp đồng Pc</td><td class="num">540.000,000</td><td class="num">1.452,318</td><td class="num">784.251.720.000</td><td><span class="badge badge--success">Đã tính</span></td><td><a href="#" onclick="App.toast('Xem chi tiết (prototype)');return false">Chi tiết</a></td></tr>
+            <tr><td><input type="checkbox"></td><td>Chênh lệch hợp đồng sai khác</td><td class="num">—</td><td class="num">—</td><td class="num diff-down">−98.640.000.000</td><td><span class="badge badge--info">Đang tính</span></td><td><a href="#" onclick="App.toast('Xem chi tiết (prototype)');return false">Chi tiết</a></td></tr>
+            <tr><td><input type="checkbox"></td><td>Thuế tài nguyên + phí môi trường</td><td class="num">—</td><td class="num">—</td><td class="num">—</td><td><span class="badge badge--neutral">Chờ</span></td><td><a href="#" onclick="App.toast('Xem chi tiết (prototype)');return false">Chi tiết</a></td></tr>
+            <tr class="row-strong"><td></td><td>Tổng tạm tính</td><td class="num">—</td><td class="num">—</td><td class="num">986.428.520.000</td><td></td><td></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="pager">
+        <span class="pager__info">1–5 / 12 khoản mục</span>
+        <button class="pager__btn" disabled>‹</button>
+        <button class="pager__btn is-active">1</button>
+        <button class="pager__btn">2</button>
+        <button class="pager__btn">3</button>
+        <button class="pager__btn">›</button>
+      </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. FORM -->
+  <section class="sc-sec">
+    <h2>4 · Form (section · validation · action)</h2>
+    <div class="sc-note">Cùng validation contract; khác composition: label trái kiểu Office (Fluent), filled + underline + section viền trái (Carbon), hairline + section chữ hoa mờ (Linear), nhãn hoa + divider đậm (Vercel).</div>
+    <div class="card"><div class="card__body">
+      <div class="form-section">
+        <div class="form-section__title">Thông tin kỳ thanh toán</div>
+        <div class="form-section__desc">Thiết lập phạm vi dữ liệu dùng để lập hồ sơ.</div>
+        <div class="field"><label class="label">Nhà máy <span class="req">*</span></label>
+          <select class="select"><option>Nhiệt điện Vĩnh Tân 2</option><option>Phú Mỹ 1</option></select></div>
+        <div class="field"><label class="label">Kỳ thanh toán <span class="req">*</span></label>
+          <input class="input" value="Tháng 05/2026"></div>
+        <div class="field"><label class="label">Snapshot dữ liệu</label>
+          <input class="input mono" value="SNAP-VT2-202605-03" readonly>
+          <div class="hint">Snapshot bất biến — bảo đảm tái lập kết quả phục vụ kiểm toán.</div></div>
+      </div>
+      <div class="form-section" style="margin-bottom:0">
+        <div class="form-section__title">Công thức &amp; làm tròn</div>
+        <div class="form-section__desc">Áp dụng cho lần tính kế tiếp; kỳ đã chốt giữ phiên bản snapshot.</div>
+        <div class="field"><label class="label">Biểu thức doanh thu <span class="req">*</span></label>
+          <input class="input mono is-invalid" value="Qmq * SMP * (1 + CAN_pct">
+          <div class="hint hint--error">Biểu thức thiếu dấu ")" — vui lòng kiểm tra lại cú pháp.</div></div>
+        <div class="field"><label class="label">Quy tắc làm tròn</label>
+          <select class="select"><option>Hàng đơn vị (doanh thu)</option><option>3 chữ số thập phân</option></select></div>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-secondary">Hủy</button>
+        <button class="btn btn-primary">Lưu phiên bản mới</button>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- 5. TABS / SEGMENTED / WORKFLOW / TIMELINE -->
+  <section class="sc-sec">
+    <h2>5 · Tabs, Segmented control, Workflow &amp; Timeline</h2>
+    <div class="sc-note">Tab underline xanh (Default), contained viền trên (Carbon), pill indicator (Fluent), monochrome (Linear/Vercel). Pills: content switcher (Carbon) / viền tròn (Vercel).</div>
+    <div class="row" style="align-items:stretch">
+      <div class="col"><div class="card" style="height:100%"><div class="card__body">
+        <div class="tabs">
+          <button class="tab is-active" onclick="App.tab(this,'sc-tp1')">Dữ liệu đầu vào</button>
+          <button class="tab" onclick="App.tab(this,'sc-tp2')">Kết quả <span class="count">7</span></button>
+          <button class="tab" onclick="App.tab(this,'sc-tp3')">Tài liệu</button>
+        </div>
+        <div style="margin-top:var(--sp-4)">
+          <div id="sc-tp1" class="tabpanel is-active"><p class="muted">Nội dung tab 1 — dữ liệu vận hành, thị trường, nhiên liệu.</p></div>
+          <div id="sc-tp2" class="tabpanel"><p class="muted">Nội dung tab 2 — 7 khoản mục thanh toán.</p></div>
+          <div id="sc-tp3" class="tabpanel"><p class="muted">Nội dung tab 3 — 8 đầu mục tài liệu.</p></div>
+        </div>
+        <div class="divider"></div>
+        <div class="pills">
+          <span class="pill is-active" onclick="App.pill(this)">Theo tháng</span>
+          <span class="pill" onclick="App.pill(this)">Theo ngày</span>
+          <span class="pill" onclick="App.pill(this)">Theo tổ máy</span>
+        </div>
+        <div class="divider"></div>
+        <ul class="steps steps--h">
+          <li class="done"><span class="dot">✓</span><div><div class="step__title">Thu thập</div><div class="step__meta">30/06 02:30</div></div></li>
+          <li class="done"><span class="dot">✓</span><div><div class="step__title">Sự kiện</div><div class="step__meta">12/14 xác nhận</div></div></li>
+          <li class="active"><span class="dot">3</span><div><div class="step__title">Tính toán</div><div class="step__meta">64%</div></div></li>
+          <li><span class="dot">4</span><div><div class="step__title">Ký số</div><div class="step__meta">Chờ</div></div></li>
+        </ul>
+      </div></div></div>
+      <div class="col"><div class="card" style="height:100%">
+        <div class="card__head"><h3>Timeline tiến trình</h3></div>
+        <div class="card__body">
+          <ul class="steps">
+            <li class="done"><span class="dot">✓</span><div><div class="step__title">Thu thập &amp; chuẩn hóa dữ liệu</div><div class="step__meta">Hoàn tất • 30/06 02:30 • 4/5 nguồn</div></div></li>
+            <li class="done"><span class="dot">✓</span><div><div class="step__title">Công bố &amp; xác nhận sự kiện</div><div class="step__meta">12/14 sự kiện đã xác nhận</div></div></li>
+            <li class="active"><span class="dot">3</span><div><div class="step__title">Tính toán và tổng hợp</div><div class="step__meta">Đang chạy • 64%</div>
+              <div class="progress" style="margin-top:8px;max-width:300px"><div class="progress__bar" style="width:64%"></div></div></div></li>
+            <li class="error"><span class="dot">!</span><div><div class="step__title">Đối soát NSMO</div><div class="step__meta">Sai lệch +0,18% cần giải trình</div></div></li>
+            <li><span class="dot">5</span><div><div class="step__title">Tổng hợp hồ sơ &amp; ký số</div><div class="step__meta">Chờ</div></div></li>
+          </ul>
+        </div>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- 6. PANEL & SURFACE -->
+  <section class="sc-sec">
+    <h2>6 · Panel &amp; Surface</h2>
+    <div class="sc-note">Chiến lược surface: viền + bóng nhẹ (Default), grid vuông không bóng (Carbon), layered đổ bóng mềm không viền (Fluent), hairline hover-border (Linear), viền chủ đích tương phản cao (Vercel).</div>
+    <div class="grid grid-3">
+      <div class="card">
+        <div class="card__head"><h3>Thông tin hồ sơ</h3><span class="badge badge--info">Đang xử lý</span></div>
+        <div class="card__body">
+          <dl class="kv" style="grid-template-columns:120px 1fr">
+            <dt>Kỳ</dt><dd>Tháng 05/2026</dd>
+            <dt>Nhà máy</dt><dd>Vĩnh Tân 2 (S1, S2)</dd>
+            <dt>Tổng tạm tính</dt><dd class="num">986.428.520.000 đ</dd>
+            <dt>Snapshot</dt><dd><code>SNAP-VT2-202605-03</code></dd>
+          </dl>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card__head"><h3>Checklist tài liệu</h3><span class="muted">5/8</span></div>
+        <div class="card__body">
+          <ul class="list-check">
+            <li><span class="check-ico ok">✓</span>Bảng kê thanh toán tháng</li>
+            <li><span class="check-ico ok">✓</span>Bảng tính doanh thu thị trường</li>
+            <li><span class="check-ico warn">!</span>Bảng kê sự kiện đã xác nhận</li>
+            <li><span class="check-ico no">○</span>Tờ trình ký duyệt</li>
+          </ul>
+        </div>
+      </div>
+      <div class="stack">
+        <div class="alert alert--info"><span class="ico">ℹ</span><div><b>Thông tin:</b> tổng hợp tự động lúc 06:00 hàng ngày.</div></div>
+        <div class="alert alert--warning"><span class="ico">⚠</span><div><b>Cảnh báo:</b> NKVH lỗi kết nối từ 02:05.</div></div>
+        <div class="alert alert--danger"><span class="ico">✕</span><div><b>Lỗi:</b> sai lệch +0,18% với NSMO chưa giải trình.</div></div>
+        <div class="alert alert--success"><span class="ico">✓</span><div><b>Hoàn tất:</b> kỳ 04/2026 đã ký số.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. CHART -->
+  <section class="sc-sec">
+    <h2>7 · Chart Container &amp; Data Visualization</h2>
+    <div class="sc-note">Không chỉ đổi màu: gridline + cột vuông (Carbon), cột gradient mềm (Fluent), cột mảnh bo tròn + glow (Linear), gridline + baseline + nhãn giá trị mono (Vercel), độ dày vòng donut khác nhau.</div>
+    <div class="row" style="align-items:stretch">
+      <div class="col" style="flex:1.4"><div class="card" style="height:100%">
+        <div class="card__head"><h3>Doanh thu thị trường theo tháng</h3>
+          <div class="pills"><span class="pill is-active" onclick="App.pill(this)">6 tháng</span><span class="pill" onclick="App.pill(this)">12 tháng</span></div></div>
+        <div class="card__body">
+          <div class="barchart" style="margin-top:20px">
+            <div class="bar" style="height:62%" data-v="695"><span>T12</span></div>
+            <div class="bar" style="height:70%" data-v="785"><span>T01</span></div>
+            <div class="bar" style="height:58%" data-v="650"><span>T02</span></div>
+            <div class="bar" style="height:81%" data-v="908"><span>T03</span></div>
+            <div class="bar" style="height:92%" data-v="1.032"><span>T04</span></div>
+            <div class="bar hi" style="height:88%" data-v="986"><span>T05</span></div>
+          </div>
+          <div class="muted" style="margin-top:28px;font-size:var(--fs-sm)">Đơn vị: tỷ đồng · cột nhấn là kỳ đang lập (tạm tính)</div>
+        </div>
+      </div></div>
+      <div class="col"><div class="card" style="height:100%">
+        <div class="card__head"><h3>Cơ cấu khoản thanh toán</h3></div>
+        <div class="card__body">
+          <div class="row" style="align-items:center;gap:var(--sp-5)">
+            <div class="donut-wrap">
+              <div class="donut" style="background:conic-gradient(var(--c-primary-600) 0 68%, var(--c-accent-500) 68% 84%, var(--c-warning-600) 84% 94%, var(--c-ink-400) 94% 100%)"></div>
+              <div class="donut__center"><b>986</b><div class="muted" style="font-size:var(--fs-xs)">tỷ đ</div></div>
+            </div>
+            <div class="legend col">
+              <div><i style="background:var(--c-primary-600)"></i>Doanh thu sản lượng (68%)</div>
+              <div><i style="background:var(--c-accent-500)"></i>Công suất CAN (16%)</div>
+              <div><i style="background:var(--c-warning-600)"></i>Chi phí khởi động (10%)</div>
+              <div><i style="background:var(--c-ink-400)"></i>Phụ trợ &amp; khác (6%)</div>
+            </div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- 8. OVERLAY: MODAL / DRAWER / TOAST -->
+  <section class="sc-sec">
+    <h2>8 · Modal, Drawer, Notification</h2>
+    <div class="sc-note">Footer nút full-width (Carbon), acrylic + pop mềm (Fluent), floating bo lớn (Linear), viền sắc gần như không animation (Vercel).</div>
+    <div class="inline" style="flex-wrap:wrap">
+      <button class="btn btn-primary" onclick="App.modal('m-sc-demo')">Mở Modal</button>
+      <button class="btn btn-secondary" onclick="App.modal('d-sc-demo')">Mở Drawer</button>
+      <button class="btn btn-secondary" onclick="App.toast('Thao tác thành công','success')">Toast thành công</button>
+      <button class="btn btn-secondary" onclick="App.toast('Có lỗi khi đồng bộ NKVH','danger')">Toast lỗi</button>
+      <span class="badge badge--success">Đã xác nhận</span>
+      <span class="badge badge--warning">Chờ duyệt</span>
+      <span class="badge badge--danger">Lỗi đồng bộ</span>
+      <span class="badge badge--info">Đang tính</span>
+      <span class="badge badge--neutral">Nháp</span>
+      <span class="tag">DIM</span><span class="tag">OCR</span><span class="tag">S1</span>
+    </div>
+  </section>
+
+  <!-- 9. EMPTY / LOADING / ERROR / SUCCESS -->
+  <section class="sc-sec">
+    <h2>9 · Empty · Loading · Error · Success state</h2>
+    <div class="sc-note">Trạng thái không thể hiện chỉ bằng màu: icon + tiêu đề + mô tả + hành động; skeleton tôn trọng prefers-reduced-motion.</div>
+    <div class="grid grid-2">
+      <div class="card"><div class="card__body--flush card__body">
+        <div class="empty">
+          <div class="empty__icon">🗂</div>
+          <div class="empty__title">Chưa có hồ sơ kỳ này</div>
+          <div class="empty__desc">Hồ sơ Tháng 06/2026 chưa được khởi tạo. Kích hoạt lập hồ sơ để bắt đầu thu thập dữ liệu.</div>
+          <button class="btn btn-primary btn-sm">Lập hồ sơ kỳ này</button>
+        </div>
+      </div></div>
+      <div class="card">
+        <div class="card__head"><h3>Đang tải kết quả tính toán</h3><div class="spinner" role="status" aria-label="Đang tải"></div></div>
+        <div class="card__body stack" style="gap:var(--sp-3)">
+          <div class="skeleton" style="width:70%;height:14px"></div>
+          <div class="skeleton" style="width:100%;height:14px"></div>
+          <div class="skeleton" style="width:90%;height:14px"></div>
+          <div class="skeleton" style="width:45%;height:14px"></div>
+        </div>
+      </div>
+      <div class="card"><div class="card__body--flush card__body">
+        <div class="empty empty--danger">
+          <div class="empty__icon">✕</div>
+          <div class="empty__title">Không tải được dữ liệu NKVH</div>
+          <div class="empty__desc">API trả timeout sau 30 giây (mã lỗi NKVH-504). Dữ liệu trạng thái tổ máy ngày 28/05 có thể thiếu.</div>
+          <button class="btn btn-secondary btn-sm">Thử lại kết nối</button>
+        </div>
+      </div></div>
+      <div class="card"><div class="card__body--flush card__body">
+        <div class="empty empty--success">
+          <div class="empty__icon">✓</div>
+          <div class="empty__title">Hồ sơ kỳ 04/2026 đã hoàn tất</div>
+          <div class="empty__desc">8/8 tài liệu đủ điều kiện, đã ký số ngày 02/06 và gửi NSMO thành công.</div>
+          <button class="btn btn-secondary btn-sm">Xem hồ sơ</button>
+        </div>
+      </div></div>
+    </div>
+  </section>
+
+</div>
+</div></div>
+
+<!-- Modal demo -->
+<div class="modal-overlay" id="m-sc-demo"><div class="modal">
+  <div class="modal__head"><h3>Xác nhận chốt kỳ 05/2026</h3><button class="modal__close" onclick="App.closeModal('m-sc-demo')">×</button></div>
+  <div class="modal__body">
+    <div class="alert alert--warning" style="margin-bottom:var(--sp-4)"><span class="ico">⚠</span>
+      <div>Sau khi chốt sẽ <b>khóa dữ liệu đầu vào và công thức</b>. Mở khóa cần người phê duyệt.</div></div>
+    <div class="field"><label class="label">Ghi chú chốt kỳ</label><textarea class="textarea" placeholder="Lý do / căn cứ chốt kỳ..."></textarea></div>
+    <div class="field" style="margin-bottom:0"><label class="label">Người phê duyệt</label>
+      <select class="select"><option>Hoàng Tú Kiên — Trưởng nhóm</option></select></div>
+  </div>
+  <div class="modal__foot">
+    <button class="btn btn-secondary" onclick="App.closeModal('m-sc-demo')">Hủy</button>
+    <button class="btn btn-primary" onclick="App.closeModal('m-sc-demo');App.toast('Đã chốt kỳ 05/2026 (demo)','success')">Xác nhận chốt</button>
+  </div>
+</div></div>
+
+<!-- Drawer demo -->
+<div class="drawer-overlay" id="d-sc-demo" onclick="if(event.target===this)App.closeModal('d-sc-demo')"><div class="drawer">
+  <div class="drawer__head"><h3>Chi tiết nguồn — Web Thị trường điện</h3><button class="modal__close" onclick="App.closeModal('d-sc-demo')">×</button></div>
+  <div class="drawer__body">
+    <dl class="kv" style="grid-template-columns:130px 1fr">
+      <dt>Phương thức</dt><dd>API NSMO</dd>
+      <dt>Lần gần nhất</dt><dd>30/06 02:30</dd>
+      <dt>Bản ghi kỳ này</dt><dd class="num">4.464</dd>
+      <dt>Trạng thái</dt><dd><span class="badge badge--success">Hoàn tất</span></dd>
+    </dl>
+    <div class="divider"></div>
+    <div class="field"><label class="label">Khung giờ thu thập</label><input class="input" value="02:00 – 02:30"></div>
+    <div class="field"><label class="label">Tần suất</label><select class="select"><option>Hàng ngày</option><option>Mỗi 6 giờ</option></select></div>
+    <div class="hint">Message Queue điều tiết tối đa 3 luồng song song để tránh bị NSMO từ chối phục vụ.</div>
+  </div>
+  <div class="drawer__foot">
+    <button class="btn btn-secondary" onclick="App.closeModal('d-sc-demo')">Đóng</button>
+    <button class="btn btn-primary" onclick="App.closeModal('d-sc-demo');App.toast('Đã lưu cấu hình nguồn (demo)','success')">Lưu</button>
+  </div>
+</div></div>
+
+<script src="assets/app.js"></script>
+<script>
+  // Chế độ so sánh song song (?compare=1): thay nội dung bằng 5 iframe embed
+  // (mỗi iframe 1 theme, ?embed=1 nên không ghi localStorage). Review-only.
+  (function () {
+    var compare = /[?&]compare=1/.test(location.search || "");
+    if (!compare) { App.layout('showcase'); return; }
+    var mode = document.documentElement.getAttribute('data-mode') || 'light';
+    var THEMES = [
+      ['default', 'Default (DS-001) — Material rút gọn'],
+      ['carbon',  'Carbon Energy (DS-002) — IBM Carbon'],
+      ['fluent',  'Fluent Liquid (DS-003) — Microsoft Fluent 2'],
+      ['linear',  'Linear Energy (DS-004) — Linear + shadcn/ui'],
+      ['vercel',  'Vercel Grid (DS-005) — Vercel Dashboard']
+    ];
+    var root = document.getElementById('sc-root');
+    var html = '<div class="page-head"><div class="page-head__titles">' +
+      '<div class="breadcrumb">Công cụ review <span>›</span> Theme Showcase <span>›</span> So sánh song song</div>' +
+      '<h1>So sánh 5 Presentation Theme</h1>' +
+      '<div class="subtitle">Cùng một trang showcase, cùng dataset — mỗi khung một theme (' + mode + ').</div></div>' +
+      '<div class="page-head__actions"><button class="btn btn-secondary" onclick="location.href=\'showcase.html\'">Về showcase</button></div></div>';
+    THEMES.forEach(function (t) {
+      html += '<div class="cmp-item"><h2>' + t[1] + '</h2><div class="cmp-frame">' +
+        '<iframe src="showcase.html?theme=' + t[0] + '&mode=' + mode + '&embed=1" title="' + t[1] + '" loading="lazy"></iframe></div></div>';
+    });
+    root.innerHTML = html;
+    root.style.maxWidth = 'none';
+    App.layout('showcase');
+  })();
+</script>
+</body>
+</html>

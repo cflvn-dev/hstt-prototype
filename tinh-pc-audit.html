@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Giải trình audit cách tính Pc | Phú Mỹ 1</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/design-system.css">
+<link rel="stylesheet" href="assets/themes.css">
+<link rel="stylesheet" href="assets/app.css">
+<script src="assets/theme-init.js"></script>
+<!-- Univer UMD (BB-06/SC-016, pin 0.25.1) - can online lan dau; neu offline se hien trang thai loi -->
+<link rel="stylesheet" href="https://unpkg.com/@univerjs/preset-sheets-core@0.25.1/lib/index.css">
+<style>
+  /* Layout 2 khu vuc cua thiet ke mau (SC-016) - chi dung token design system */
+  .audit-layout{display:flex;gap:var(--sp-3);align-items:stretch;height:calc(100vh - 230px);min-height:460px}
+  #univer-box{flex:1;min-width:0;border:var(--bw) solid var(--c-border);border-radius:var(--r-md);overflow:hidden;background:var(--c-surface)}
+  .audit-resizer{width:6px;flex:none;cursor:col-resize;border-radius:var(--r-sm)}
+  .audit-resizer:hover{background:var(--c-border)}
+  .audit-panel{width:var(--audit-panel-w,380px);min-width:280px;max-width:620px;flex:none;display:flex;flex-direction:column;border:var(--bw) solid var(--c-border);border-radius:var(--r-md);background:var(--c-surface);overflow:hidden}
+  .audit-panel__head{display:flex;align-items:center;justify-content:space-between;gap:var(--sp-2);padding:var(--sp-2) var(--sp-3);border-bottom:var(--bw) solid var(--c-border)}
+  .audit-panel__body{overflow:auto;flex:1;padding:0 var(--sp-3) var(--sp-3)}
+  .audit-layout.is-collapsed .audit-panel,.audit-layout.is-collapsed .audit-resizer{display:none}
+  details.audit-sec{border-bottom:var(--bw) solid var(--c-border);padding:var(--sp-2) 0}
+  details.audit-sec>summary{cursor:pointer;font-weight:var(--fw-semibold,600);font-size:var(--fs-sm);padding:2px 0}
+  details.audit-sec .kv{margin:var(--sp-2) 0 0}
+  .audit-chips{display:flex;flex-wrap:wrap;gap:var(--sp-1);align-items:center;margin-bottom:var(--sp-3)}
+  .audit-chips .tag{cursor:pointer}
+  .cellref{cursor:pointer;text-decoration:underline;color:var(--c-primary-600)}
+  @media (max-width:1100px){
+    .audit-panel{position:fixed;right:0;top:64px;bottom:0;z-index:60;width:min(90vw,400px);box-shadow:var(--sh-lg);border-radius:0}
+    .audit-layout.is-collapsed .audit-panel{display:none}
+    .audit-resizer{display:none}
+  }
+</style>
+</head>
+<body>
+<div class="app"><div class="main">
+<div class="content">
+
+  <div class="page-head">
+    <div class="page-head__titles">
+      <div class="breadcrumb">Tính Pc <span>›</span> Quy trình tính toán <span>›</span> Giải trình audit</div>
+      <h1>Giải trình audit cách tính Pc</h1>
+      <div class="subtitle">Univer readonly + Audit Panel · dữ liệu mẫu: <code>sample_tinhtoan.xlsx</code> / Sheet1 (giá nhiên liệu bình quân tháng 3/2026, NMĐ Phú Mỹ)</div>
+    </div>
+    <div class="page-head__actions">
+      <button class="btn btn-secondary" onclick="auditTogglePanel()">Thu gọn/mở Audit Panel</button>
+      <a class="btn btn-ghost" href="tinh-pc.html">← Quay lại Tính Pc</a>
+    </div>
+  </div>
+
+  <div class="alert alert--info" style="margin-bottom:var(--sp-3)"><span class="ico">ℹ</span>
+    <div><b>Workbook hệ thống sinh</b> <span class="badge badge--success">có audit trong cell</span> - chọn một ô để xem giải trình (ô là <b>giá trị dẫn xuất</b> sẽ giải thích được tính từ đâu). Workbook <b>chỉ đọc</b>: chọn ô/vùng, cuộn, copy được; không sửa được dữ liệu.
+    <br><b>Phân biệt loại workbook</b> (TASK-007/SC-016): <b>file gốc chuyên viên nộp</b> là ảnh chụp chứng từ, <b>không có audit</b> và mang nhãn cảnh báo - file chuyển từ <code>.xlsb</code> (mất công thức, chỉ còn giá trị), file có <b>VBA</b> (macro không chạy, giá trị tĩnh), file có <b>external link chết</b> (giá trị có thể là cache kỳ cũ). Theo dõi ISS-012.</div></div>
+
+  <!-- Thanh tab sheet (SC-016 mở rộng đa sheet - TASK-007 mục 4.6). Sample 1 sheet; sheet ẩn minh họa -->
+  <div class="inline" id="sheet-tabs" style="gap:var(--sp-1); flex-wrap:wrap; align-items:center; margin-bottom:var(--sp-3); border-bottom:var(--bw) solid var(--c-border); padding-bottom:var(--sp-2)">
+    <span class="muted" style="font-size:var(--fs-sm); margin-right:var(--sp-1)">Sheet:</span>
+    <button class="btn btn-sm btn-primary sheet-tab" data-name="Sheet1">Sheet1</button>
+    <button class="btn btn-sm btn-ghost sheet-tab" data-name="TyGia" onclick="App.toast('Sheet ẩn trong file gốc - bảng tính trung gian (sample, chưa nạp trong bản mẫu)')">TyGia <span class="badge badge--neutral">ẩn</span></button>
+    <button class="btn btn-sm btn-ghost sheet-tab" data-name="CPKĐ" onclick="App.toast('Sheet ẩn trong file gốc - bảng tính trung gian (sample)')">CPKĐ <span class="badge badge--neutral">ẩn</span></button>
+    <button class="btn btn-sm btn-ghost sheet-tab" data-name="KD-PM1" onclick="App.toast('Sheet ẩn trong file gốc (sample)')">KD-PM1 <span class="badge badge--neutral">ẩn</span></button>
+    <div class="field" style="margin:0 0 0 auto"><input class="input" style="height:30px; min-width:150px" placeholder="Tìm sheet..." oninput="filterSheets(this.value)"></div>
+  </div>
+
+  <div class="audit-chips" id="audit-chips">
+    <span class="muted" style="font-size:var(--fs-sm)">Ô có audit mẫu:</span>
+  </div>
+
+  <div class="audit-layout" id="audit-layout">
+    <div id="univer-box">
+      <div class="empty" id="univer-loading" style="height:100%">
+        <div class="spinner"></div>
+        <div class="empty__title">Đang tải workbook...</div>
+        <div class="empty__desc">Nạp thư viện Univer (unpkg CDN) và dữ liệu Sheet1.</div>
+      </div>
+    </div>
+    <div class="audit-resizer" id="audit-resizer" title="Kéo để đổi chiều rộng panel"></div>
+    <aside class="audit-panel" id="audit-panel">
+      <div class="audit-panel__head">
+        <b style="font-size:var(--fs-sm)">Audit Panel</b>
+        <span class="badge badge--neutral" id="audit-state-badge">Chưa chọn ô</span>
+      </div>
+      <div class="audit-panel__body">
+        <div class="empty" id="audit-empty">
+          <div class="empty__icon">▦</div>
+          <div class="empty__title">Chọn một ô dữ liệu để xem thông tin giải trình.</div>
+        </div>
+        <div id="audit-content" style="display:none"></div>
+      </div>
+    </aside>
+  </div>
+
+</div>
+</div></div>
+
+<script src="assets/app.js"></script>
+<script src="assets/data/sample-tinhtoan-sheet1.js"></script>
+<script src="assets/data/sample-tinhtoan-audit.js"></script>
+<!-- Univer UMD dependencies -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/rxjs@7.8.1/dist/bundles/rxjs.umd.min.js"></script>
+<script src="https://unpkg.com/@univerjs/presets@0.25.1/lib/umd/index.js"></script>
+<script src="https://unpkg.com/@univerjs/preset-sheets-core@0.25.1/lib/umd/index.js"></script>
+<script src="https://unpkg.com/@univerjs/preset-sheets-core@0.25.1/lib/umd/locales/en-US.js"></script>
+<script>
+App.layout('pc');
+
+/* Tim/loc tab sheet (SC-016 da sheet) */
+function filterSheets(q) {
+  q = (q || '').toLowerCase();
+  document.querySelectorAll('#sheet-tabs .sheet-tab').forEach(function (b) {
+    var name = (b.getAttribute('data-name') || '').toLowerCase();
+    b.style.display = (!q || name.indexOf(q) >= 0) ? '' : 'none';
+  });
+}
+
+/* ================= WorkbookLoaderService ================= */
+var WorkbookLoaderService = {
+  load: function () {
+    var wb = window.G3_SAMPLE_TINHTOAN_WB;
+    if (!wb || !wb.sheets) throw new Error('missing-workbook');
+    if (!wb.sheets.sheet1 || wb.sheets.sheet1.name !== 'Sheet1') throw new Error('missing-sheet1');
+    return wb;
+  },
+  cellAt: function (r, c) { // gia tri tai (r,c), co xu ly merge (lay o goc vung merge)
+    var sh = window.G3_SAMPLE_TINHTOAN_WB.sheets.sheet1;
+    var cell = (sh.cellData[String(r)] || {})[String(c)];
+    if (cell && cell.v !== undefined && cell.v !== null) return cell;
+    var merges = sh.mergeData || [];
+    for (var i = 0; i < merges.length; i++) {
+      var m = merges[i];
+      if (r >= m.startRow && r <= m.endRow && c >= m.startColumn && c <= m.endColumn) {
+        return (sh.cellData[String(m.startRow)] || {})[String(m.startColumn)] || null;
+      }
+    }
+    return cell || null;
+  }
+};
+
+/* ================= CellAuditService (mock, tach ngoai Univer) ================= */
+var CellAuditService = {
+  get: function (addr) { return (window.G3_SAMPLE_TINHTOAN_AUDIT || {})[addr] || null; },
+  hasFormula: function (addr) { return !!(window.G3_SAMPLE_TINHTOAN_FORMULAS || {})[addr]; },
+  formulaOf: function (addr) { return (window.G3_SAMPLE_TINHTOAN_FORMULAS || {})[addr] || null; },
+  listAudited: function () { return Object.keys(window.G3_SAMPLE_TINHTOAN_AUDIT || {}); }
+};
+
+/* ================= helpers ================= */
+function colLetter(c) { var s = ''; c = c + 1; while (c > 0) { var m = (c - 1) % 26; s = String.fromCharCode(65 + m) + s; c = Math.floor((c - 1) / 26); } return s; }
+function parseAddr(addr) {
+  var m = /^([A-Z]+)(\d+)$/.exec(addr); if (!m) return null;
+  var c = 0; for (var i = 0; i < m[1].length; i++) c = c * 26 + (m[1].charCodeAt(i) - 64);
+  return { r: parseInt(m[2], 10) - 1, c: c - 1 };
+}
+function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+function fmtNum(v) {
+  if (typeof v !== 'number') return String(v);
+  try { return v.toLocaleString('vi-VN', { maximumFractionDigits: 6 }); } catch (e) { return String(v); }
+}
+var SRC_LABEL = { 'raw-data': 'Dữ liệu raw', 'operational-event': 'Sự kiện vận hành', 'contract-config': 'Cấu hình hợp đồng', 'calculated-value': 'Giá trị tính toán', 'manual-override': 'Nhập tay/override' };
+
+/* ================= AuditPanel ================= */
+function labelsFor(r, c) { // chi tieu (cot B/A cung hang) + cot/chu ky (hang tieu de 9)
+  var rowCell = WorkbookLoaderService.cellAt(r, 1) || WorkbookLoaderService.cellAt(r, 0);
+  var colCell = WorkbookLoaderService.cellAt(8, c);
+  return {
+    metric: rowCell && typeof rowCell.v === 'string' ? rowCell.v : null,
+    col: colCell && typeof colCell.v === 'string' ? colCell.v : null
+  };
+}
+function secHtml(title, inner, open) {
+  return '<details class="audit-sec"' + (open ? ' open' : '') + '><summary>' + title + '</summary>' + inner + '</details>';
+}
+function renderAudit(r, c) {
+  var addr = colLetter(c) + (r + 1);
+  var cell = WorkbookLoaderService.cellAt(r, c);
+  var v = cell ? cell.v : undefined;
+  var audit = CellAuditService.get(addr);
+  var lb = labelsFor(r, c);
+  var badge = document.getElementById('audit-state-badge');
+  var box = document.getElementById('audit-content');
+  document.getElementById('audit-empty').style.display = 'none';
+  box.style.display = 'block';
+
+  var status, badgeCls = 'badge badge--neutral';
+  if (audit) {
+    status = audit.valueType === 'derived' ? 'Derived value' : (audit.valueType === 'label' ? 'Header / Label' : 'Raw value');
+    badgeCls = audit.valueType === 'derived' ? 'badge badge--info' : 'badge badge--success';
+  } else if (v === undefined || v === null || v === '') { status = 'Empty'; }
+  else if (CellAuditService.hasFormula(addr)) { status = 'Derived value · No audit metadata'; badgeCls = 'badge badge--warning'; }
+  else if (typeof v === 'string') { status = 'Header / Label'; }
+  else { status = 'Raw value · No audit metadata'; }
+  badge.className = badgeCls; badge.textContent = addr + ' · ' + status;
+
+  var h = '';
+  // --- Tong quan ---
+  var ov = '<dl class="kv" style="grid-template-columns:110px 1fr">' +
+    '<dt>Sheet</dt><dd>Sheet1</dd>' +
+    '<dt>Ô</dt><dd><code>' + addr + '</code></dd>' +
+    (audit && audit.metricName ? '<dt>Chỉ tiêu</dt><dd>' + esc(audit.metricName) + '</dd>' : (lb.metric ? '<dt>Chỉ tiêu</dt><dd>' + esc(lb.metric) + '</dd>' : '')) +
+    (audit && audit.period ? '<dt>Kỳ/cột</dt><dd>' + esc(audit.period) + '</dd>' : (lb.col ? '<dt>Kỳ/cột</dt><dd>' + esc(lb.col) + '</dd>' : '')) +
+    '<dt>Giá trị hiển thị</dt><dd class="num">' + (audit && audit.displayValue ? esc(audit.displayValue) : (v === undefined ? '<span class="muted">(rỗng)</span>' : esc(fmtNum(v)))) + '</dd>' +
+    '<dt>Giá trị thực</dt><dd><code>' + (v === undefined ? 'null' : esc(String(v))) + '</code></dd>' +
+    '<dt>Kiểu dữ liệu</dt><dd>' + (v === undefined ? 'Rỗng' : (typeof v === 'number' ? 'Số' : 'Văn bản')) + '</dd>' +
+    '<dt>Trạng thái</dt><dd>' + status +
+      (audit && audit.isOverridden ? ' <span class="badge badge--warning">Override</span>' : '') +
+      (audit && audit.warnings && audit.warnings.length ? ' <span class="badge badge--danger">Warning</span>' : '') + '</dd>' +
+    '</dl>';
+  h += secHtml('Tổng quan', ov, true);
+
+  if (audit) {
+    // --- Cong thuc ---
+    if (audit.formulaName || audit.formulaExpression) {
+      var fm = '<dl class="kv" style="grid-template-columns:110px 1fr">' +
+        (audit.formulaName ? '<dt>Công thức</dt><dd>' + esc(audit.formulaName) + '</dd>' : '') +
+        (audit.formulaExpression ? '<dt>Biểu thức</dt><dd><code>' + esc(audit.formulaExpression) + '</code></dd>' : '') +
+        (audit.formulaVersion ? '<dt>Phiên bản</dt><dd><span class="tag">' + esc(audit.formulaVersion) + '</span></dd>' : '') +
+        (audit.roundingRule ? '<dt>Làm tròn</dt><dd>' + esc(audit.roundingRule) + '</dd>' : '') + '</dl>';
+      h += secHtml('Công thức', fm, true);
+    }
+    // --- Dau vao ---
+    if (audit.inputs && audit.inputs.length) {
+      var rows = audit.inputs.map(function (inp) {
+        return '<tr><td>' + esc(inp.name) +
+          (inp.sourceReference ? '<div class="muted" style="font-size:var(--fs-sm)">' + esc(inp.sourceReference) + '</div>' : '') +
+          '</td><td class="num nowrap">' + esc(inp.value) + (inp.unit ? ' <span class="muted">' + esc(inp.unit) + '</span>' : '') + '</td>' +
+          '<td><span class="tag">' + (SRC_LABEL[inp.sourceType] || esc(inp.sourceType)) + '</span>' +
+          (inp.period ? '<div class="muted" style="font-size:var(--fs-sm)">' + esc(inp.period) + '</div>' : '') + '</td>' +
+          '<td>' + (inp.cellReference ? '<span class="cellref" onclick="auditNavigate(\'' + inp.cellReference + '\')">' + inp.cellReference + '</span>' : '-') + '</td></tr>';
+      }).join('');
+      h += secHtml('Dữ liệu đầu vào (' + audit.inputs.length + ')',
+        '<div class="table-wrap" style="margin-top:var(--sp-2)"><table class="tbl tbl--compact"><thead><tr><th>Tên</th><th class="num">Giá trị</th><th>Nguồn</th><th>Ô</th></tr></thead><tbody>' + rows + '</tbody></table></div>', true);
+    }
+    // --- Cac buoc tinh ---
+    if (audit.calculationSteps && audit.calculationSteps.length) {
+      var steps = '<ul class="steps" style="margin-top:var(--sp-2)">' + audit.calculationSteps.map(function (st) {
+        return '<li class="done"><span class="dot">' + st.order + '</span><div><div class="step__title">' + esc(st.description) + '</div>' +
+          '<div class="step__meta">' + (st.expression ? '<code>' + esc(st.expression) + '</code> ' : '') + (st.result ? '=> <b>' + esc(st.result) + '</b>' : '') + '</div></div></li>';
+      }).join('') + '</ul>';
+      h += secHtml('Các bước tính', steps, false);
+    }
+    // --- Truy vet ---
+    var tr = '<dl class="kv" style="grid-template-columns:110px 1fr">' +
+      (audit.sourceModule ? '<dt>Mô-đun nguồn</dt><dd>' + esc(audit.sourceModule) + '</dd>' : '') +
+      (audit.sourceDocument ? '<dt>Tài liệu nguồn</dt><dd>' + esc(audit.sourceDocument) + '</dd>' : '') +
+      (audit.calculatedAt ? '<dt>Thời điểm tính</dt><dd>' + esc(audit.calculatedAt) + '</dd>' : '') +
+      '<dt>Override</dt><dd>' + (audit.isOverridden ? '<span class="badge badge--warning">Có - giá trị nhập tay</span>' : 'Không') + '</dd>' + '</dl>' +
+      (audit.warnings && audit.warnings.length ? '<div class="alert alert--warning" style="margin-top:var(--sp-2)"><span class="ico">⚠</span><div>' + audit.warnings.map(esc).join('<br>') + '</div></div>' : '');
+    h += secHtml('Truy vết', tr, false);
+  } else if (CellAuditService.hasFormula(addr)) {
+    h += secHtml('Công thức gốc (tham khảo)', '<div class="hint" style="margin-top:var(--sp-2)">Ô có công thức trong file Excel nhưng chưa được gắn audit metadata mẫu. Công thức gốc chỉ để tham khảo, không phải nguồn audit:</div><pre style="white-space:pre-wrap;font-size:var(--fs-sm);margin:var(--sp-2) 0 0"><code>' + esc(CellAuditService.formulaOf(addr)) + '</code></pre>', true);
+  }
+  box.innerHTML = h;
+}
+
+/* ================= SpreadsheetViewer (Univer) ================= */
+var univerAPI = null;
+function auditNavigate(addr) {
+  var rc = parseAddr(addr); if (!rc) return;
+  try {
+    var ws = univerAPI.getActiveWorkbook().getActiveSheet();
+    var range = ws.getRange(addr);
+    if (range && range.activate) range.activate();
+    if (ws.scrollToCell) ws.scrollToCell(rc.r, rc.c);
+  } catch (e) { /* fallback duoi */ }
+  renderAudit(rc.r, rc.c);
+}
+function auditTogglePanel() { document.getElementById('audit-layout').classList.toggle('is-collapsed'); }
+function showBoxError(title, desc) {
+  document.getElementById('univer-box').innerHTML =
+    '<div class="empty empty--danger" style="height:100%"><div class="empty__icon">✕</div><div class="empty__title">' + esc(title) + '</div><div class="empty__desc">' + esc(desc) + '</div></div>';
+}
+(function initChips() {
+  var wrap = document.getElementById('audit-chips');
+  CellAuditService.listAudited().forEach(function (addr) {
+    var t = document.createElement('span'); t.className = 'tag'; t.textContent = addr;
+    t.onclick = function () { auditNavigate(addr); };
+    wrap.appendChild(t);
+  });
+})();
+(function initUniver() {
+  if (!window.UniverPresets || !window.UniverCore || !window.UniverPresetSheetsCore) {
+    showBoxError('Không tải được thư viện Univer', 'Trang thiết kế mẫu cần kết nối internet để tải Univer UMD từ unpkg (pin @0.25.1). Kiểm tra mạng rồi tải lại trang.');
+    return;
+  }
+  var wbData;
+  try { wbData = WorkbookLoaderService.load(); }
+  catch (e) {
+    showBoxError(e.message === 'missing-sheet1' ? 'Không tìm thấy Sheet1' : 'Không nạp được workbook',
+      'Chạy lại: powershell -File .ai/scripts/convert-sample-tinhtoan.ps1 để sinh assets/data/sample-tinhtoan-sheet1.js');
+    return;
+  }
+  try {
+    var createUniver = UniverPresets.createUniver;
+    var LocaleType = UniverCore.LocaleType, mergeLocales = UniverCore.mergeLocales;
+    var loading = document.getElementById('univer-loading');
+    if (loading) loading.remove();
+    var locales = {};
+    locales[LocaleType.EN_US] = mergeLocales(window.UniverPresetSheetsCoreEnUS || {});
+    var result = createUniver({
+      locale: LocaleType.EN_US,
+      locales: locales,
+      presets: [UniverPresetSheetsCore.UniverSheetsCorePreset({
+        container: 'univer-box',
+        header: false,          /* an toolbar - che do readonly (SC-016) */
+        footer: true,           /* giu thanh zoom */
+        contextMenu: false
+      })]
+    });
+    univerAPI = result.univerAPI;
+    univerAPI.createWorkbook(wbData);
+    /* khoa chinh sua: permission API + chan command mutate (phong khi permission API doi) */
+    try {
+      var perm = univerAPI.getActiveWorkbook().getWorkbookPermission();
+      var p = perm && (perm.setReadOnly ? perm.setReadOnly() : (perm.setMode ? perm.setMode('viewer') : null));
+      if (p && p.catch) p.catch(function () {});
+    } catch (e) { }
+    try {
+      univerAPI.onBeforeCommandExecute(function (command) {
+        var id = (command && command.id) || '';
+        if (/^sheet\.command\.(set-range-values|insert-|remove-|delete-row|delete-col|move-|clear-selection|add-worksheet|set-worksheet-name|paste)/.test(id)) {
+          throw new Error('Workbook readonly (SC-016)');
+        }
+      });
+    } catch (e) { }
+    /* chon cell => cap nhat Audit Panel */
+    univerAPI.addEvent(univerAPI.Event.SelectionChanged, function (params) {
+      try {
+        var sels = params && params.selections;
+        if (!sels || !sels.length) return;
+        var rg = sels[0].range || sels[0];
+        if (rg == null || rg.startRow == null) return;
+        renderAudit(rg.startRow, rg.startColumn);
+      } catch (e) { }
+    });
+  } catch (e) {
+    showBoxError('Khởi tạo Univer thất bại', String(e && e.message || e));
+  }
+})();
+/* keo doi chieu rong panel */
+(function initResizer() {
+  var rs = document.getElementById('audit-resizer'), panel = document.getElementById('audit-panel');
+  var startX = 0, startW = 0, dragging = false;
+  rs.addEventListener('mousedown', function (ev) { dragging = true; startX = ev.clientX; startW = panel.offsetWidth; ev.preventDefault(); });
+  document.addEventListener('mousemove', function (ev) {
+    if (!dragging) return;
+    var w = Math.min(620, Math.max(280, startW + (startX - ev.clientX)));
+    panel.style.width = w + 'px';
+  });
+  document.addEventListener('mouseup', function () { dragging = false; });
+})();
+</script>
+</body>
+</html>

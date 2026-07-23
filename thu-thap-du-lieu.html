@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thu thập dữ liệu | Vĩnh Tân 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/design-system.css">
+<link rel="stylesheet" href="assets/themes.css">
+<link rel="stylesheet" href="assets/app.css">
+<script src="assets/theme-init.js"></script>
+</head>
+<body>
+<div class="app"><div class="main">
+<div class="content">
+
+  <div class="page-head">
+    <div class="page-head__titles">
+      <div class="breadcrumb">Quy trình lập hồ sơ <span>›</span> Thu thập dữ liệu</div>
+      <h1>Thu thập &amp; đồng bộ dữ liệu</h1>
+      <div class="subtitle">Nhà máy Vĩnh Tân 2 · kỳ Tháng 05/2026 · 5 nguồn dữ liệu đầu vào</div>
+    </div>
+  </div>
+
+  <!-- Điều hướng cấp 2 (SC-011 / Biên bản 03; đổi tên tab OCR theo Biên bản 04) -->
+  <div class="tabs" style="margin-bottom:var(--sp-4)">
+    <button class="tab is-active" onclick="App.tab(this,'tab-giamsat')">Giám sát &amp; Thống kê</button>
+    <button class="tab" onclick="App.tab(this,'tab-tacvu')">Tác vụ thu thập</button>
+    <button class="tab" onclick="App.tab(this,'tab-log')">Log thu thập</button>
+    <button class="tab" onclick="App.tab(this,'tab-dulieu')">Dữ liệu</button>
+    <button class="tab" onclick="App.tab(this,'tab-nguon')">OCR</button>
+  </div>
+
+  <!-- PANEL: Giám sát & Thống kê (FR-043) -->
+  <div class="tabpanel is-active" id="tab-giamsat">
+    <div class="card" style="margin-bottom:var(--sp-4)">
+      <div class="card__head"><h3>⚡ Thời gian thực <span class="muted" style="font-weight:400">· ảnh chụp 30/06 12:07 · <span class="badge badge--success">đang chạy</span></span></h3>
+        <button class="btn btn-secondary btn-sm" onclick="App.toast('Đã làm mới số liệu tức thời')">↻ Làm mới</button></div>
+      <div class="card__body">
+        <div class="grid grid-4" style="margin-bottom:var(--sp-4)">
+          <div class="stat"><div class="stat__label">Tác vụ đang chạy</div><div class="stat__value">0 <small>/ 5</small></div></div>
+          <div class="stat"><div class="stat__label">Hàng đợi</div><div class="stat__value">0 <small>/ 1000</small></div></div>
+          <div class="stat"><div class="stat__label">Số worker</div><div class="stat__value">5</div></div>
+          <div class="stat"><div class="stat__label">Giới hạn đồng thời toàn cục</div><div class="stat__value">5</div></div>
+        </div>
+        <div class="row">
+          <div class="col"><b>Đồng thời theo nguồn</b>
+            <div class="table-wrap" style="margin-top:8px"><table class="tbl tbl--compact">
+              <thead><tr><th>Nguồn</th><th class="num">Đang chạy</th><th class="num">Giới hạn</th></tr></thead>
+              <tbody><tr><td>WebThiTruongDien</td><td class="num">0</td><td class="num">2</td></tr></tbody>
+            </table></div>
+          </div>
+          <div class="col"><b>Đồng thời theo loại dữ liệu</b>
+            <div class="table-wrap" style="margin-top:8px"><table class="tbl tbl--compact">
+              <thead><tr><th>Loại dữ liệu</th><th class="num">Đang chạy</th><th class="num">Giới hạn</th></tr></thead>
+              <tbody><tr><td>PHUTAI_CONGSUAT_IAH_48</td><td class="num">0</td><td class="num">1</td></tr></tbody>
+            </table></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card__head"><h3>📊 Thống kê tác vụ thu thập <span class="muted" style="font-weight:400">· cache 2'</span></h3>
+        <span class="badge badge--info">Tổng đang hoạt động: 149</span></div>
+      <div class="card__body"><div class="grid grid-3">
+        <div><b>Theo trạng thái</b><div class="table-wrap" style="margin-top:8px"><table class="tbl tbl--compact">
+          <thead><tr><th>Giá trị</th><th class="num">Số lượng</th></tr></thead>
+          <tbody>
+            <tr><td><span class="badge badge--success">Success</span></td><td class="num">82</td></tr>
+            <tr><td><span class="badge badge--warning">Expired</span></td><td class="num">56</td></tr>
+            <tr><td><span class="badge badge--neutral">NoDataYet</span></td><td class="num">10</td></tr>
+            <tr><td><span class="badge badge--danger">Cancelled</span></td><td class="num">1</td></tr>
+          </tbody></table></div></div>
+        <div><b>Theo nguồn</b><div class="table-wrap" style="margin-top:8px"><table class="tbl tbl--compact">
+          <thead><tr><th>Giá trị</th><th class="num">Số lượng</th></tr></thead>
+          <tbody>
+            <tr><td>DIM</td><td class="num">31</td></tr>
+            <tr><td>NhatKyVanHanh</td><td class="num">8</td></tr>
+            <tr><td>EvnHoChuaThuyDien</td><td class="num">44</td></tr>
+            <tr><td>NsmoPublic</td><td class="num">26</td></tr>
+            <tr><td>WebThiTruongDien</td><td class="num">79</td></tr>
+          </tbody></table></div></div>
+        <div><b>Theo loại dữ liệu</b><div class="table-wrap" style="margin-top:8px"><table class="tbl tbl--compact">
+          <thead><tr><th>Giá trị</th><th class="num">Số lượng</th></tr></thead>
+          <tbody>
+            <tr><td>CONGSUAT_KHADUNG_48</td><td class="num">12</td></tr>
+            <tr><td>GIA_CAN_48</td><td class="num">13</td></tr>
+            <tr><td>SMP_IAH_48</td><td class="num">13</td></tr>
+            <tr><td>SOLIEU_DODEM_48</td><td class="num">12</td></tr>
+            <tr><td>THONGTIN_HOCHUA</td><td class="num">44</td></tr>
+          </tbody></table></div></div>
+      </div></div>
+    </div>
+    <div class="hint" style="margin-top:var(--sp-3)">Tab "Tác vụ định kỳ" (thấy trong ảnh minh họa) - phạm vi cần xác nhận (ISS-007).</div>
+  </div>
+
+  <!-- PANEL: Tác vụ thu thập (FR-008/FR-010) -->
+  <div class="tabpanel" id="tab-tacvu">
+    <!-- Nút Cấu hình lịch + Thu thập ngay chuyển vào đây theo Biên bản 04 -->
+    <div class="between" style="margin-bottom:var(--sp-4)">
+      <b>Tác vụ thu thập</b>
+      <div class="inline" style="gap:var(--sp-2)">
+        <button class="btn btn-secondary" onclick="App.modal('m-schedule')">Cấu hình lịch</button>
+        <button class="btn btn-primary" onclick="App.toast('Đã đẩy yêu cầu thu thập vào hàng đợi (Message Queue)','success')">↻ Thu thập ngay</button>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom:var(--sp-4)"><div class="card__body">
+      <div class="grid grid-4">
+        <div class="field" style="margin:0"><label class="label">Nguồn</label><select class="select"><option>(tất cả)</option><option>WebThiTruongDien</option><option>NsmoPublic</option></select></div>
+        <div class="field" style="margin:0"><label class="label">Loại dữ liệu</label><select class="select"><option>(tất cả)</option><option>SMP_IAH_48</option><option>GIA_CAN_48</option></select></div>
+        <div class="field" style="margin:0"><label class="label">Trạng thái</label><select class="select"><option>(tất cả)</option><option>Scheduled</option><option>Success</option><option>Expired</option></select></div>
+        <div class="field" style="margin:0"><label class="label">Ngày mục tiêu</label><input type="date" class="input"></div>
+      </div>
+    </div></div>
+    <div class="card"><div class="card__body card__body--flush"><div class="table-wrap">
+      <table class="tbl tbl--compact">
+        <thead><tr><th>#</th><th>Nguồn</th><th>Loại dữ liệu</th><th>Ngày mục</th><th class="num">Kỳ</th><th>Trạng thái</th><th>Loại</th><th>Thời hạn kế</th><th></th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>WebThiTruongDien</td><td>THONGTIN_HOCHUA</td><td>01/07</td><td class="num">1</td><td><span class="badge badge--success">Success</span></td><td>Định kỳ</td><td class="nowrap">02/07 02:00</td><td><a href="#" onclick="App.tab(document.querySelector('[onclick*=tab-log]'),'tab-log');return false">Log</a></td></tr>
+          <tr><td>2</td><td>WebThiTruongDien</td><td>SMP_IAH_48</td><td>01/07</td><td class="num">48</td><td><span class="badge badge--warning">Expired</span></td><td>Định kỳ</td><td class="nowrap">02/07 02:00</td><td><a href="#" onclick="App.toast('Xem chi tiết tác vụ (prototype)');return false">Xem</a></td></tr>
+          <tr><td>3</td><td>NsmoPublic</td><td>SANLUONG_HUYDONG_THEO_LH</td><td>01/07</td><td class="num">1</td><td><span class="badge badge--neutral">Scheduled</span></td><td>Tức thì</td><td class="nowrap">01/07 13:31</td><td><a href="#" onclick="App.toast('Xem chi tiết tác vụ (prototype)');return false">Xem</a></td></tr>
+          <tr><td>4</td><td>WebThiTruongDien</td><td>CONGSUAT_KHADUNG_48</td><td>01/07</td><td class="num">48</td><td><span class="badge badge--danger">Cancelled</span></td><td>Định kỳ</td><td class="nowrap">-</td><td><a href="#" onclick="App.toast('Xem chi tiết tác vụ (prototype)');return false">Xem</a></td></tr>
+        </tbody>
+      </table>
+    </div></div></div>
+  </div>
+
+  <!-- PANEL: Log thu thập (FR-010) -->
+  <div class="tabpanel" id="tab-log">
+    <div class="card" style="margin-bottom:var(--sp-4)"><div class="card__body">
+      <div class="grid grid-4">
+        <div class="field" style="margin:0"><label class="label">Mã tác vụ</label><input class="input" placeholder="vd 156"></div>
+        <div class="field" style="margin:0"><label class="label">Nguồn</label><select class="select"><option>(tất cả)</option><option>WebThiTruongDien</option></select></div>
+        <div class="field" style="margin:0"><label class="label">Trạng thái</label><select class="select"><option>(tất cả)</option><option>Success</option><option>NoDataYet</option></select></div>
+        <div class="field" style="margin:0"><label class="label">Bắt đầu (từ)</label><input type="date" class="input"></div>
+      </div>
+    </div></div>
+    <div class="card"><div class="card__body card__body--flush"><div class="table-wrap">
+      <table class="tbl tbl--compact">
+        <thead><tr><th>Id</th><th>Mã TV</th><th>Nguồn</th><th>Loại dữ liệu</th><th>Bắt đầu</th><th>Trạng thái</th><th class="num">HTTP</th><th class="num">Bản ghi</th><th class="num">ms</th><th class="num">Mã lỗi</th></tr></thead>
+        <tbody>
+          <tr><td>617</td><td>156</td><td>WebThiTruongDien</td><td>CONGSUAT_KHADUNG_48</td><td class="nowrap">01/07 15:46</td><td><span class="badge badge--neutral">NoDataYet</span></td><td class="num">200</td><td class="num">0</td><td class="num">819</td><td class="num">0</td></tr>
+          <tr><td>615</td><td>153</td><td>WebThiTruongDien</td><td>SMP_SAU_VANHANH_48</td><td class="nowrap">01/07 15:46</td><td><span class="badge badge--neutral">NoDataYet</span></td><td class="num">200</td><td class="num">0</td><td class="num">1.626</td><td class="num">0</td></tr>
+          <tr><td>612</td><td>157</td><td>WebThiTruongDien</td><td>SOLIEU_DODEM_48</td><td class="nowrap">01/07 13:31</td><td><span class="badge badge--success">Success</span></td><td class="num">200</td><td class="num">294</td><td class="num">3.756</td><td class="num">0</td></tr>
+          <tr><td>611</td><td>160</td><td>EvnHoChuaThuyDien</td><td>THONGTIN_HOCHUA</td><td class="nowrap">01/07 13:31</td><td><span class="badge badge--success">Success</span></td><td class="num">200</td><td class="num">38</td><td class="num">855</td><td class="num">0</td></tr>
+        </tbody>
+      </table>
+    </div></div></div>
+  </div>
+
+  <!-- PANEL: Dữ liệu (FR-044) -->
+  <div class="tabpanel" id="tab-dulieu">
+    <div class="pills" style="margin-bottom:var(--sp-3);flex-wrap:wrap">
+      <span class="pill is-active" onclick="App.pill(this)">Phụ tải công suất</span>
+      <span class="pill" onclick="App.pill(this)">SMP IAH</span>
+      <span class="pill" onclick="App.pill(this)">SMP sau vận hành</span>
+      <span class="pill" onclick="App.pill(this)">Số liệu đo đếm</span>
+      <span class="pill" onclick="App.pill(this)">Công suất khả dụng</span>
+      <span class="pill" onclick="App.pill(this)">Sản lượng hợp đồng</span>
+      <span class="pill" onclick="App.pill(this)">Giá CAN</span>
+    </div>
+    <div class="card"><div class="card__head"><h3>Phụ tải công suất</h3>
+      <button class="btn btn-secondary btn-sm" onclick="App.toast('Đang xuất dữ liệu (prototype)')">↓ Tải xuống</button></div>
+      <div class="card__body">
+        <div class="grid grid-4" style="margin-bottom:var(--sp-3)">
+          <div class="field" style="margin:0"><label class="label">Ngày (từ)</label><input type="date" class="input"></div>
+          <div class="field" style="margin:0"><label class="label">Ngày (đến)</label><input type="date" class="input"></div>
+          <div class="field" style="margin:0"><label class="label">Chu kỳ (1–48)</label><input class="input" placeholder="vd 30 – 48"></div>
+          <div class="field" style="margin:0"><label class="label">Miền</label><select class="select"><option>(tất cả)</option><option>Bắc</option><option>Trung</option><option>Nam</option></select></div>
+        </div>
+        <div class="table-wrap"><table class="tbl tbl--compact">
+          <thead><tr><th>Ngày</th><th class="num">Chu kỳ</th><th>Miền</th><th class="num">Giá trị (MW)</th></tr></thead>
+          <tbody>
+            <tr><td>25/08/2021</td><td class="num">30</td><td>Miền Bắc</td><td class="num">12,3</td></tr>
+            <tr><td>25/08/2021</td><td class="num">30</td><td>Miền Trung</td><td class="num">15,8</td></tr>
+            <tr><td>25/08/2021</td><td class="num">30</td><td>Miền Nam</td><td class="num">55,9</td></tr>
+            <tr><td>25/08/2021</td><td class="num">31</td><td>Miền Bắc</td><td class="num">12,3</td></tr>
+          </tbody>
+        </table></div>
+        <div class="muted" style="font-size:var(--fs-xs);margin-top:var(--sp-2)">Mặc định dữ liệu thị trường 48 chu kỳ/ngày (BR-015).</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PANEL: OCR (SC-002; Biên bản 04: chỉ tập trung OCR, bỏ card nguồn DIM/NKVH/Web + lịch sử + hàng đợi) -->
+  <div class="tabpanel" id="tab-nguon">
+  <div class="hint" style="margin-bottom:var(--sp-4)">Tab tập trung vào bóc tách chứng từ bằng OCR. Trạng thái thu thập theo nguồn (DIM, Nhật ký vận hành, Web TTĐ...) xem tại tab <b>Giám sát &amp; Thống kê</b> và <b>Log thu thập</b>.</div>
+
+  <!-- OCR -->
+  <div class="card" id="ocr" style="margin-top:var(--sp-4)">
+    <div class="card__head"><h3>Bóc tách chứng từ bằng OCR</h3>
+      <button class="btn btn-secondary btn-sm" onclick="App.modal('m-upload')">↑ Tải chứng từ</button></div>
+    <div class="card__body">
+      <div class="alert alert--info" style="margin-bottom:var(--sp-4)"><span class="ico">ℹ</span>
+        <div>Mẫu hỗ trợ: Biên bản giao nhận than · Chứng thư giám định chất lượng/khối lượng than · Hóa đơn nhập than, dầu · Văn bản điều chỉnh giá than, khí · Tờ khai thuế. Dữ liệu bóc tách cần chuyên viên xác nhận trước khi lưu.</div></div>
+      <div class="table-wrap"><table class="tbl">
+        <thead><tr><th>Chứng từ</th><th>Loại mẫu</th><th>Ngày</th><th class="num">Độ tin cậy</th><th>Trạng thái</th><th></th></tr></thead>
+        <tbody>
+          <tr><td><b>BBGN-than-2605.pdf</b></td><td>Biên bản giao nhận than</td><td>26/05</td><td class="num"><span class="badge badge--success badge--plain">98%</span></td><td><span class="badge badge--warning">Chờ xác nhận</span></td><td><button class="btn btn-primary btn-sm" onclick="App.modal('m-ocr')">Kiểm tra</button></td></tr>
+          <tr><td><b>CT-chatluong-T05.pdf</b></td><td>Chứng thư chất lượng than</td><td>25/05</td><td class="num"><span class="badge badge--success badge--plain">95%</span></td><td><span class="badge badge--success">Đã lưu</span></td><td><button class="btn btn-ghost btn-sm" onclick="App.toast('Xem chi tiết (prototype)')">Xem</button></td></tr>
+          <tr><td><b>HD-nhapthan-T05.pdf</b></td><td>Hóa đơn nhập than</td><td>24/05</td><td class="num"><span class="badge badge--warning badge--plain">72%</span></td><td><span class="badge badge--warning">Chờ xác nhận</span></td><td><button class="btn btn-primary btn-sm" onclick="App.modal('m-ocr')">Kiểm tra</button></td></tr>
+        </tbody>
+      </table></div>
+    </div>
+  </div>
+  </div><!-- /tab-nguon -->
+
+</div>
+</div></div>
+
+<!-- Modal: Cấu hình lịch -->
+<div class="modal-overlay" id="m-schedule"><div class="modal">
+  <div class="modal__head"><h3>Cấu hình lịch thu thập tự động</h3><button class="modal__close" onclick="App.closeModal('m-schedule')">×</button></div>
+  <div class="modal__body">
+    <div class="field"><label class="label">Nguồn dữ liệu</label>
+      <select class="select"><option>Web Thị trường điện (NSMO)</option><option>DIM</option><option>NKVH</option></select></div>
+    <div class="grid grid-2">
+      <div class="field"><label class="label">Tần suất</label><select class="select"><option>Hàng ngày</option><option>Mỗi 6 giờ</option></select></div>
+      <div class="field"><label class="label">Khung giờ</label><input class="input" value="02:00 – 02:30"></div>
+    </div>
+    <div class="inline"><label class="switch"><input type="checkbox" checked><span class="slider"></span></label><span>Chỉ chạy ngoài giờ hành chính</span></div>
+    <div class="hint">Lịch cấu hình độc lập theo từng nhà máy.</div>
+  </div>
+  <div class="modal__foot"><button class="btn btn-secondary" onclick="App.closeModal('m-schedule')">Hủy</button>
+    <button class="btn btn-primary" onclick="App.closeModal('m-schedule');App.toast('Đã lưu lịch thu thập','success')">Lưu lịch</button></div>
+</div></div>
+
+<!-- Modal: Upload -->
+<div class="modal-overlay" id="m-upload"><div class="modal">
+  <div class="modal__head"><h3>Tải chứng từ để bóc tách OCR</h3><button class="modal__close" onclick="App.closeModal('m-upload')">×</button></div>
+  <div class="modal__body">
+    <div class="field"><label class="label">Loại mẫu chứng từ</label>
+      <select class="select"><option>Biên bản giao nhận than</option><option>Chứng thư giám định chất lượng than</option><option>Hóa đơn nhập than, dầu</option></select></div>
+    <div class="imgbox" style="height:140px;cursor:pointer" onclick="App.toast('Chọn tệp (prototype)')">Kéo thả tệp PDF/ảnh vào đây hoặc bấm để chọn</div>
+    <div class="hint">Giới hạn: PDF/JPG/PNG, tối đa 20MB. Tên tệp được mã hóa GUID khi lưu.</div>
+  </div>
+  <div class="modal__foot"><button class="btn btn-secondary" onclick="App.closeModal('m-upload')">Hủy</button>
+    <button class="btn btn-primary" onclick="App.closeModal('m-upload');App.toast('Đã gửi chứng từ tới OCR Server','success')">Bóc tách</button></div>
+</div></div>
+
+<!-- Modal: Kiểm tra OCR -->
+<div class="modal-overlay" id="m-ocr"><div class="modal modal--lg">
+  <div class="modal__head"><h3>Kiểm tra &amp; xác nhận dữ liệu OCR — Biên bản giao nhận than</h3><button class="modal__close" onclick="App.closeModal('m-ocr')">×</button></div>
+  <div class="modal__body">
+    <div class="row">
+      <div class="col"><div class="imgbox" style="height:280px">Ảnh chứng từ gốc<br>(BBGN-than-2605.pdf)</div></div>
+      <div class="col">
+        <div class="muted" style="font-size:var(--fs-sm);margin-bottom:var(--sp-3)">Dữ liệu bóc tách (có thể hiệu chỉnh trước khi lưu):</div>
+        <div class="field"><label class="label">Số biên bản</label><input class="input" value="BBGN/VT2/2026-0517"></div>
+        <div class="grid grid-2">
+          <div class="field"><label class="label">Khối lượng (tấn)</label><input class="input num" value="12.480,250"></div>
+          <div class="field"><label class="label">Ngày giao nhận</label><input class="input" value="26/05/2026"></div>
+        </div>
+        <div class="field"><label class="label">Nhiệt trị (kcal/kg)</label><input class="input num" value="5.120" style="border-color:var(--c-warning-600)"><div class="hint" style="color:var(--c-warning-700)">⚠ Độ tin cậy thấp — vui lòng đối chiếu bản gốc.</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="modal__foot"><button class="btn btn-secondary" onclick="App.closeModal('m-ocr')">Đóng</button>
+    <button class="btn btn-success" onclick="App.closeModal('m-ocr');App.toast('Đã xác nhận và lưu dữ liệu chứng từ','success')">Xác nhận &amp; lưu</button></div>
+</div></div>
+
+<script src="assets/app.js"></script>
+<script>App.layout('collect');</script>
+</body>
+</html>

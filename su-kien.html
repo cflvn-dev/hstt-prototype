@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sự kiện vận hành | Vĩnh Tân 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/design-system.css">
+<link rel="stylesheet" href="assets/themes.css">
+<link rel="stylesheet" href="assets/app.css">
+<script src="assets/theme-init.js"></script>
+</head>
+<body>
+<div class="app"><div class="main">
+<div class="content">
+
+  <div class="page-head">
+    <div class="page-head__titles">
+      <div class="breadcrumb">Quy trình lập hồ sơ <span>›</span> Sự kiện vận hành</div>
+      <h1>Tổng hợp &amp; công bố sự kiện</h1>
+      <div class="subtitle">Vĩnh Tân 2 · Tháng 05/2026 · tổng hợp tự động lúc 06:00 hàng ngày</div>
+    </div>
+    <div class="page-head__actions">
+      <button class="btn btn-secondary" onclick="App.modal('m-evt-add')">＋ Thêm sự kiện</button>
+      <button class="btn btn-secondary" onclick="evtComposeEmail()">✉ Soạn email</button>
+      <button class="btn btn-secondary" onclick="App.modal('m-evt-sched')">Lịch công bố</button>
+      <button class="btn btn-primary" onclick="App.toast('Đã công bố 2 sự kiện đã chọn lên Web TTĐ','success')">Công bố sự kiện đã chọn</button>
+    </div>
+  </div>
+
+  <div class="alert alert--warning" style="margin-bottom:var(--sp-4)"><span class="ico">⚠</span>
+    <div><b>2 sự kiện chờ duyệt công bố</b> và <b>1 sự kiện bị NSMO từ chối xác nhận</b>. Cần chuyên viên xử lý trước khi chốt kỳ.</div></div>
+
+  <!-- Tổng quan trạng thái -->
+  <div class="grid grid-4" style="margin-bottom:var(--sp-4)">
+    <div class="stat"><div class="stat__label">Tổng sự kiện kỳ này</div><div class="stat__value">14</div></div>
+    <div class="stat"><div class="stat__label">Đã NSMO xác nhận</div><div class="stat__value" style="color:var(--c-success-600)">11</div></div>
+    <div class="stat"><div class="stat__label">Chờ duyệt / công bố</div><div class="stat__value" style="color:var(--c-warning-600)">2</div></div>
+    <div class="stat"><div class="stat__label">Bị từ chối</div><div class="stat__value" style="color:var(--c-danger-600)">1</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card__head">
+      <div class="tabs" style="border:none">
+        <div class="tab is-active" onclick="App.tab(this,'tp-all')">Tất cả <span class="count">14</span></div>
+        <div class="tab" onclick="App.tab(this,'tp-wait')">Chờ xử lý <span class="count">3</span></div>
+        <div class="tab" onclick="App.tab(this,'tp-month')">Sự kiện tháng</div>
+      </div>
+      <input class="input" placeholder="Tìm sự kiện..." style="max-width:220px">
+    </div>
+    <div class="card__body card__body--flush">
+      <div id="tp-all" class="tabpanel is-active"><div class="table-wrap">
+        <table class="tbl">
+          <thead><tr><th style="width:34px"><input type="checkbox"></th><th>Loại sự kiện</th><th>Tổ máy</th><th>Thời điểm bắt đầu</th><th>Thời điểm kết thúc</th><th>Chu kỳ vận hành</th><th>Nguồn căn cứ</th><th>Công bố TTĐ</th><th>Xác nhận NSMO</th><th></th></tr></thead>
+          <tbody>
+            <tr><td><input type="checkbox" checked></td><td><b>Khởi động tổ máy</b></td><td><span class="tag">S1</span></td><td class="nowrap">03/05 05:20</td><td class="nowrap">03/05 09:50</td><td class="nowrap">11-20 (10 chu kỳ)</td><td><span class="tag" title="Nguồn số liệu chốt căn cứ">DCS</span></td><td><span class="badge badge--neutral">Chưa công bố</span></td><td><span class="badge badge--neutral">—</span></td><td><button class="btn btn-ghost btn-sm" onclick="App.modal('m-evt')">Chi tiết</button></td></tr>
+            <tr><td><input type="checkbox" checked></td><td><b>Vận hành chu trình đơn</b></td><td><span class="tag">S2</span></td><td class="nowrap">11/05 08:00</td><td class="nowrap">11/05 20:00</td><td class="nowrap">17-41 (25 chu kỳ)</td><td><span class="tag" title="Nguồn số liệu chốt căn cứ">DCS</span></td><td><span class="badge badge--neutral">Chưa công bố</span></td><td><span class="badge badge--neutral">—</span></td><td><button class="btn btn-ghost btn-sm" onclick="App.modal('m-evt')">Chi tiết</button></td></tr>
+            <tr><td><input type="checkbox"></td><td><b>Tổ máy sự cố kéo dài &gt; 72h</b></td><td><span class="tag">S1</span></td><td class="nowrap">14/05 21:10</td><td class="nowrap">14/05 23:40</td><td class="nowrap">43-48 (6 chu kỳ)</td><td><span class="tag" title="Nguồn số liệu chốt căn cứ">NKVH</span></td><td><span class="badge badge--success">Đã công bố</span></td><td><span class="badge badge--danger">Từ chối</span></td><td><button class="btn btn-danger btn-sm" onclick="App.modal('m-reject')">Xử lý</button></td></tr>
+            <tr><td><input type="checkbox"></td><td><b>Ngừng máy theo kế hoạch</b></td><td><span class="tag">S2</span></td><td class="nowrap">18/05 00:00</td><td class="nowrap">18/05 06:00</td><td class="nowrap">1-13 (13 chu kỳ)</td><td><span class="tag" title="Nguồn số liệu chốt căn cứ">DCS</span></td><td><span class="badge badge--success">Đã công bố</span></td><td><span class="badge badge--success">Đã xác nhận</span></td><td><button class="btn btn-ghost btn-sm" onclick="App.modal('m-evt')">Chi tiết</button></td></tr>
+            <tr><td><input type="checkbox"></td><td><b>Khởi động được thanh toán chi phí</b></td><td><span class="tag">S1</span></td><td class="nowrap">20/05 04:45</td><td class="nowrap">20/05 07:15</td><td class="nowrap">10-15 (6 chu kỳ)</td><td><span class="tag" title="Nguồn số liệu chốt căn cứ">DIM</span></td><td><span class="badge badge--success">Đã công bố</span></td><td><span class="badge badge--success">Đã xác nhận</span></td><td><button class="btn btn-ghost btn-sm" onclick="App.modal('m-evt')">Chi tiết</button></td></tr>
+            <tr><td><input type="checkbox"></td><td><b>Vận hành thời gian thiếu nhiên liệu</b></td><td><span class="tag">S2</span></td><td class="nowrap">22/05 12:00</td><td class="nowrap">22/05 18:00</td><td class="nowrap">25-37 (13 chu kỳ)</td><td><span class="tag" title="Nguồn số liệu chốt căn cứ">DCS</span></td><td><span class="badge badge--success">Đã công bố</span></td><td><span class="badge badge--success">Đã xác nhận</span></td><td><button class="btn btn-ghost btn-sm" onclick="App.modal('m-evt')">Chi tiết</button></td></tr>
+            <tr><td><input type="checkbox"></td><td><b>Thử nghiệm AGC</b></td><td><span class="tag">S1</span></td><td class="nowrap">27/05 14:30</td><td class="nowrap">27/05 16:00</td><td class="nowrap">30-33 (4 chu kỳ)</td><td><span class="tag" title="Nguồn số liệu chốt căn cứ">DCS</span></td><td><span class="badge badge--success">Đã công bố</span></td><td><span class="badge badge--success">Đã xác nhận</span></td><td><button class="btn btn-ghost btn-sm" onclick="App.modal('m-evt')">Chi tiết</button></td></tr>
+          </tbody>
+        </table>
+      </div></div>
+      <div id="tp-wait" class="tabpanel"><div class="table-wrap">
+        <table class="tbl">
+          <thead><tr><th>Loại sự kiện</th><th>Tổ máy</th><th>Thời điểm bắt đầu</th><th>Thời điểm kết thúc</th><th>Chu kỳ vận hành</th><th>Tình trạng</th><th></th></tr></thead>
+          <tbody>
+            <tr><td><b>Khởi động tổ máy</b></td><td><span class="tag">S1</span></td><td>03/05 05:20</td><td>03/05 09:50</td><td class="nowrap">11-20 (10 chu kỳ)</td><td><span class="badge badge--warning">Chờ duyệt công bố</span></td><td><button class="btn btn-primary btn-sm" onclick="App.toast('Đã công bố lên Web TTĐ','success')">Công bố</button></td></tr>
+            <tr><td><b>Vận hành chu trình đơn</b></td><td><span class="tag">S2</span></td><td>11/05 08:00</td><td>11/05 20:00</td><td class="nowrap">17-41 (25 chu kỳ)</td><td><span class="badge badge--warning">Chờ duyệt công bố</span></td><td><button class="btn btn-primary btn-sm" onclick="App.toast('Đã công bố lên Web TTĐ','success')">Công bố</button></td></tr>
+            <tr><td><b>Tổ máy sự cố kéo dài &gt; 72h</b></td><td><span class="tag">S1</span></td><td>14/05 21:10</td><td>14/05 23:40</td><td class="nowrap">43-48 (6 chu kỳ)</td><td><span class="badge badge--danger">NSMO từ chối</span></td><td><button class="btn btn-danger btn-sm" onclick="App.modal('m-reject')">Xử lý</button></td></tr>
+          </tbody>
+        </table>
+      </div></div>
+      <!-- Tab: Sự kiện tháng (FR-056 / FL-004 bước 7-8) -->
+      <div id="tp-month" class="tabpanel">
+        <div style="padding:var(--sp-4)">
+          <div class="alert alert--warning" style="margin-bottom:var(--sp-4)"><span class="ico">⚠</span>
+            <div>Tháng 05/2026 còn <b>3 sự kiện chưa được NSMO xác nhận</b> - chưa thể xuất biểu mẫu chốt bản tổng hợp sự kiện tháng.</div></div>
+          <div class="grid grid-4" style="margin-bottom:var(--sp-4)">
+            <div class="stat"><div class="stat__label">Tháng hồ sơ</div><div class="stat__value">05/2026</div></div>
+            <div class="stat"><div class="stat__label">Sự kiện đã gom (đã NSMO xác nhận)</div><div class="stat__value">11</div></div>
+            <div class="stat"><div class="stat__label">Ký số - Công ty</div><div class="stat__value"><span class="badge badge--neutral">Chưa ký</span></div></div>
+            <div class="stat"><div class="stat__label">Ký số - NSMO</div><div class="stat__value"><span class="badge badge--neutral">Chưa ký</span></div></div>
+          </div>
+          <div class="hint" style="margin-bottom:var(--sp-3)">Bản tổng hợp mọi sự kiện đã công bố và được NSMO xác nhận trong tháng; quan hệ 1-1 với hồ sơ thanh toán tháng. Việc ký số thực hiện trên Web TTĐ - hệ thống theo dõi trạng thái.</div>
+          <div class="table-wrap" style="margin-bottom:var(--sp-4)">
+            <table class="tbl tbl--compact">
+              <thead><tr><th>#</th><th>Loại sự kiện</th><th>Tổ máy</th><th>Thời điểm bắt đầu</th><th>Thời điểm kết thúc</th><th>Chu kỳ vận hành</th><th>Nguồn căn cứ</th><th>Ghi chú</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td><b>Ngừng máy theo kế hoạch</b></td><td><span class="tag">S2</span></td><td class="nowrap">18/05 00:00</td><td class="nowrap">18/05 06:00</td><td class="nowrap">1-13 (13 chu kỳ)</td><td><span class="tag">DCS</span></td><td>Ngừng dự phòng theo lệnh NSMO</td></tr>
+                <tr><td>2</td><td><b>Khởi động được thanh toán chi phí</b></td><td><span class="tag">S1</span></td><td class="nowrap">20/05 04:45</td><td class="nowrap">20/05 07:15</td><td class="nowrap">10-15 (6 chu kỳ)</td><td><span class="tag">DIM</span></td><td>Ngừng do thừa nguồn, chào giá 1 đồng</td></tr>
+                <tr><td>3</td><td><b>Vận hành thời gian thiếu nhiên liệu</b></td><td><span class="tag">S2</span></td><td class="nowrap">22/05 12:00</td><td class="nowrap">22/05 18:00</td><td class="nowrap">25-37 (13 chu kỳ)</td><td><span class="tag">DCS</span></td><td>NSMO công bố, đã đối chiếu</td></tr>
+                <tr><td>4</td><td><b>Thử nghiệm AGC</b></td><td><span class="tag">S1</span></td><td class="nowrap">27/05 14:30</td><td class="nowrap">27/05 16:00</td><td class="nowrap">30-33 (4 chu kỳ)</td><td><span class="tag">DCS</span></td><td>Theo phiếu công tác PCT-0527</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="field" style="margin-bottom:var(--sp-4)"><label class="label">Ghi chú bản tổng hợp tháng</label>
+            <textarea class="textarea" placeholder="Ghi chú chung cho bảng tổng hợp sự kiện tháng (thay cập nhật tay vào biểu mẫu)..."></textarea></div>
+          <div class="form-actions">
+            <button class="btn btn-secondary" onclick="App.toast('Đã lưu ghi chú bản tổng hợp tháng','success')">Lưu ghi chú</button>
+            <button class="btn btn-primary" onclick="App.toast('Tháng còn sự kiện chưa được NSMO xác nhận - chưa thể xuất biểu mẫu','danger')">Xuất biểu mẫu</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</div></div>
+
+<!-- Modal: chi tiết sự kiện -->
+<div class="modal-overlay" id="m-evt"><div class="modal modal--lg">
+  <div class="modal__head"><h3>Chi tiết sự kiện — Khởi động tổ máy S1</h3><button class="modal__close" onclick="App.closeModal('m-evt')">×</button></div>
+  <div class="modal__body">
+    <div class="tabs" style="border:none;margin-bottom:var(--sp-4)">
+      <div class="tab is-active" onclick="App.tab(this,'evt-tab-info')">Thông tin</div>
+      <div class="tab" onclick="App.tab(this,'evt-tab-evidence')">Số liệu căn cứ</div>
+    </div>
+    <div id="evt-tab-info" class="tabpanel is-active">
+      <dl class="kv">
+        <dt>Loại sự kiện</dt><dd>Khởi động tổ máy</dd>
+        <dt>Tổ máy</dt><dd>S1 (622 MW)</dd>
+        <dt>Thời điểm bắt đầu</dt><dd>03/05/2026 05:20</dd>
+        <dt>Thời điểm kết thúc</dt><dd>03/05/2026 09:50</dd>
+        <dt>Chu kỳ vận hành</dt><dd>11-20 (10 chu kỳ)</dd>
+        <dt>Nguồn ghi nhận</dt><dd>DCS (ảnh chụp) → OCR · NKVH</dd>
+        <dt>Nguồn số liệu chốt căn cứ</dt><dd><span class="tag">DCS</span> <span class="muted" style="font-size:var(--fs-sm)">(ưu tiên DIM &lt; NKVH &lt; DCS)</span></dd>
+        <dt>Trạng thái</dt><dd><span class="badge badge--warning">Chờ duyệt công bố</span></dd>
+      </dl>
+      <div class="divider"></div>
+      <div class="field"><label class="label">Ghi chú công bố</label><textarea class="textarea" placeholder="Ghi chú gửi kèm khi công bố lên Web TTĐ..."></textarea></div>
+    </div>
+    <div id="evt-tab-evidence" class="tabpanel">
+      <div class="muted" style="font-size:var(--fs-sm);margin-bottom:var(--sp-3)">Số liệu vận hành của tổ máy S1 theo khoảng chu kỳ 11-20 (03/05) làm căn cứ cho sự kiện, hiển thị theo 3 nguồn (ưu tiên DIM &lt; NKVH &lt; DCS).</div>
+      <div class="tabs" style="border:none;margin-bottom:var(--sp-3)">
+        <div class="tab is-active" onclick="App.tab(this,'evd-dim')">DIM</div>
+        <div class="tab" onclick="App.tab(this,'evd-nkvh')">Nhật ký vận hành</div>
+        <div class="tab" onclick="App.tab(this,'evd-dcs')">DCS</div>
+      </div>
+      <div id="evd-dim" class="tabpanel is-active">
+        <div class="table-wrap"><table class="tbl tbl--compact">
+          <thead><tr><th>Chỉ số / thông tin</th><th>Giá trị</th><th>Chu kỳ / thời điểm</th></tr></thead>
+          <tbody>
+            <tr><td>Điện năng đầu cực</td><td class="num">Bắt đầu tăng</td><td>chu kỳ 12</td></tr>
+            <tr><td>Công suất trung bình chu kỳ</td><td class="num">0 → 205 MW</td><td>chu kỳ 11-13</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+      <div id="evd-nkvh" class="tabpanel">
+        <div class="empty">
+          <div class="empty__icon">∅</div>
+          <div class="empty__title">Chưa có số liệu Nhật ký vận hành</div>
+          <div class="empty__desc">Nguồn Nhật ký vận hành chưa đồng bộ số liệu cho khoảng chu kỳ này của sự kiện.</div>
+        </div>
+      </div>
+      <div id="evd-dcs" class="tabpanel">
+        <div class="row">
+          <div class="col"><div class="imgbox" style="height:200px">Ảnh chụp màn hình DCS (sample)<br>tổ máy S1 · 03/05 05:20</div></div>
+          <div class="col">
+            <div class="muted" style="font-size:var(--fs-sm);margin-bottom:var(--sp-3)">Số liệu đọc từ ảnh DCS qua OCR:</div>
+            <div class="table-wrap"><table class="tbl tbl--compact">
+              <thead><tr><th>Chỉ số / thông tin</th><th>Giá trị</th><th>Chu kỳ / thời điểm</th></tr></thead>
+              <tbody>
+                <tr><td>Công suất phát P</td><td class="num">0 → 210 MW</td><td>chu kỳ 11</td></tr>
+                <tr><td>Trạng thái tổ máy</td><td>Khởi động</td><td class="nowrap">03/05 05:20</td></tr>
+              </tbody>
+            </table></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal__foot">
+    <button class="btn btn-secondary" onclick="App.closeModal('m-evt')">Đóng</button>
+    <button class="btn btn-secondary" onclick="App.closeModal('m-evt');App.toast('Đã lên lịch công bố theo cấu hình')">Lên lịch công bố</button>
+    <button class="btn btn-primary" onclick="App.closeModal('m-evt');App.toast('Đã công bố lên Web TTĐ','success')">Công bố ngay</button>
+  </div>
+</div></div>
+
+<!-- Modal: xử lý từ chối -->
+<div class="modal-overlay" id="m-reject"><div class="modal">
+  <div class="modal__head"><h3>Sự kiện bị NSMO từ chối xác nhận</h3><button class="modal__close" onclick="App.closeModal('m-reject')">×</button></div>
+  <div class="modal__body">
+    <div class="alert alert--danger" style="margin-bottom:var(--sp-4)"><span class="ico">✕</span>
+      <div><b>Lý do từ chối (từ NSMO):</b> Thời điểm bắt đầu sự cố chưa khớp với bản ghi điều độ. Đề nghị đối chiếu lại.</div></div>
+    <dl class="kv">
+      <dt>Đầu mối liên hệ</dt><dd>Phòng Điều độ NSMO · 024.xxxx.xxxx</dd>
+      <dt>Email</dt><dd>dieudo@nsmo.vn</dd>
+    </dl>
+    <div class="hint">Việc làm rõ thực hiện qua kênh liên lạc bên ngoài hệ thống; sau khi thống nhất, cập nhật lại dữ liệu và công bố lại.</div>
+  </div>
+  <div class="modal__foot"><button class="btn btn-secondary" onclick="App.closeModal('m-reject')">Đóng</button>
+    <button class="btn btn-primary" onclick="App.closeModal('m-reject');App.toast('Đã đánh dấu đang liên hệ làm rõ')">Đánh dấu đang xử lý</button></div>
+</div></div>
+
+<!-- Modal: lịch công bố -->
+<div class="modal-overlay" id="m-evt-sched"><div class="modal">
+  <div class="modal__head"><h3>Lịch công bố theo loại sự kiện</h3><button class="modal__close" onclick="App.closeModal('m-evt-sched')">×</button></div>
+  <div class="modal__body">
+    <div class="table-wrap"><table class="tbl tbl--compact">
+      <thead><tr><th>Loại sự kiện</th><th>Thời điểm công bố</th><th>Tự động</th></tr></thead>
+      <tbody>
+        <tr><td>Khởi động / Ngừng máy</td><td>Đầu ngày vận hành (06:30)</td><td><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></td></tr>
+        <tr><td>Sự cố kéo dài &gt; 72h</td><td>Ngay khi tổng hợp</td><td><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></td></tr>
+        <tr><td>Thử nghiệm AGC / khác</td><td>Cuối ngày (20:00)</td><td><label class="switch"><input type="checkbox"><span class="slider"></span></label></td></tr>
+      </tbody>
+    </table></div>
+  </div>
+  <div class="modal__foot"><button class="btn btn-secondary" onclick="App.closeModal('m-evt-sched')">Hủy</button>
+    <button class="btn btn-primary" onclick="App.closeModal('m-evt-sched');App.toast('Đã lưu lịch công bố','success')">Lưu</button></div>
+</div></div>
+
+<!-- Modal: thêm sự kiện thủ công (FR-051 / FL-016) -->
+<div class="modal-overlay" id="m-evt-add"><div class="modal">
+  <div class="modal__head"><h3>Thêm sự kiện thủ công</h3><button class="modal__close" onclick="App.closeModal('m-evt-add')">×</button></div>
+  <div class="modal__body">
+    <div class="field"><label class="label">Loại sự kiện</label>
+      <select class="select"><option>Khởi động tổ máy</option><option>Ngừng máy</option><option>Vận hành chu trình đơn</option><option>Thử nghiệm</option><option>Tổ máy sự cố kéo dài &gt; 72h</option></select></div>
+    <div class="field"><label class="label">Tổ máy</label>
+      <select class="select"><option>S1</option><option>S2</option></select></div>
+    <div class="grid grid-2">
+      <div class="field"><label class="label">Thời điểm bắt đầu</label><input type="datetime-local" class="input"></div>
+      <div class="field"><label class="label">Thời điểm kết thúc</label><input type="datetime-local" class="input"></div>
+    </div>
+    <div class="hint" style="margin-bottom:var(--sp-3)">Căn cứ thời điểm theo loại sự kiện (BR-016) - vd Khởi động tổ máy: bắt đầu = đóng MC theo DIM (lệnh con thứ 1), kết thúc = đạt lệnh điều độ (lệnh con thứ 4). Nguồn chốt NKVH/DCS phải đính kèm tài liệu.</div>
+    <div class="field"><label class="label">Chu kỳ vận hành</label><input class="input" placeholder="vd 11-20 (10 chu kỳ)"><div class="hint">Định dạng xx-yy (zz chu kỳ); mặc định 48 chu kỳ/ngày.</div></div>
+    <div class="field"><label class="label">Nguồn số liệu chốt căn cứ</label>
+      <select class="select"><option>DCS</option><option>Nhật ký vận hành</option><option>DIM</option></select>
+      <div class="hint">Nguồn số liệu vận hành làm căn cứ chốt sự kiện (ưu tiên DIM &lt; NKVH &lt; DCS).</div></div>
+    <div class="field" style="margin-bottom:0"><label class="label">Ghi chú / nguồn căn cứ</label><textarea class="textarea" placeholder="Căn cứ khai báo (vd theo NKVH, biên bản...)"></textarea></div>
+  </div>
+  <div class="modal__foot"><button class="btn btn-secondary" onclick="App.closeModal('m-evt-add')">Hủy</button>
+    <button class="btn btn-primary" onclick="App.closeModal('m-evt-add');App.toast('Đã thêm sự kiện (chờ duyệt công bố)','success')">Lưu sự kiện</button></div>
+</div></div>
+
+<!-- Modal: xác nhận soạn email (FR-052 / FL-017 bước 2) -->
+<div class="modal-overlay" id="m-email-confirm"><div class="modal">
+  <div class="modal__head"><h3>Soạn email từ sự kiện đã chọn</h3><button class="modal__close" onclick="App.closeModal('m-email-confirm')">×</button></div>
+  <div class="modal__body">
+    <p id="email-confirm-msg" style="margin:0">Bạn có muốn soạn email với <b>0</b> sự kiện đã chọn?</p>
+  </div>
+  <div class="modal__foot"><button class="btn btn-secondary" onclick="App.closeModal('m-email-confirm')">Hủy</button>
+    <button class="btn btn-primary" onclick="evtOpenEmailForm()">Đồng ý</button></div>
+</div></div>
+
+<!-- Modal: form email (FR-052 / FL-017 bước 3-4) -->
+<div class="modal-overlay" id="m-email-form"><div class="modal modal--lg">
+  <div class="modal__head"><h3>Soạn email</h3><button class="modal__close" onclick="App.closeModal('m-email-form')">×</button></div>
+  <div class="modal__body">
+    <div class="field"><label class="label">Người nhận</label><input class="input" value="dieudo@nsmo.vn"></div>
+    <div class="field"><label class="label">Tiêu đề</label><input class="input" id="email-subject" value="Thông báo sự kiện vận hành - Vĩnh Tân 2"></div>
+    <div class="field" style="margin-bottom:0"><label class="label">Nội dung</label>
+      <textarea class="textarea" id="email-body" style="min-height:180px"></textarea>
+      <div class="hint">Nội dung được dựng sẵn từ các sự kiện đã chọn; có thể chỉnh trước khi gửi.</div></div>
+  </div>
+  <div class="modal__foot"><button class="btn btn-secondary" onclick="App.closeModal('m-email-form')">Hủy</button>
+    <button class="btn btn-primary" onclick="App.closeModal('m-email-form');App.toast('Đã gửi email','success')">Gửi</button></div>
+</div></div>
+
+<script src="assets/app.js"></script>
+<script>
+  App.layout('event');
+  // ---- Soạn email từ các sự kiện đã chọn (FR-052 / FL-017) ----
+  function evtSelectedRows() {
+    var boxes = document.querySelectorAll('#tp-all tbody input[type="checkbox"]');
+    return Array.prototype.filter.call(boxes, function (b) { return b.checked; })
+      .map(function (b) {
+        var tr = b.closest('tr'), tds = tr.querySelectorAll('td');
+        return { loai: tds[1].innerText.trim(), to: tds[2].innerText.trim(), batdau: tds[3].innerText.trim() };
+      });
+  }
+  function evtComposeEmail() {
+    var rows = evtSelectedRows();
+    if (!rows.length) { App.toast('Vui lòng chọn ít nhất một sự kiện', 'danger'); return; }
+    document.getElementById('email-confirm-msg').innerHTML =
+      'Bạn có muốn soạn email với <b>' + rows.length + '</b> sự kiện đã chọn?';
+    App.modal('m-email-confirm');
+  }
+  function evtOpenEmailForm() {
+    var rows = evtSelectedRows();
+    var lines = rows.map(function (r, i) {
+      return (i + 1) + '. ' + r.loai + ' — tổ máy ' + r.to + ' — bắt đầu ' + r.batdau;
+    }).join('\n');
+    document.getElementById('email-body').value =
+      'Kính gửi Quý đơn vị,\n\nNhà máy Vĩnh Tân 2 thông báo các sự kiện vận hành sau:\n\n' +
+      lines + '\n\nTrân trọng.';
+    App.closeModal('m-email-confirm');
+    App.modal('m-email-form');
+  }
+</script>
+</body>
+</html>

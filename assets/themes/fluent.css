@@ -1,0 +1,174 @@
+/* ==========================================================================
+   DS-003 - FLUENT LIQUID ENTERPRISE | Presentation Theme (DEC-006)
+   --------------------------------------------------------------------------
+   Cảm hứng Microsoft Fluent 2: gần gũi Office, thân thiện, depth rõ.
+   Đặc trưng trình bày:
+   - Shell: SIDEBAR SÁNG ACRYLIC (mica) với pill indicator xanh, icon vai trò
+     lớn; topbar acrylic; action của trang gom thành COMMAND BAR kiểu Office.
+   - Surface: layered/elevated - card nổi bằng shadow mềm, ít viền.
+   - KPI: icon tile gradient BÊN TRÁI, chữ xếp cột bên phải; summary card
+     acrylic nhẹ (vùng được phép dùng glass theo DEC-005).
+   - Form: LABEL BÊN TRÁI (kiểu dialog Office) trong modal/panel; focus
+     underline xanh. Table/form luôn nền đặc - không glass.
+   - Motion: fade + slide + elevation mềm 150-250ms.
+   ========================================================================== */
+
+/* ---------- 1. TOKENS ---------- */
+[data-theme="fluent"] {
+  --font-sans: "Segoe UI", "Inter", system-ui, sans-serif;
+  --c-primary-50: #eff6fc; --c-primary-100: #deecf9; --c-primary-200: #c7e0f4; --c-primary-300: #a9d3f2;
+  --c-primary-500: #2b88d8; --c-primary-600: #0f6cbd; --c-primary-700: #115ea3; --c-primary-800: #0c3b5e;
+  --c-accent-500: #8764b8; --c-accent-600: #744da9;
+  --c-bg: #f0f0f0; --c-surface: #ffffff; --c-surface-2: #faf9f8;
+  --c-border: #e1dfdd; --c-border-strong: #c8c6c4;
+  --c-ink-900: #201f1e; --c-ink-700: #323130; --c-ink-500: #605e5c; --c-ink-400: #a19f9d;
+  --c-neutral-50: #f3f2f1; --c-neutral-600: #605e5c;
+  --r-sm: 4px; --r-md: 6px; --r-lg: 10px;
+  --sh-xs: 0 .3px .9px rgba(0,0,0,.07);
+  --sh-sm: 0 1.6px 3.6px rgba(0,0,0,.11), 0 .3px .9px rgba(0,0,0,.07);
+  --sh-md: 0 3.2px 7.2px rgba(0,0,0,.13), 0 .6px 1.8px rgba(0,0,0,.09);
+  --sh-lg: 0 12.8px 28.8px rgba(0,0,0,.18);
+  --glass-bg: rgba(255,255,255,.74); --glass-blur: 22px;
+  --accent-gradient: linear-gradient(135deg, #0f6cbd, #8764b8);
+  /* Shell: sidebar sáng acrylic (mica), chữ tối, pill indicator */
+  --sidebar-bg: rgba(243,242,241,.78); --sidebar-blur: 24px;
+  --sidebar-ink: #323130; --sidebar-ink-strong: #201f1e;
+  --sidebar-muted: #605e5c; --sidebar-group: #605e5c;
+  --sidebar-hover-bg: rgba(0,0,0,.05); --sidebar-border: rgba(0,0,0,.08);
+  --nav-active-bg: rgba(255,255,255,.95); --nav-active-ink: #201f1e;
+  --motion-fast: .15s; --motion-base: .22s;
+}
+[data-theme="fluent"][data-mode="dark"] {
+  --c-bg: #1b1a19; --c-surface: #2b2b2b; --c-surface-2: #333333;
+  --c-border: #3d3d3d; --c-border-strong: #4f4f4f;
+  --c-ink-900: #ffffff; --c-ink-700: #d6d6d6; --c-ink-500: #a6a6a6; --c-ink-400: #7a7a7a;
+  --c-white: #2b2b2b;
+  --c-primary-50: #0e2033; --c-primary-100: #0a1f33; --c-primary-600: #479ef5; --c-primary-700: #62abf5;
+  --c-neutral-50: #333333; --c-neutral-600: #a6a6a6;
+  --glass-bg: rgba(43,43,43,.74);
+  --sidebar-bg: rgba(32,32,32,.8);
+  --sidebar-ink: #d6d6d6; --sidebar-ink-strong: #ffffff;
+  --sidebar-muted: #a6a6a6; --sidebar-group: #a6a6a6;
+  --sidebar-hover-bg: rgba(255,255,255,.06); --sidebar-border: rgba(255,255,255,.09);
+  --nav-active-bg: rgba(255,255,255,.09); --nav-active-ink: #ffffff;
+  --sh-sm: 0 1.6px 3.6px rgba(0,0,0,.4); --sh-md: 0 3.2px 7.2px rgba(0,0,0,.5); --sh-lg: 0 12.8px 28.8px rgba(0,0,0,.6);
+}
+
+/* ---------- 2. LAYOUT RECIPE: nav mềm acrylic + command bar ---------- */
+[data-theme="fluent"] .sidebar { border-right: 1px solid var(--sidebar-border); }
+[data-theme="fluent"] .nav-link { position: relative; border-radius: var(--r-sm); }
+[data-theme="fluent"] .nav-link.is-active { box-shadow: var(--sh-xs); font-weight: var(--fw-semibold); }
+[data-theme="fluent"] .nav-link.is-active::before {
+  content: ""; position: absolute; left: 0; top: 25%; bottom: 25%; width: 3px;
+  border-radius: var(--r-full); background: var(--c-primary-600);
+}
+[data-theme="fluent"] .nav-link .ico { width: 20px; height: 20px; color: var(--c-primary-600); }
+[data-theme="fluent"] .nav-link.is-active .ico { color: var(--c-primary-600); }
+[data-theme="fluent"][data-mode="dark"] .nav-link .ico { color: var(--c-primary-500); }
+
+/* Command bar: hàng action của trang gom vào khay acrylic kiểu Office */
+[data-theme="fluent"] .page-head__actions {
+  background: var(--glass-bg); backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--c-border); border-radius: var(--r-md);
+  padding: 4px; box-shadow: var(--sh-xs); gap: 2px;
+}
+[data-theme="fluent"] .page-head__actions .btn-secondary,
+[data-theme="fluent"] .page-head__actions .btn-ghost {
+  background: transparent; border-color: transparent;
+}
+[data-theme="fluent"] .page-head__actions .btn-secondary:hover,
+[data-theme="fluent"] .page-head__actions .btn-ghost:hover { background: var(--c-neutral-50); }
+
+/* ---------- 3. COMPONENT RECIPE: layered, bo tròn thân thiện ---------- */
+[data-theme="fluent"] .card { border-color: transparent; box-shadow: var(--sh-md); }
+[data-theme="fluent"] .btn { border-radius: var(--r-sm); font-weight: var(--fw-semibold); }
+[data-theme="fluent"] .btn-primary { box-shadow: var(--sh-xs); }
+[data-theme="fluent"] .btn-secondary { box-shadow: var(--sh-xs); }
+
+/* KPI: icon tile gradient bên trái, chữ xếp cột phải; card acrylic nhẹ */
+[data-theme="fluent"] .stat {
+  grid-template-columns: auto 1fr; column-gap: var(--sp-4);
+  grid-template-areas: "icon label" "icon value" "icon delta" "spark spark";
+  background: var(--glass-bg); backdrop-filter: blur(var(--glass-blur));
+  border-color: transparent; box-shadow: var(--sh-sm);
+}
+[data-theme="fluent"] .stat__icon {
+  justify-self: start; align-self: center; width: 46px; height: 46px;
+  background: var(--accent-gradient); color: #fff; border-radius: var(--r-lg);
+  box-shadow: var(--sh-sm); font-size: 18px;
+}
+[data-theme="fluent"] .stat__value { font-size: 24px; margin: 2px 0; }
+
+/* Tabs: indicator pill tròn kiểu Fluent */
+[data-theme="fluent"] .tab { border-bottom: none; position: relative; border-radius: var(--r-sm) var(--r-sm) 0 0; }
+[data-theme="fluent"] .tab:hover { background: var(--c-neutral-50); }
+[data-theme="fluent"] .tab.is-active::after {
+  content: ""; position: absolute; left: 12px; right: 12px; bottom: 0; height: 3px;
+  border-radius: var(--r-full); background: var(--c-primary-600);
+}
+[data-theme="fluent"] .pills { border-radius: var(--r-full); }
+[data-theme="fluent"] .pill { border-radius: var(--r-full); }
+[data-theme="fluent"] .pill.is-active { box-shadow: var(--sh-sm); }
+
+/* Form: label BÊN TRÁI trong modal/drawer/panel trực tiếp (kiểu dialog Office).
+   Field nằm trong .grid (bộ lọc nhiều cột) vẫn label-trên để không vỡ cột hẹp. */
+[data-theme="fluent"] .modal__body > .field,
+[data-theme="fluent"] .drawer__body > .field,
+[data-theme="fluent"] .form-section > .field,
+[data-theme="fluent"] .card__body > .field {
+  display: grid; grid-template-columns: var(--field-label-w) 1fr;
+  align-items: center; column-gap: var(--sp-3);
+}
+[data-theme="fluent"] .modal__body > .field > .label,
+[data-theme="fluent"] .drawer__body > .field > .label,
+[data-theme="fluent"] .form-section > .field > .label,
+[data-theme="fluent"] .card__body > .field > .label { margin-bottom: 0; }
+[data-theme="fluent"] .modal__body > .field > .hint,
+[data-theme="fluent"] .drawer__body > .field > .hint,
+[data-theme="fluent"] .form-section > .field > .hint,
+[data-theme="fluent"] .card__body > .field > .hint { grid-column: 2; }
+/* Field chứa textarea: label căn đầu dòng (không nổi giữa vùng cao) */
+[data-theme="fluent"] .field:has(> .textarea) { align-items: start; }
+[data-theme="fluent"] .field:has(> .textarea) > .label { margin-top: 8px; }
+[data-theme="fluent"] .input,
+[data-theme="fluent"] .select,
+[data-theme="fluent"] .textarea { background: var(--c-surface); }
+[data-theme="fluent"] .input:focus,
+[data-theme="fluent"] .select:focus,
+[data-theme="fluent"] .textarea:focus {
+  border-color: var(--c-border-strong); border-bottom: 2px solid var(--c-primary-600); box-shadow: none;
+}
+[data-theme="fluent"] .form-section {
+  background: var(--c-surface); border: 1px solid var(--c-border); border-radius: var(--r-lg);
+  padding: var(--sp-5); box-shadow: var(--sh-xs);
+}
+
+/* Modal/Drawer: acrylic + depth (vùng glass được phép) */
+[data-theme="fluent"] .modal { border-color: transparent; animation-name: fluent-pop; }
+@keyframes fluent-pop { from { opacity: 0; transform: scale(.96) translateY(10px); } to { opacity: 1; transform: none; } }
+[data-theme="fluent"] .drawer { border-left-color: transparent; }
+[data-theme="fluent"] .modal-overlay, [data-theme="fluent"] .drawer-overlay { background: rgba(0,0,0,.35); }
+
+/* ---------- 4. DATA DISPLAY: table nền đặc, hover xám ấm, header rõ ---------- */
+[data-theme="fluent"] .tbl thead th {
+  background: var(--c-surface); color: var(--c-ink-900); font-weight: var(--fw-semibold);
+}
+[data-theme="fluent"] .tbl tbody tr:hover { background: var(--c-neutral-50); }
+[data-theme="fluent"] .filterbar { box-shadow: var(--sh-xs); border-color: transparent; }
+
+/* ---------- 5. CHART RECIPE: cột gradient mềm, đầu tròn ---------- */
+[data-theme="fluent"] .barchart .bar {
+  border-radius: var(--r-sm) var(--r-sm) 0 0;
+  background: linear-gradient(180deg, var(--c-primary-200), var(--c-primary-100));
+}
+[data-theme="fluent"] .barchart .bar:hover { background: var(--c-primary-300); }
+[data-theme="fluent"] .barchart .bar.hi {
+  background: linear-gradient(180deg, var(--c-primary-500), var(--c-primary-600));
+}
+[data-theme="fluent"] .donut__center b { font-weight: var(--fw-semibold); }
+
+/* ---------- 6. INTERACTION / MOTION: fade + slide + elevation mềm ---------- */
+[data-theme="fluent"] .card { transition: box-shadow var(--motion-base) var(--ease-standard); }
+[data-theme="fluent"] .stat:hover { box-shadow: var(--sh-md); }
+[data-theme="fluent"] .btn:hover { box-shadow: var(--sh-sm); }
+[data-theme="fluent"] .btn-ghost:hover { box-shadow: none; }

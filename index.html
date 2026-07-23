@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trang chào | Vĩnh Tân 2 — Lập hồ sơ thanh toán</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/design-system.css">
+<link rel="stylesheet" href="assets/themes.css">
+<link rel="stylesheet" href="assets/app.css">
+<script src="assets/theme-init.js"></script>
+</head>
+<body>
+<!-- Trang chào (Welcome) — SC-021 / DEC-021. Route "/". Header + module launcher do
+     App.welcome() render; khu 2 (.welcome__content) là khối dashboard theo SC-001. -->
+<div class="welcome">
+<main class="welcome__body">
+
+  <div class="welcome__hero">
+    <h1>Xin chào, Trần Khánh Duy</h1>
+    <div class="subtitle">Nhà máy phụ trách <b>Nhiệt điện Vĩnh Tân 2</b> · Kỳ <b>Tháng 05/2026</b> · Chọn một mô-đun để bắt đầu</div>
+  </div>
+
+  <!-- Khu 1: module launcher (8 mô-đun, 2 dòng) — App.welcome() đổ từ NAV (trừ Dashboard) -->
+  <div class="welcome__launcher" id="welcomeLauncher"></div>
+
+  <!-- Khu 2: nội dung dashboard (SSOT = SC-001) -->
+  <div class="welcome__content">
+
+  <div class="page-head">
+    <div class="page-head__titles">
+      <h1>Bảng điều khiển — Vĩnh Tân 2</h1>
+      <div class="subtitle">Tổng hợp nhanh tình hình lập hồ sơ thanh toán kỳ <b>Tháng 05/2026</b> · cập nhật 30/06/2026 09:42</div>
+    </div>
+    <div class="page-head__actions">
+      <button class="btn btn-secondary" onclick="App.toast('Đang xuất báo cáo PDF... (prototype)')">Xuất PDF</button>
+      <button class="btn btn-primary" onclick="location.href='ho-so-chi-tiet.html'">Xem hồ sơ kỳ này</button>
+    </div>
+  </div>
+
+  <!-- KPI -->
+  <div class="grid grid-4" style="margin-bottom:var(--sp-4)">
+    <div class="stat">
+      <div class="stat__icon">⚡</div>
+      <div class="stat__label">Sản lượng giao nhận Qmq</div>
+      <div class="stat__value">712.480 <small>MWh</small></div>
+      <div class="stat__delta up">▲ 3,2% so với T04</div>
+      <!-- slot sparkline (DEC-006): 6 kỳ gần nhất, theme quyết định hiển thị -->
+      <div class="stat__spark" aria-hidden="true"><i style="height:56%"></i><i style="height:64%"></i><i style="height:52%"></i><i style="height:74%"></i><i style="height:86%"></i><i class="hi" style="height:100%"></i></div>
+    </div>
+    <div class="stat">
+      <div class="stat__icon">₫</div>
+      <div class="stat__label">Doanh thu (tạm tính)</div>
+      <div class="stat__value">986,4 <small>tỷ đ</small></div>
+      <div class="stat__delta down">▼ 1,1% so với T04</div>
+      <div class="stat__spark" aria-hidden="true"><i style="height:62%"></i><i style="height:70%"></i><i style="height:58%"></i><i style="height:81%"></i><i style="height:100%"></i><i class="hi" style="height:92%"></i></div>
+    </div>
+    <div class="stat">
+      <div class="stat__icon" style="background:var(--c-warning-50);color:var(--c-warning-600)">⏱</div>
+      <div class="stat__label">Tiến độ lập hồ sơ</div>
+      <div class="stat__value">64<small>%</small></div>
+      <div class="stat__delta">Đang ở bước Tính toán</div>
+      <div class="stat__spark" aria-hidden="true"><i style="height:100%"></i><i style="height:100%"></i><i style="height:100%"></i><i style="height:100%"></i><i style="height:100%"></i><i class="hi" style="height:64%"></i></div>
+    </div>
+    <div class="stat">
+      <div class="stat__icon" style="background:var(--c-danger-50);color:var(--c-danger-600)">!</div>
+      <div class="stat__label">Cảnh báo cần xử lý</div>
+      <div class="stat__value">3</div>
+      <div class="stat__delta down">1 lỗi đồng bộ · 2 sự kiện chờ duyệt</div>
+      <div class="stat__spark" aria-hidden="true"><i style="height:35%"></i><i style="height:20%"></i><i style="height:50%"></i><i style="height:20%"></i><i style="height:35%"></i><i class="hi" style="height:65%"></i></div>
+    </div>
+  </div>
+
+  <div class="alert alert--warning" style="margin-bottom:var(--sp-4)">
+    <span class="ico">⚠</span>
+    <div><b>Cần hành động:</b> Nguồn <b>NKVH</b> lỗi kết nối từ 02:05; có <b>2 sự kiện</b> (khởi động tổ máy S1, vận hành chu trình đơn) chờ chuyên viên duyệt công bố lên Web Thị trường điện.
+      <a href="su-kien.html">Đi tới Sự kiện →</a></div>
+  </div>
+
+  <div class="row" style="align-items:stretch">
+    <!-- Tiến độ lập hồ sơ -->
+    <div class="col" style="flex:1.2">
+      <div class="card" style="height:100%">
+        <div class="card__head"><h3>Tiến trình lập hồ sơ kỳ 05/2026</h3>
+          <a href="ho-so-chi-tiet.html" class="btn btn-ghost btn-sm">Chi tiết</a></div>
+        <div class="card__body">
+          <ul class="steps">
+            <li class="done"><span class="dot">✓</span><div>
+              <div class="step__title">1 · Thu thập &amp; chuẩn hóa dữ liệu</div>
+              <div class="step__meta">Hoàn tất • 30/06 02:30 • 4/5 nguồn đồng bộ thành công</div></div></li>
+            <li class="done"><span class="dot">✓</span><div>
+              <div class="step__title">2 · Công bố &amp; xác nhận sự kiện</div>
+              <div class="step__meta">Hoàn tất một phần • 12/14 sự kiện đã xác nhận, 2 chờ duyệt</div></div></li>
+            <li class="active"><span class="dot">3</span><div>
+              <div class="step__title">3 · Tính toán và tổng hợp</div>
+              <div class="step__meta">Đang chạy • 64% • bước: Tổng hợp khoản thanh toán thị trường</div>
+              <div class="progress" style="margin-top:8px;max-width:340px"><div class="progress__bar" style="width:64%"></div></div></div></li>
+            <li><span class="dot">4</span><div>
+              <div class="step__title">4 · Tổng hợp hồ sơ &amp; ký số</div>
+              <div class="step__meta">Chờ • 8 đầu mục tài liệu theo danh mục</div></div></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hiện trạng đồng bộ nguồn -->
+    <div class="col">
+      <div class="card" style="height:100%">
+        <div class="card__head"><h3>Hiện trạng đồng bộ dữ liệu</h3>
+          <a href="thu-thap-du-lieu.html" class="btn btn-ghost btn-sm">Xem</a></div>
+        <div class="card__body stack" style="gap:var(--sp-3)">
+          <div class="source"><div class="source__ico" style="background:#1565c0">DIM</div>
+            <div class="col"><b>Đo đếm DIM</b><div class="muted" style="font-size:var(--fs-sm)">02:15 · 17.280 bản ghi</div></div>
+            <span class="badge badge--success">Hoàn tất</span></div>
+          <div class="source"><div class="source__ico" style="background:#00897b">TTĐ</div>
+            <div class="col"><b>Web Thị trường điện</b><div class="muted" style="font-size:var(--fs-sm)">02:30 · 4.464 bản ghi</div></div>
+            <span class="badge badge--success">Hoàn tất</span></div>
+          <div class="source"><div class="source__ico" style="background:#7048e8">DCS</div>
+            <div class="col"><b>Sự kiện DCS (OCR)</b><div class="muted" style="font-size:var(--fs-sm)">23:40 · 126 ảnh chờ bóc tách</div></div>
+            <span class="badge badge--warning">Chờ OCR</span></div>
+          <div class="source"><div class="source__ico" style="background:#c77700">NKVH</div>
+            <div class="col"><b>Nhật ký vận hành</b><div class="muted" style="font-size:var(--fs-sm)">02:05 · timeout API</div></div>
+            <span class="badge badge--danger">Lỗi</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top:var(--sp-4); align-items:stretch">
+    <!-- Biểu đồ doanh thu -->
+    <div class="col" style="flex:1.4">
+      <div class="card" style="height:100%">
+        <div class="card__head"><h3>Doanh thu thị trường theo tháng</h3>
+          <div class="pills"><span class="pill is-active" onclick="App.pill(this)">6 tháng</span><span class="pill" onclick="App.pill(this)">12 tháng</span></div></div>
+        <div class="card__body">
+          <div class="barchart">
+            <div class="bar" style="height:62%" data-v="695"><span>T12</span></div>
+            <div class="bar" style="height:70%" data-v="785"><span>T01</span></div>
+            <div class="bar" style="height:58%" data-v="650"><span>T02</span></div>
+            <div class="bar" style="height:81%" data-v="908"><span>T03</span></div>
+            <div class="bar" style="height:92%" data-v="1.032"><span>T04</span></div>
+            <div class="bar hi" style="height:88%" data-v="986"><span>T05</span></div>
+          </div>
+          <div class="muted" style="margin-top:28px;font-size:var(--fs-sm)">Đơn vị: tỷ đồng · cột đậm là kỳ đang lập (tạm tính)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cơ cấu khoản thanh toán -->
+    <div class="col">
+      <div class="card" style="height:100%">
+        <div class="card__head"><h3>Cơ cấu khoản thanh toán</h3></div>
+        <div class="card__body">
+          <div class="row" style="align-items:center;gap:var(--sp-5)">
+            <div class="donut-wrap">
+              <div class="donut" style="background:conic-gradient(#1565c0 0 68%, #00897b 68% 84%, #c77700 84% 94%, #7048e8 94% 100%)"></div>
+              <div class="donut__center"><b>986</b><div class="muted" style="font-size:var(--fs-xs)">tỷ đ</div></div>
+            </div>
+            <div class="legend col">
+              <div><i style="background:#1565c0"></i>Doanh thu sản lượng (68%)</div>
+              <div><i style="background:#00897b"></i>Thanh toán công suất CAN (16%)</div>
+              <div><i style="background:#c77700"></i>Chi phí khởi động (10%)</div>
+              <div><i style="background:#7048e8"></i>Dịch vụ phụ trợ &amp; khác (6%)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  </div><!-- /.welcome__content -->
+
+</main>
+</div>
+<script src="assets/app.js"></script>
+<script>App.welcome();</script>
+</body>
+</html>

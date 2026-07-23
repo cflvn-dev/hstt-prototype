@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chi tiết hồ sơ 05/2026 | Vĩnh Tân 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/design-system.css">
+<link rel="stylesheet" href="assets/themes.css">
+<link rel="stylesheet" href="assets/app.css">
+<script src="assets/theme-init.js"></script>
+</head>
+<body>
+<div class="app"><div class="main">
+<div class="content">
+
+  <div class="page-head">
+    <div class="page-head__titles">
+      <div class="breadcrumb">Quy trình lập hồ sơ <span>›</span> Tổng hợp hồ sơ <span>›</span> Tháng 05/2026</div>
+      <h1>Hồ sơ thanh toán — Tháng 05/2026 <span class="badge badge--info" style="vertical-align:middle">Đang xử lý</span></h1>
+      <div class="subtitle">Vĩnh Tân 2 · 2 tổ máy S1/S2 · tổng tạm tính <b>986.428.520.000 đ</b> · đổi kỳ bằng bộ chọn Tháng hồ sơ trên thanh trên</div>
+    </div>
+    <div class="page-head__actions">
+      <button class="btn btn-secondary" onclick="App.modal('m-doccat')">Danh mục tài liệu</button>
+      <button class="btn btn-secondary" onclick="App.toast('Đã kích hoạt lập hồ sơ kỳ 05/2026','success')">Lập hồ sơ kỳ này</button>
+      <button class="btn btn-secondary" onclick="App.modal('m-export')">Xuất hồ sơ</button>
+      <button class="btn btn-primary" onclick="App.modal('m-sign')">Ký số hồ sơ</button>
+    </div>
+  </div>
+
+  <div class="alert alert--warning" style="margin-bottom:var(--sp-4)"><span class="ico">⚠</span>
+    <div><b>Hồ sơ chưa đủ điều kiện ký:</b> còn 3 đầu mục tài liệu chưa hoàn thiện và 2 ghi chú rà soát chưa xử lý.</div></div>
+
+  <div class="card">
+    <div class="card__head" style="padding-bottom:0">
+      <!-- Thứ tự tab theo FB-001/DEC-009: Tài liệu (mặc định) => Thư mục hồ sơ => còn lại -->
+      <div class="tabs" style="border:none">
+        <div class="tab is-active" onclick="App.tab(this,'tp-doc')">Tài liệu <span class="count">5/8</span></div>
+        <div class="tab" onclick="App.tab(this,'tp-folder')">Thư mục hồ sơ</div>
+        <div class="tab" onclick="App.tab(this,'tp-in')">Dữ liệu đầu vào</div>
+        <div class="tab" onclick="App.tab(this,'tp-calc')">Kết quả tính toán</div>
+        <div class="tab" onclick="App.tab(this,'tp-review')">Đánh giá &amp; rà soát <span class="count">2</span></div>
+        <div class="tab" onclick="App.tab(this,'tp-version')">Phiên bản hồ sơ</div>
+      </div>
+    </div>
+    <div class="card__body">
+
+      <!-- TAB: Thư mục hồ sơ (FR-048 / Biên bản 03; taxonomy 11 nhóm tài liệu / TASK-005, DEC-008) -->
+      <div id="tp-folder" class="tabpanel">
+        <div class="alert alert--info" style="margin-bottom:var(--sp-4)"><span class="ico">ℹ</span>
+          <div>Giao diện chi tiết hồ sơ tổ chức như <b>trình quản lý thư mục</b>: nhóm thư mục chia theo <b>danh mục 11 loại tài liệu đính kèm</b> hồ sơ tiền điện tháng (features/04 mục 1.1) - mô phỏng cách làm excel + chia sẻ file để dễ làm quen và dễ tải file áp quy trình cũ.</div></div>
+        <div class="row" style="align-items:flex-start">
+          <!-- Cây thư mục: 11 nhóm theo danh mục tài liệu -->
+          <div class="col" style="flex:.9">
+            <div class="card"><div class="card__body" style="padding:var(--sp-3)">
+              <div class="stack" style="gap:2px;font-size:var(--fs-sm)">
+                <a href="#" onclick="return false" style="padding:5px 8px;border-radius:6px;background:var(--c-primary-50);color:var(--c-primary-700);font-weight:600">📂 01 · Bảng tổng hợp các khoản thanh toán</a>
+                <a href="#" onclick="App.toast('Chuyển thư mục (prototype)');return false" style="padding:5px 8px">📁 02 · Bảng tính chi tiết các khoản</a>
+                <a href="#" onclick="App.toast('Chuyển thư mục (prototype)');return false" style="padding:5px 8px">📁 03 · Bảng kê thanh toán tháng</a>
+                <a href="#" onclick="App.toast('Chuyển thư mục (prototype)');return false" style="padding:5px 8px">📁 04 · Bảng kê chênh lệch sản lượng</a>
+                <a href="#" onclick="App.toast('Chuyển thư mục (prototype)');return false" style="padding:5px 8px">📁 05 · Sản lượng hợp đồng giờ phân bổ</a>
+                <a href="#" onclick="App.toast('Chuyển thư mục (prototype)');return false" style="padding:5px 8px">📁 06 · Xác nhận sự kiện/DIM tháng</a>
+                <a href="#" onclick="App.toast('Chuyển thư mục (prototype)');return false" style="padding:5px 8px">📁 07 · Giao nhận điện năng tháng</a>
+                <a href="#" onclick="App.toast('Chuyển thư mục (prototype)');return false" style="padding:5px 8px">📁 08 · Sản lượng đo đếm từng chu kỳ</a>
+                <a href="#" onclick="App.toast('Chuyển thư mục (prototype)');return false" style="padding:5px 8px">📁 09 · Tài liệu nhiên liệu (PVGAS...)</a>
+                <a href="#" onclick="App.toast('Chuyển thư mục (prototype)');return false" style="padding:5px 8px">📁 10 · Phiếu ĐKCT + phụ lục vận hành</a>
+                <a href="#" onclick="App.toast('Chuyển thư mục (prototype)');return false" style="padding:5px 8px">📁 11 · Trang màn hình DCS (M-1)</a>
+              </div>
+            </div></div>
+          </div>
+          <!-- Nội dung thư mục -->
+          <div class="col" style="flex:2">
+            <div class="card"><div class="card__head">
+              <h3 style="font-size:var(--fs-md)">📂 01 · Bảng tổng hợp các khoản thanh toán</h3>
+              <div class="inline" style="gap:var(--sp-2)">
+                <button class="btn btn-secondary btn-sm" onclick="App.toast('Tải lên file (prototype)')">↑ Tải lên</button>
+                <button class="btn btn-ghost btn-sm" onclick="App.toast('Tải tất cả thư mục (prototype)')">↓ Tải tất cả</button></div></div>
+              <div class="card__body">
+                <dl class="kv" style="grid-template-columns:110px 1fr;margin-bottom:var(--sp-3)">
+                  <dt>Nguồn gốc</dt><dd>Hệ thống sinh từ kết quả tính toán (PH-003)</dd>
+                  <dt>Xác nhận</dt><dd>Công ty ký và đóng dấu</dd>
+                </dl>
+                <div class="table-wrap"><table class="tbl tbl--compact">
+                <thead><tr><th>Tên</th><th>Loại</th><th class="num">Kích thước</th><th>Cập nhật</th><th></th></tr></thead>
+                <tbody>
+                  <tr><td>📄 tong-hop-thanh-toan-T05.pdf</td><td>Bảng tổng hợp</td><td class="num">380 KB</td><td class="nowrap">30/06 03:05</td><td><a href="#" onclick="App.toast('Tải xuống (prototype)');return false">Tải</a></td></tr>
+                  <tr><td>📄 tong-hop-thanh-toan-T05.xlsx</td><td>Bảng tổng hợp (nguồn)</td><td class="num">96 KB</td><td class="nowrap">30/06 03:05</td><td><a href="#" onclick="App.toast('Tải xuống (prototype)');return false">Tải</a></td></tr>
+                </tbody>
+              </table></div></div>
+            </div>
+            <div class="hint" style="margin-top:var(--sp-3)">Nếu hệ thống lỗi, người dùng vẫn có thể tải file tương ứng để áp quy trình cũ (excel + chia sẻ file). Thư mục 06 lấy từ bản Sự kiện tháng (PH-002); thư mục 03/04/05/07 là tài liệu NSMO công bố, đã ký số trên Web TTĐ.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB: Dữ liệu đầu vào -->
+      <div id="tp-in" class="tabpanel">
+        <div class="pills" style="margin-bottom:var(--sp-4)">
+          <span class="pill is-active" onclick="App.pill(this)">Vận hành</span>
+          <span class="pill" onclick="App.pill(this)">Thị trường</span>
+          <span class="pill" onclick="App.pill(this)">Nhiên liệu</span>
+        </div>
+        <div class="table-wrap"><table class="tbl tbl--compact">
+          <thead><tr><th>Nhóm dữ liệu</th><th>Nguồn</th><th class="num">Bản ghi</th><th>Độ đầy đủ</th><th>Trạng thái</th></tr></thead>
+          <tbody>
+            <tr><td>Sản lượng giao nhận theo chu kỳ</td><td><span class="tag">DIM</span></td><td class="num">17.280</td><td>31/31 ngày</td><td><span class="badge badge--success">Đủ</span></td></tr>
+            <tr><td>Công suất phát theo tổ máy</td><td><span class="tag">DCS</span></td><td class="num">8.928</td><td>31/31 ngày</td><td><span class="badge badge--success">Đủ</span></td></tr>
+            <tr><td>Trạng thái tổ máy / sự kiện</td><td><span class="tag">NKVH</span></td><td class="num">38</td><td>30/31 ngày</td><td><span class="badge badge--warning">Thiếu 28/05</span></td></tr>
+            <tr><td>Giá thị trường SMP, CAN</td><td><span class="tag">TTĐ</span></td><td class="num">4.464</td><td>31/31 ngày</td><td><span class="badge badge--success">Đủ</span></td></tr>
+          </tbody>
+        </table></div>
+      </div>
+
+      <!-- TAB: Kết quả tính toán -->
+      <div id="tp-calc" class="tabpanel">
+        <div class="table-wrap"><table class="tbl">
+          <thead><tr><th>Khoản mục</th><th class="num">Thành tiền (đ)</th><th>Nguồn tính</th></tr></thead>
+          <tbody>
+            <tr><td>Doanh thu sản lượng thị trường</td><td class="num">888.818.800.000</td><td><code>Rmq v3</code></td></tr>
+            <tr><td>Thanh toán công suất (CAN)</td><td class="num">157.824.000.000</td><td><code>CAN v3</code></td></tr>
+            <tr><td>Thanh toán giá hợp đồng Pc</td><td class="num">784.251.720.000</td><td><code>Pc v2</code></td></tr>
+            <tr><td>Chênh lệch hợp đồng sai khác</td><td class="num diff-down">−98.640.000.000</td><td><code>HĐSK v1</code></td></tr>
+            <tr><td>Chi phí khởi động</td><td class="num">12.450.000.000</td><td><code>Ckđ v1</code></td></tr>
+            <tr class="row-strong"><td>Tổng thanh toán tạm tính</td><td class="num">986.428.520.000</td><td></td></tr>
+          </tbody>
+        </table></div>
+        <div class="hint" style="margin-top:var(--sp-3)">Số liệu lấy từ bộ số liệu đầu vào đã chốt của kỳ. <a href="tinh-toan.html">Xem chi tiết tính toán →</a></div>
+      </div>
+
+      <!-- TAB: Tài liệu (tab mặc định - DEC-009) -->
+      <div id="tp-doc" class="tabpanel is-active">
+        <ul class="list-check">
+          <li><span class="check-ico ok">✓</span><div class="col"><b>Bảng kê thanh toán tháng</b><div class="muted" style="font-size:var(--fs-sm)">bangke-thang-T05.pdf · 30/06</div></div><button class="btn btn-ghost btn-sm" onclick="App.toast('Xem tài liệu')">Xem</button></li>
+          <li><span class="check-ico ok">✓</span><div class="col"><b>Bảng kê ngày (đã đối soát)</b><div class="muted" style="font-size:var(--fs-sm)">bangke-ngay-T05.xlsx</div></div><button class="btn btn-ghost btn-sm" onclick="App.toast('Xem tài liệu')">Xem</button></li>
+          <li><span class="check-ico ok">✓</span><div class="col"><b>Bảng tính doanh thu thị trường</b></div><button class="btn btn-ghost btn-sm" onclick="App.toast('Xem tài liệu')">Xem</button></li>
+          <li><span class="check-ico ok">✓</span><div class="col"><b>Biên bản giao nhận / chứng thư than</b></div><button class="btn btn-ghost btn-sm" onclick="App.toast('Xem tài liệu')">Xem</button></li>
+          <li><span class="check-ico ok">✓</span><div class="col"><b>Hóa đơn nhiên liệu</b></div><button class="btn btn-ghost btn-sm" onclick="App.toast('Xem tài liệu')">Xem</button></li>
+          <li><span class="check-ico no">○</span><div class="col"><b>Bảng kê sự kiện đã xác nhận</b><div class="muted" style="font-size:var(--fs-sm)">Chờ 2 sự kiện được NSMO xác nhận</div></div><button class="btn btn-secondary btn-sm" onclick="App.toast('Cần hoàn tất xác nhận sự kiện')">Bổ sung</button></li>
+          <li><span class="check-ico no">○</span><div class="col"><b>Bảng tính thuế, phí</b><div class="muted" style="font-size:var(--fs-sm)">Chờ bước tính thuế hoàn tất</div></div><button class="btn btn-secondary btn-sm" onclick="App.toast('Chờ tính toán')">Bổ sung</button></li>
+          <li><span class="check-ico no">○</span><div class="col"><b>Tờ trình ký duyệt</b></div><button class="btn btn-secondary btn-sm" onclick="App.toast('Tạo tờ trình (prototype)')">Tạo</button></li>
+        </ul>
+      </div>
+
+      <!-- TAB: Đánh giá & rà soát -->
+      <div id="tp-review" class="tabpanel">
+        <div class="between" style="margin-bottom:var(--sp-3)">
+          <span class="muted">Ghi chú rà soát chất lượng trước khi phê duyệt</span>
+          <button class="btn btn-secondary btn-sm" onclick="App.modal('m-note')">+ Thêm ghi chú</button>
+        </div>
+        <div class="stack">
+          <div class="card"><div class="card__body">
+            <div class="between"><div class="inline"><span class="badge badge--warning">Cần bổ sung</span><b>Thiếu dữ liệu NKVH ngày 28/05</b></div><span class="muted" style="font-size:var(--fs-sm)">Trần Khánh Duy · 30/06</span></div>
+            <p style="margin:var(--sp-2) 0 0">Đề nghị bù dữ liệu vận hành ngày 28/05 trước khi chốt, tránh lệch sản lượng.</p>
+          </div></div>
+          <div class="card"><div class="card__body">
+            <div class="between"><div class="inline"><span class="badge badge--info">Cần xác minh</span><b>Đối chiếu sai lệch +0,18% với NSMO</b></div><span class="muted" style="font-size:var(--fs-sm)">Hoàng Tú Kiên · 30/06</span></div>
+            <p style="margin:var(--sp-2) 0 0">Sai lệch doanh thu so với số NSMO ngày 22/05, cần liên hệ làm rõ trước khi ký.</p>
+          </div></div>
+        </div>
+      </div>
+
+      <!-- TAB: Phiên bản hồ sơ (FR-016 / SC-017 / FL-021 - Biên bản 07) -->
+      <div id="tp-version" class="tabpanel">
+        <div class="between" style="margin-bottom:var(--sp-3)">
+          <span class="muted">Đóng gói trạng thái toàn bộ hồ sơ thành phiên bản (snapshot) để lưu và xem lại - chế độ chỉ đọc, không tính lại.</span>
+          <button class="btn btn-secondary btn-sm" onclick="App.modal('m-version')">+ Tạo phiên bản</button>
+        </div>
+        <div class="table-wrap"><table class="tbl tbl--compact">
+          <thead><tr><th>Mã phiên bản</th><th>Thời điểm tạo</th><th>Người tạo</th><th class="num">Tổng thanh toán (đ)</th><th class="num">Tài liệu</th><th>Ghi chú</th><th>Trạng thái</th><th></th></tr></thead>
+          <tbody>
+            <tr><td><code>HS-VT2-202605-v2</code></td><td class="nowrap">30/06 03:10</td><td>Trần Khánh Duy</td><td class="num">986.428.520.000</td><td class="num">5/8</td><td>Sau khi bù DIM 28/05</td><td><span class="badge badge--info">Chỉ đọc</span></td><td><button class="btn btn-primary btn-sm" onclick="App.toast('Đang xem phiên bản HS-VT2-202605-v2 (chỉ đọc)')">Xem</button></td></tr>
+            <tr><td><code>HS-VT2-202605-v1</code></td><td class="nowrap">28/06 17:42</td><td>Trần Khánh Duy</td><td class="num">984.000.000.000</td><td class="num">4/8</td><td>Bản đầu kỳ</td><td><span class="badge badge--info">Chỉ đọc</span></td><td><button class="btn btn-ghost btn-sm" onclick="App.toast('Mở phiên bản HS-VT2-202605-v1 (chỉ đọc)')">Xem</button></td></tr>
+          </tbody>
+        </table></div>
+        <div class="card" style="margin-top:var(--sp-4)">
+          <div class="card__head"><h3 style="font-size:var(--fs-md)">Xem phiên bản <code>HS-VT2-202605-v2</code></h3><span class="badge badge--info">Bản đóng gói chỉ đọc</span></div>
+          <div class="card__body">
+            <div class="alert alert--info" style="margin-bottom:var(--sp-3)"><span class="ico">ℹ</span>
+              <div>Đây là trạng thái hồ sơ tại thời điểm tạo phiên bản (30/06 03:10), có thể khác trạng thái hồ sơ hiện tại. Không cho chỉnh sửa và không chạy lại tính toán.</div></div>
+            <dl class="kv" style="grid-template-columns:180px 1fr;margin-bottom:var(--sp-3)">
+              <dt>Tổng thanh toán tạm tính</dt><dd class="num">986.428.520.000 đ</dd>
+              <dt>Thành phần đóng gói</dt><dd>Dữ liệu đầu vào · Công thức &amp; tham số · Kết quả tính · Tài liệu đính kèm</dd>
+              <dt>Bất biến</dt><dd>Có (không sửa sau khi tạo - BR-008)</dd>
+            </dl>
+            <b style="font-size:var(--fs-sm)">Kết quả tính toán đã đóng gói</b>
+            <div class="table-wrap" style="margin-top:8px"><table class="tbl tbl--compact">
+              <thead><tr><th>Khoản mục</th><th class="num">Thành tiền (đ)</th><th>Công thức (phiên bản)</th></tr></thead>
+              <tbody>
+                <tr><td>Doanh thu sản lượng thị trường</td><td class="num">888.818.800.000</td><td><code>Rmq</code> <span class="tag">v3</span></td></tr>
+                <tr><td>Thanh toán công suất (CAN)</td><td class="num">157.824.000.000</td><td><code>CAN</code> <span class="tag">v3</span></td></tr>
+                <tr><td>Thanh toán giá hợp đồng Pc</td><td class="num">784.251.720.000</td><td><code>Pc</code> <span class="tag">v2</span></td></tr>
+                <tr><td>Chi phí khởi động</td><td class="num">12.450.000.000</td><td><code>Ckđ</code> <span class="tag">v1</span></td></tr>
+                <tr class="row-strong"><td>Tổng tạm tính</td><td class="num">986.428.520.000</td><td></td></tr>
+              </tbody>
+            </table></div>
+          </div>
+        </div>
+        <div class="hint" style="margin-top:var(--sp-3)">Cơ chế đóng gói/lưu trữ phiên bản chi tiết đang thiết kế lại (ISS-014); prototype dùng sample data. Tính năng so sánh tự động giữa các phiên bản đã bỏ (bổ sung lại sau nếu cần).</div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</div></div>
+
+<!-- Modal xuất hồ sơ (FB-001/DEC-009: 3 lựa chọn) -->
+<div class="modal-overlay" id="m-export"><div class="modal">
+  <div class="modal__head"><h3>Xuất hồ sơ — Tháng 05/2026</h3><button class="modal__close" onclick="App.closeModal('m-export')">×</button></div>
+  <div class="modal__body">
+    <div class="muted" style="font-size:var(--fs-sm);margin-bottom:var(--sp-3)">Chọn hình thức xuất bộ hồ sơ thanh toán của kỳ:</div>
+    <div class="stack" style="gap:var(--sp-2)">
+      <label class="field" style="margin:0;display:flex;gap:var(--sp-2);align-items:flex-start;cursor:pointer">
+        <input type="radio" name="export-mode" checked>
+        <span><b>Tải xuống toàn bộ hồ sơ</b><br><span class="muted" style="font-size:var(--fs-sm)">Gói nén đầy đủ tài liệu theo cây thư mục hồ sơ (giữ nguyên định dạng gốc).</span></span>
+      </label>
+      <label class="field" style="margin:0;display:flex;gap:var(--sp-2);align-items:flex-start;cursor:pointer">
+        <input type="radio" name="export-mode">
+        <span><b>Xuất các file PDF riêng lẻ</b><br><span class="muted" style="font-size:var(--fs-sm)">Mỗi tài liệu trong danh mục xuất thành một file PDF.</span></span>
+      </label>
+      <label class="field" style="margin:0;display:flex;gap:var(--sp-2);align-items:flex-start;cursor:pointer">
+        <input type="radio" name="export-mode">
+        <span><b>Xuất một file PDF duy nhất</b><br><span class="muted" style="font-size:var(--fs-sm)">Gộp toàn bộ hồ sơ thành một PDF theo thứ tự danh mục, phục vụ in/gửi.</span></span>
+      </label>
+    </div>
+  </div>
+  <div class="modal__foot"><button class="btn btn-secondary" onclick="App.closeModal('m-export')">Hủy</button>
+    <button class="btn btn-primary" onclick="App.closeModal('m-export');App.toast('Đang xuất hồ sơ theo lựa chọn... (prototype)','success')">Xuất</button></div>
+</div></div>
+
+<!-- Modal danh mục tài liệu (chuyển từ màn danh sách cũ - DEC-009) -->
+<div class="modal-overlay" id="m-doccat"><div class="modal">
+  <div class="modal__head"><h3>Danh mục tài liệu hồ sơ — Vĩnh Tân 2</h3><button class="modal__close" onclick="App.closeModal('m-doccat')">×</button></div>
+  <div class="modal__body">
+    <div class="muted" style="font-size:var(--fs-sm);margin-bottom:var(--sp-3)">Danh mục là căn cứ đánh giá tiến độ hoàn thiện hồ sơ theo từng kỳ.</div>
+    <ul class="list-check">
+      <li><span class="check-ico ok">✓</span><div class="col">Bảng kê thanh toán tháng</div><span class="tag">Bắt buộc</span></li>
+      <li><span class="check-ico ok">✓</span><div class="col">Bảng kê ngày (đã đối soát)</div><span class="tag">Bắt buộc</span></li>
+      <li><span class="check-ico ok">✓</span><div class="col">Bảng tính doanh thu thị trường</div><span class="tag">Bắt buộc</span></li>
+      <li><span class="check-ico ok">✓</span><div class="col">Biên bản giao nhận / chứng thư than</div><span class="tag">Bắt buộc</span></li>
+      <li><span class="check-ico ok">✓</span><div class="col">Hóa đơn nhiên liệu</div><span class="tag">Bắt buộc</span></li>
+      <li><span class="check-ico no">○</span><div class="col">Bảng kê sự kiện đã xác nhận</div><span class="tag">Bắt buộc</span></li>
+      <li><span class="check-ico no">○</span><div class="col">Bảng tính thuế, phí</div><span class="tag">Bắt buộc</span></li>
+      <li><span class="check-ico no">○</span><div class="col">Tờ trình ký duyệt</div><span class="tag">Bắt buộc</span></li>
+    </ul>
+  </div>
+  <div class="modal__foot"><button class="btn btn-secondary" onclick="App.closeModal('m-doccat')">Đóng</button>
+    <button class="btn btn-primary" onclick="App.closeModal('m-doccat');App.toast('Đã lưu danh mục tài liệu','success')">Lưu danh mục</button></div>
+</div></div>
+
+<!-- Modal thêm ghi chú -->
+<div class="modal-overlay" id="m-note"><div class="modal">
+  <div class="modal__head"><h3>Thêm ghi chú rà soát</h3><button class="modal__close" onclick="App.closeModal('m-note')">×</button></div>
+  <div class="modal__body">
+    <div class="grid grid-2">
+      <div class="field"><label class="label">Loại</label><select class="select"><option>Cần bổ sung</option><option>Cần xác minh</option><option>Đạt</option></select></div>
+      <div class="field"><label class="label">Thành phần hồ sơ</label><select class="select"><option>Dữ liệu đầu vào</option><option>Kết quả tính toán</option><option>Tài liệu</option></select></div>
+    </div>
+    <div class="field"><label class="label">Nội dung</label><textarea class="textarea" placeholder="Mô tả vấn đề cần xử lý..."></textarea></div>
+  </div>
+  <div class="modal__foot"><button class="btn btn-secondary" onclick="App.closeModal('m-note')">Hủy</button>
+    <button class="btn btn-primary" onclick="App.closeModal('m-note');App.toast('Đã thêm ghi chú rà soát','success')">Lưu ghi chú</button></div>
+</div></div>
+
+<!-- Modal ký số -->
+<div class="modal-overlay" id="m-sign"><div class="modal">
+  <div class="modal__head"><h3>Ký số hồ sơ thanh toán</h3><button class="modal__close" onclick="App.closeModal('m-sign')">×</button></div>
+  <div class="modal__body">
+    <div class="signbox" style="margin-bottom:var(--sp-4)">
+      <div class="source__ico" style="background:var(--c-primary-600)">🔑</div>
+      <div class="col"><b>USB Token — chữ ký số PKI</b><div class="muted" style="font-size:var(--fs-sm)">Yêu cầu Desktop Signing App + nhập mã PIN</div></div>
+    </div>
+    <ul class="steps" style="margin:0;padding:0">
+      <li class="done"><span class="dot">1</span><div class="step__title">Web App khởi tạo phiên ký, chuẩn bị file</div></li>
+      <li><span class="dot">2</span><div class="step__title">Mở Desktop Signing App (custom protocol)</div></li>
+      <li><span class="dot">3</span><div class="step__title">Ký bằng USB Token → upload file đã ký</div></li>
+    </ul>
+    <div class="alert alert--warning" style="margin-top:var(--sp-4)"><span class="ico">⚠</span><div>Hồ sơ chưa đủ điều kiện ký (3 tài liệu thiếu). Nút ký bị khóa ở prototype.</div></div>
+  </div>
+  <div class="modal__foot"><button class="btn btn-secondary" onclick="App.closeModal('m-sign')">Đóng</button>
+    <button class="btn btn-primary" disabled>Bắt đầu ký số</button></div>
+</div></div>
+
+<!-- Modal tạo phiên bản hồ sơ (FR-016 / SC-017 / FL-021) -->
+<div class="modal-overlay" id="m-version"><div class="modal">
+  <div class="modal__head"><h3>Tạo phiên bản hồ sơ — Tháng 05/2026</h3><button class="modal__close" onclick="App.closeModal('m-version')">×</button></div>
+  <div class="modal__body">
+    <div class="muted" style="font-size:var(--fs-sm);margin-bottom:var(--sp-3)">Đóng gói trạng thái hiện tại của toàn bộ hồ sơ thành một phiên bản để lưu và xem lại. Thành phần sẽ đóng gói:</div>
+    <ul class="list-check" style="margin-bottom:var(--sp-3)">
+      <li><span class="check-ico ok">✓</span>Dữ liệu đầu vào của kỳ</li>
+      <li><span class="check-ico ok">✓</span>Công thức &amp; tham số áp dụng (kèm phiên bản)</li>
+      <li><span class="check-ico ok">✓</span>Kết quả tính toán các khoản mục</li>
+      <li><span class="check-ico ok">✓</span>Tài liệu đính kèm hiện có</li>
+    </ul>
+    <div class="field"><label class="label">Ghi chú phiên bản</label><textarea class="textarea" placeholder="Vd: Bản sau khi bù DIM 28/05..."></textarea></div>
+    <div class="alert alert--warning"><span class="ico">⚠</span><div>Phiên bản <b>bất biến sau khi tạo</b> (BR-008): chỉ để xem lại, không sửa và không chạy lại tính toán.</div></div>
+  </div>
+  <div class="modal__foot"><button class="btn btn-secondary" onclick="App.closeModal('m-version')">Hủy</button>
+    <button class="btn btn-primary" onclick="App.closeModal('m-version');App.toast('Đã tạo phiên bản hồ sơ HS-VT2-202605-v3','success')">Tạo phiên bản</button></div>
+</div></div>
+
+<script src="assets/app.js"></script>
+<script>App.layout('dossier');</script>
+</body>
+</html>

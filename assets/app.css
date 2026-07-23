@@ -1,0 +1,81 @@
+/* Prototype — bổ sung nhỏ trên design system (chart giả lập, mini-bar...) */
+
+/* Mini bar chart bằng CSS (giả lập biểu đồ cho prototype) */
+.barchart { display: flex; align-items: flex-end; gap: 8px; height: 160px; padding-top: var(--sp-3); }
+.barchart .bar { flex: 1; background: var(--c-primary-100); border-radius: 4px 4px 0 0; position: relative; min-width: 8px;
+  transition: background .12s; }
+.barchart .bar:hover { background: var(--c-primary-300); }
+.barchart .bar.hi { background: var(--c-primary-600); }
+.barchart .bar span { position: absolute; bottom: -20px; left: 0; right: 0; text-align: center;
+  font-size: 10.5px; color: var(--c-ink-400); }
+
+/* Donut bằng conic-gradient */
+.donut { width: 132px; height: 132px; border-radius: 50%; display: grid; place-items: center; }
+.donut::after { content: ""; width: 88px; height: 88px; background: var(--c-surface); border-radius: 50%; }
+.donut__center { position: absolute; text-align: center; }
+.donut__center b { font-size: var(--fs-2xl); color: var(--c-ink-900); }
+.donut-wrap { position: relative; display: grid; place-items: center; }
+
+/* Legend */
+.legend { display: flex; flex-direction: column; gap: 8px; font-size: var(--fs-sm); }
+.legend i { width: 10px; height: 10px; border-radius: 3px; display: inline-block; margin-right: 8px; }
+
+/* Source card (nguồn dữ liệu) */
+.source { display: flex; align-items: center; gap: var(--sp-3); padding: var(--sp-3) var(--sp-4);
+  border: 1px solid var(--c-border); border-radius: var(--r-md); }
+.source__ico { width: 38px; height: 38px; border-radius: var(--r-md); display: grid; place-items: center;
+  font-weight: 700; font-size: 12px; color: #fff; flex: none; }
+
+/* Sparkline dot row */
+.dotline { display: flex; gap: 3px; }
+.dotline i { width: 9px; height: 9px; border-radius: 2px; background: var(--c-success-600); }
+.dotline i.miss { background: var(--c-danger-600); }
+.dotline i.none { background: var(--c-border-strong); }
+
+/* Sign pad placeholder */
+.signbox { border: 1px solid var(--c-border); border-radius: var(--r-md); padding: var(--sp-4);
+  display: flex; align-items: center; gap: var(--sp-3); background: var(--c-bg); }
+
+/* Diff highlight (so sánh) */
+.diff-up { color: var(--c-danger-600); font-weight: 600; }
+.diff-down { color: var(--c-success-600); font-weight: 600; }
+.diff-zero { color: var(--c-ink-400); }
+
+/* ===== Theme switcher (review-only, DEC-005) — chrome app shell, không phải component sản phẩm ===== */
+.theme-switch { position: relative; }
+.theme-menu { position: absolute; top: calc(100% + 8px); right: 0; width: 268px;
+  background: var(--c-surface); border: 1px solid var(--c-border); border-radius: var(--r-lg);
+  box-shadow: var(--sh-lg); padding: var(--sp-2); z-index: 60; display: none; }
+.theme-menu.is-open { display: block; }
+.theme-menu__head { display: flex; align-items: center; justify-content: space-between;
+  font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: .06em;
+  color: var(--c-ink-500); padding: var(--sp-2) var(--sp-2) var(--sp-1); }
+.theme-menu__head span { background: var(--c-neutral-50); color: var(--c-ink-500); border-radius: var(--r-full);
+  padding: 1px 7px; font-size: 10px; letter-spacing: 0; text-transform: none; }
+.theme-menu__list { display: flex; flex-direction: column; gap: 2px; }
+.theme-opt { display: flex; align-items: center; gap: var(--sp-3); width: 100%; text-align: left;
+  background: none; border: none; font: inherit; cursor: pointer; padding: 7px var(--sp-2);
+  border-radius: var(--r-md); color: var(--c-ink-700); }
+.theme-opt:hover { background: var(--c-neutral-50); }
+.theme-opt.is-active { background: var(--c-primary-50); }
+.theme-opt__sw { width: 22px; height: 22px; border-radius: var(--r-sm); flex: none;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,.10); }
+.theme-opt__txt { flex: 1; min-width: 0; line-height: 1.2; }
+.theme-opt__txt b { display: block; font-size: var(--fs-sm); font-weight: var(--fw-semibold); color: var(--c-ink-900); }
+.theme-opt__txt small { color: var(--c-ink-500); font-size: 11px; }
+.theme-opt__check { color: var(--c-primary-600); opacity: 0; flex: none; display: grid; place-items: center; }
+.theme-opt__check .ico { width: 15px; height: 15px; }
+.theme-opt.is-active .theme-opt__check { opacity: 1; }
+.theme-menu__mode { display: flex; align-items: center; justify-content: space-between;
+  margin-top: var(--sp-2); padding: var(--sp-3) var(--sp-2) var(--sp-1); border-top: 1px solid var(--c-border); }
+.theme-menu__mode-lbl { display: flex; align-items: center; gap: 7px; font-size: var(--fs-sm); color: var(--c-ink-700); }
+.theme-menu__mode-lbl .ico { width: 16px; height: 16px; }
+.theme-menu__link { display: block; margin-top: var(--sp-2); padding: 8px var(--sp-2);
+  border-top: 1px solid var(--c-border); font-size: var(--fs-sm); color: var(--c-primary-600); }
+.theme-menu__link:hover { background: var(--c-neutral-50); text-decoration: none; }
+/* Swatch đại diện từng Design System */
+.theme-sw--default { background: linear-gradient(135deg, #1f6fe0, #00897b); }
+.theme-sw--carbon  { background: linear-gradient(135deg, #0f62fe, #1192e8); }
+.theme-sw--fluent  { background: linear-gradient(135deg, #0f6cbd, #8764b8); }
+.theme-sw--linear  { background: linear-gradient(135deg, #5e6ad2, #7c8aff); }
+.theme-sw--vercel  { background: linear-gradient(90deg, #0070f3, #00dfd8); }

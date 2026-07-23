@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Danh mục & cấu hình | Vĩnh Tân 2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/design-system.css">
+<link rel="stylesheet" href="assets/themes.css">
+<link rel="stylesheet" href="assets/app.css">
+<script src="assets/theme-init.js"></script>
+</head>
+<body>
+<div class="app"><div class="main">
+<div class="content">
+
+  <div class="page-head">
+    <div class="page-head__titles">
+      <div class="breadcrumb">Giám sát &amp; quản trị <span>›</span> Danh mục &amp; cấu hình</div>
+      <h1>Danh mục &amp; cấu hình</h1>
+      <div class="subtitle">Vĩnh Tân 2 · công thức tính toán, danh mục nghiệp vụ, tích hợp OCR, phân quyền</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card__head" style="padding-bottom:0">
+      <div class="tabs" style="border:none">
+        <div class="tab is-active" onclick="App.tab(this,'tp-cat')">Danh mục</div>
+        <div class="tab" onclick="App.tab(this,'tp-ocr')">Tích hợp OCR</div>
+        <div class="tab" onclick="App.tab(this,'tp-role')">Phân quyền</div>
+      </div>
+    </div>
+    <div class="card__body">
+
+      <!-- Công thức -->
+      <!-- Danh mục -->
+      <div id="tp-cat" class="tabpanel is-active">
+        <div class="grid grid-3">
+          <div class="card"><div class="card__body">
+            <h3 style="margin-bottom:var(--sp-2)">Nhà máy &amp; tổ máy</h3>
+            <dl class="kv" style="grid-template-columns:auto 1fr">
+              <dt>Mã NM</dt><dd>VT2</dd><dt>Loại hình</dt><dd>Nhiệt điện than</dd>
+              <dt>Tổ máy</dt><dd>S1, S2 (2×622 MW)</dd>
+            </dl>
+            <button class="btn btn-ghost btn-sm" style="margin-top:var(--sp-2)" onclick="App.toast('Quản lý danh mục (prototype)')">Quản lý →</button>
+          </div></div>
+          <div class="card"><div class="card__body">
+            <h3 style="margin-bottom:var(--sp-2)">Loại sự kiện</h3>
+            <p class="muted" style="font-size:var(--fs-sm)">11 loại sự kiện vận hành cần theo dõi &amp; công bố.</p>
+            <button class="btn btn-ghost btn-sm" onclick="App.toast('Quản lý danh mục (prototype)')">Quản lý →</button>
+          </div></div>
+          <div class="card"><div class="card__body">
+            <h3 style="margin-bottom:var(--sp-2)">Tham số thị trường</h3>
+            <p class="muted" style="font-size:var(--fs-sm)">Giá trần, hệ số CAN, ngưỡng kiểm tra...</p>
+            <button class="btn btn-ghost btn-sm" onclick="App.toast('Quản lý danh mục (prototype)')">Quản lý →</button>
+          </div></div>
+          <div class="card"><div class="card__body">
+            <h3 style="margin-bottom:var(--sp-2)">Loại chứng từ / tài liệu</h3>
+            <p class="muted" style="font-size:var(--fs-sm)">Mẫu chứng từ &amp; danh mục tài liệu hồ sơ.</p>
+            <button class="btn btn-ghost btn-sm" onclick="App.toast('Quản lý danh mục (prototype)')">Quản lý →</button>
+          </div></div>
+          <div class="card"><div class="card__body">
+            <h3 style="margin-bottom:var(--sp-2)">Khoản mục thanh toán</h3>
+            <p class="muted" style="font-size:var(--fs-sm)">Danh mục khoản mục thanh toán thị trường điện.</p>
+            <button class="btn btn-ghost btn-sm" onclick="App.toast('Quản lý danh mục (prototype)')">Quản lý →</button>
+          </div></div>
+          <div class="card"><div class="card__body">
+            <h3 style="margin-bottom:var(--sp-2)">Kỳ thanh toán</h3>
+            <p class="muted" style="font-size:var(--fs-sm)">Mốc thời gian &amp; chu kỳ lập hồ sơ.</p>
+            <button class="btn btn-ghost btn-sm" onclick="App.toast('Quản lý danh mục (prototype)')">Quản lý →</button>
+          </div></div>
+        </div>
+      </div>
+
+      <!-- OCR -->
+      <div id="tp-ocr" class="tabpanel">
+        <div class="row">
+          <div class="col"><div class="card"><div class="card__body">
+            <h3 style="margin-bottom:var(--sp-3)">Kết nối OCR Server</h3>
+            <div class="field"><label class="label">Địa chỉ / API endpoint</label><input class="input mono" value="https://ocr.genco3.local:8443/api/v2"></div>
+            <div class="grid grid-2">
+              <div class="field"><label class="label">Cổng</label><input class="input num" value="8443"></div>
+              <div class="field"><label class="label">Ngưỡng tin cậy</label><input class="input num" value="80%"></div>
+            </div>
+            <div class="inline"><span class="badge badge--success">Đã kết nối</span><span class="muted" style="font-size:var(--fs-sm)">kiểm tra gần nhất 30/06 02:40</span></div>
+          </div></div></div>
+          <div class="col"><div class="card"><div class="card__body card__body--flush">
+            <div class="card__head"><h3>Mẫu chứng từ &amp; quy tắc nhận dạng</h3></div>
+            <ul class="list-check" style="padding:0 var(--sp-5)">
+              <li><span class="check-ico ok">✓</span><div class="col">Biên bản giao nhận than</div><span class="tag">7 trường</span></li>
+              <li><span class="check-ico ok">✓</span><div class="col">Chứng thư chất lượng than</div><span class="tag">6 trường</span></li>
+              <li><span class="check-ico ok">✓</span><div class="col">Chứng thư khối lượng than</div><span class="tag">5 trường</span></li>
+              <li><span class="check-ico ok">✓</span><div class="col">Hóa đơn nhập than, dầu</div><span class="tag">8 trường</span></li>
+              <li><span class="check-ico ok">✓</span><div class="col">Văn bản điều chỉnh giá than, khí</div><span class="tag">4 trường</span></li>
+              <li><span class="check-ico ok">✓</span><div class="col">Tờ khai thuế</div><span class="tag">6 trường</span></li>
+            </ul>
+          </div></div></div>
+        </div>
+      </div>
+
+      <!-- Phân quyền -->
+      <div id="tp-role" class="tabpanel">
+        <div class="alert alert--info" style="margin-bottom:var(--sp-4)"><span class="ico">ℹ</span>
+          <div>Phân quyền theo vai trò &amp; phạm vi nhà máy. Đăng nhập qua SSO (LDAP/ADFS); mọi thao tác ghi audit log.</div></div>
+        <div class="table-wrap"><table class="tbl">
+          <thead><tr><th>Người dùng</th><th>Vai trò</th><th>Phạm vi nhà máy</th><th>Quyền chính</th></tr></thead>
+          <tbody>
+            <tr><td><div class="inline"><div class="avatar" style="width:30px;height:30px;font-size:11px">TD</div><b>Trần Khánh Duy</b></div></td><td>Chuyên viên thanh toán</td><td><span class="tag">Vĩnh Tân 2</span></td><td>Thu thập, tính toán, lập hồ sơ</td></tr>
+            <tr><td><div class="inline"><div class="avatar" style="width:30px;height:30px;font-size:11px">HK</div><b>Hoàng Tú Kiên</b></div></td><td>Trưởng nhóm / phê duyệt</td><td><span class="tag">Vĩnh Tân 2</span></td><td>Duyệt, ký số, chốt kỳ</td></tr>
+            <tr><td><div class="inline"><div class="avatar" style="width:30px;height:30px;font-size:11px">QT</div><b>Quản trị HT</b></div></td><td>Quản trị viên</td><td><span class="tag">Tất cả</span></td><td>Cấu hình, danh mục, phân quyền</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</div></div>
+
+<!-- Modal công thức -->
+<script src="assets/app.js"></script>
+<script>App.layout('config');</script>
+</body>
+</html>

@@ -1,0 +1,207 @@
+/* ==========================================================================
+   DS-002 - CARBON ENERGY | Presentation Theme (DEC-006)
+   --------------------------------------------------------------------------
+   Cảm hứng IBM Carbon: enterprise, hệ thống, dữ liệu dày, cảm giác vận hành
+   công nghiệp. Đặc trưng trình bày:
+   - Shell: HEADER TỐI (#161616) + SIDEBAR SÁNG dạng rail viền rõ; content
+     FULL-WIDTH (không bounded) - dashboard thiên phân tích.
+   - Surface: grid-based, vuông tuyệt đối, không shadow, viền là ngôn ngữ chính.
+   - KPI: tile phẳng có accent bar xanh điện bên trái, không icon.
+   - Table: header đậm, zebra, hàng cao, hover xám - data table là trọng tâm.
+   - Form: filled input + underline; modal footer nút full-width kiểu Carbon.
+   - Motion: nhanh, trực tiếp, gần như không hiệu ứng.
+   Cấu trúc file (mọi theme theo cùng thứ tự): 1 tokens (light/dark) =>
+   2 layout recipe => 3 component recipe => 4 data display => 5 chart recipe
+   => 6 interaction/motion.
+   ========================================================================== */
+
+/* ---------- 1. TOKENS ---------- */
+[data-theme="carbon"] {
+  --font-sans: "IBM Plex Sans", "Inter", "Segoe UI", system-ui, sans-serif;
+  --c-primary-50: #edf5ff; --c-primary-100: #d0e2ff; --c-primary-200: #a6c8ff; --c-primary-300: #78a9ff;
+  --c-primary-500: #4589ff; --c-primary-600: #0f62fe; --c-primary-700: #0043ce; --c-primary-800: #002d9c;
+  --c-accent-500: #1192e8; --c-accent-600: #0072c3;
+  --c-bg: #f4f4f4; --c-surface: #ffffff; --c-surface-2: #f4f4f4;
+  --c-border: #e0e0e0; --c-border-strong: #c6c6c6;
+  --c-ink-900: #161616; --c-ink-700: #393939; --c-ink-500: #6f6f6f; --c-ink-400: #a8a8a8;
+  --c-neutral-50: #f4f4f4; --c-neutral-600: #6f6f6f;
+  --r-sm: 0px; --r-md: 0px; --r-lg: 0px;
+  --icon-stroke: 1.7;
+  /* Mật độ dày, chữ gọn (data table trọng tâm) */
+  --fs-sm: 12px; --fs-md: 13px; --fs-lg: 14.5px; --fs-xl: 17px;
+  --sp-3: 10px; --sp-4: 13px; --sp-5: 16px; --sp-6: 18px;
+  --tbl-py: 13px; --tbl-px: 14px;
+  --sh-xs: none; --sh-sm: none;
+  --sh-md: 0 2px 6px rgba(0,0,0,.12);
+  --sh-lg: 0 8px 24px rgba(0,0,0,.16);
+  --content-max: 100%;               /* layout: full-width, dữ liệu dày */
+  --accent-gradient: linear-gradient(90deg, #0f62fe, #1192e8);
+  /* Shell: header tối + sidebar SÁNG (rail) */
+  --topbar-bg: #161616; --topbar-ink: #f4f4f4; --topbar-muted: #a8a8a8;
+  --sidebar-bg: #ffffff;
+  --sidebar-ink: #525252; --sidebar-ink-strong: #161616;
+  --sidebar-muted: #8d8d8d; --sidebar-group: #6f6f6f;
+  --sidebar-hover-bg: #e8e8e8; --sidebar-border: #e0e0e0;
+  --nav-active-bg: #e0e0e0; --nav-active-ink: #161616;
+  /* Theme-internal */
+  --carbon-zebra: #fafafa; --carbon-hover: #e8e8e8;
+  --carbon-input-bg: #f4f4f4;
+  --motion-fast: .07s; --motion-base: .11s;
+}
+[data-theme="carbon"][data-mode="dark"] {
+  --c-bg: #161616; --c-surface: #262626; --c-surface-2: #333333;
+  --c-border: #393939; --c-border-strong: #525252;
+  --c-ink-900: #f4f4f4; --c-ink-700: #c6c6c6; --c-ink-500: #8d8d8d; --c-ink-400: #6f6f6f;
+  --c-white: #262626;
+  --c-primary-50: #1c2a3a; --c-primary-100: #001d6c; --c-primary-600: #4589ff; --c-primary-700: #78a9ff;
+  --c-neutral-50: #333333; --c-neutral-600: #8d8d8d;
+  --topbar-bg: #0b0b0b; --topbar-ink: #f4f4f4; --topbar-muted: #8d8d8d;
+  --sidebar-bg: #262626;
+  --sidebar-ink: #c6c6c6; --sidebar-ink-strong: #f4f4f4;
+  --sidebar-muted: #8d8d8d; --sidebar-group: #8d8d8d;
+  --sidebar-hover-bg: #333333; --sidebar-border: #393939;
+  --nav-active-bg: #393939; --nav-active-ink: #f4f4f4;
+  --carbon-zebra: #2b2b2b; --carbon-hover: #333333;
+  --carbon-input-bg: #333333;
+  --sh-md: 0 2px 8px rgba(0,0,0,.55); --sh-lg: 0 8px 24px rgba(0,0,0,.6);
+}
+
+/* ---------- 2. LAYOUT RECIPE: header tối + rail sáng, full-width ---------- */
+[data-theme="carbon"] .topbar {
+  background: var(--topbar-bg); color: var(--topbar-ink);
+  border-bottom: 2px solid transparent;
+  background-image: linear-gradient(var(--topbar-bg), var(--topbar-bg)), var(--accent-gradient);
+  background-origin: border-box; background-clip: padding-box, border-box;
+}
+[data-theme="carbon"] .topbar__plant { color: var(--topbar-ink); }
+[data-theme="carbon"] .topbar__plant select {
+  background: transparent; color: var(--topbar-ink); border-color: #393939;
+}
+[data-theme="carbon"] .topbar__icon-btn {
+  background: transparent; border-color: #393939; color: var(--topbar-muted); border-radius: 0;
+}
+[data-theme="carbon"] .topbar__icon-btn:hover { background: #393939; color: var(--topbar-ink); }
+[data-theme="carbon"] .topbar__icon-btn .dot { border-color: var(--topbar-bg); }
+[data-theme="carbon"] .topbar__period {
+  background: transparent; color: var(--c-primary-300);
+  border-color: #393939; border-radius: 0;
+}
+[data-theme="carbon"] .topbar__user b { color: var(--topbar-ink); }
+[data-theme="carbon"] .topbar__user small { color: var(--topbar-muted); }
+[data-theme="carbon"] .avatar { border-radius: 0; background: #393939; color: var(--topbar-ink); }
+
+[data-theme="carbon"] .sidebar { border-right: 1px solid var(--sidebar-border); }
+[data-theme="carbon"] .sidebar__logo { border-radius: 0; }
+[data-theme="carbon"] .nav-link { border-radius: 0; position: relative; margin-bottom: 0; }
+[data-theme="carbon"] .nav-link.is-active { font-weight: var(--fw-semibold); }
+[data-theme="carbon"] .nav-link.is-active::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--c-primary-600);
+}
+[data-theme="carbon"] .sidebar__nav { padding: var(--sp-3) 0; }
+[data-theme="carbon"] .nav-group__label { padding-left: var(--sp-5); }
+[data-theme="carbon"] .nav-link { padding-left: var(--sp-5); }
+
+[data-theme="carbon"] .content { padding: var(--sp-5) var(--sp-6); }
+[data-theme="carbon"] .page-head {
+  border-bottom: 1px solid var(--c-border); padding-bottom: var(--sp-4); margin-bottom: var(--sp-5);
+}
+[data-theme="carbon"] .page-head h1 { font-weight: var(--fw-regular); font-size: 26px; }
+[data-theme="carbon"] .breadcrumb a { color: var(--c-primary-600); }
+
+/* ---------- 3. COMPONENT RECIPE: vuông, phẳng, viền là ngôn ngữ chính ---------- */
+[data-theme="carbon"] .card,
+[data-theme="carbon"] .stat,
+[data-theme="carbon"] .modal,
+[data-theme="carbon"] .alert,
+[data-theme="carbon"] .badge,
+[data-theme="carbon"] .imgbox,
+[data-theme="carbon"] .filterbar,
+[data-theme="carbon"] .empty__icon,
+[data-theme="carbon"] .skeleton,
+[data-theme="carbon"] .source { border-radius: 0; box-shadow: none; }
+
+[data-theme="carbon"] .btn { border-radius: 0; font-weight: var(--fw-regular); padding: 9px 16px; }
+[data-theme="carbon"] .btn-sm { padding: 6px 11px; }
+[data-theme="carbon"] .btn-ghost { color: var(--c-primary-600); }
+[data-theme="carbon"] .steps .dot,
+[data-theme="carbon"] .check-ico,
+[data-theme="carbon"] .progress, [data-theme="carbon"] .progress__bar { border-radius: 0; }
+
+/* KPI tile: accent bar trái, không icon, số lớn căn trái */
+[data-theme="carbon"] .stat {
+  border-left: 3px solid var(--c-primary-600);
+  grid-template-columns: 1fr; grid-template-areas: "label" "value" "delta" "spark";
+}
+[data-theme="carbon"] .stat__icon { display: none; }
+[data-theme="carbon"] .stat__label { font-size: var(--fs-sm); }
+[data-theme="carbon"] .stat__value { font-size: 26px; font-weight: var(--fw-semibold); }
+
+/* Tabs: contained tab kiểu Carbon (hộp xám, active nhấn viền trên xanh) */
+[data-theme="carbon"] .tabs { gap: 1px; }
+[data-theme="carbon"] .tab {
+  background: var(--c-surface-2); border-bottom: none; margin-bottom: 0;
+  border-top: 2px solid transparent; color: var(--c-ink-700);
+}
+[data-theme="carbon"] .tab.is-active {
+  background: var(--c-surface); border-top-color: var(--c-primary-600); color: var(--c-ink-900);
+}
+
+/* Pills => content switcher (viền chung, active đảo màu) */
+[data-theme="carbon"] .pills { background: transparent; border: 1px solid var(--c-ink-500); border-radius: 0; padding: 0; gap: 0; }
+[data-theme="carbon"] .pill { border-radius: 0; color: var(--c-ink-700); }
+[data-theme="carbon"] .pill:not(:last-child) { border-right: 1px solid var(--c-ink-500); }
+[data-theme="carbon"] .pill.is-active { background: var(--c-ink-900); color: var(--c-surface); box-shadow: none; }
+
+/* Form: filled input + underline (đặc trưng Carbon) */
+[data-theme="carbon"] .input,
+[data-theme="carbon"] .select,
+[data-theme="carbon"] .textarea {
+  background: var(--carbon-input-bg); border: none;
+  border-bottom: 1px solid var(--c-border-strong); border-radius: 0;
+}
+[data-theme="carbon"] .input:focus,
+[data-theme="carbon"] .select:focus,
+[data-theme="carbon"] .textarea:focus { border-bottom: 2px solid var(--c-primary-600); box-shadow: none; }
+[data-theme="carbon"] .form-section { border-left: 3px solid var(--c-border-strong); padding-left: var(--sp-4); }
+[data-theme="carbon"] .form-section__title { text-transform: none; }
+
+/* Modal: footer nút full-width chia đều (chữ ký nhận diện Carbon) */
+[data-theme="carbon"] .modal__foot { padding: 0; gap: 0; border-top: 1px solid var(--c-border); }
+[data-theme="carbon"] .modal__foot .btn {
+  flex: 1; border-radius: 0; padding: 14px 16px; justify-content: flex-start; margin: 0;
+}
+[data-theme="carbon"] .modal__foot .btn-secondary { border: none; background: var(--c-surface-2); }
+[data-theme="carbon"] .drawer__foot { padding: 0; gap: 0; }
+[data-theme="carbon"] .drawer__foot .btn { flex: 1; border-radius: 0; padding: 14px 16px; }
+[data-theme="carbon"] .drawer { border-radius: 0; }
+
+/* Pager: ô vuông liền nhau */
+[data-theme="carbon"] .pager__btn { border-radius: 0; }
+[data-theme="carbon"] .pager__btn + .pager__btn { margin-left: -1px; }
+
+/* ---------- 4. DATA DISPLAY RECIPE: bảng đậm, zebra, hàng cao ---------- */
+[data-theme="carbon"] .tbl thead th {
+  background: var(--c-surface-2); color: var(--c-ink-900); font-weight: var(--fw-semibold);
+  text-transform: none; letter-spacing: .01em; border-bottom: 1px solid var(--c-border-strong);
+}
+[data-theme="carbon"] .tbl tbody tr:nth-child(even) td { background: var(--carbon-zebra); }
+[data-theme="carbon"] .tbl tbody tr:hover td { background: var(--carbon-hover); }
+[data-theme="carbon"] .tbl .row-strong td { background: var(--c-surface-2); }
+[data-theme="carbon"] .filterbar { background: var(--c-surface); border-bottom: none; }
+
+/* ---------- 5. CHART RECIPE: cột vuông, gridline ngang, legend vuông ---------- */
+[data-theme="carbon"] .barchart {
+  background: repeating-linear-gradient(to top, var(--c-border) 0 1px, transparent 1px 40px);
+  gap: 4px;
+}
+[data-theme="carbon"] .barchart .bar { border-radius: 0; background: var(--c-primary-200); }
+[data-theme="carbon"] .barchart .bar:hover { background: var(--c-primary-300); }
+[data-theme="carbon"] .barchart .bar.hi { background: var(--c-primary-600); }
+[data-theme="carbon"] .donut::after { width: 72px; height: 72px; }
+[data-theme="carbon"] .legend i { border-radius: 0; }
+[data-theme="carbon"] .stat__spark i { border-radius: 0; }
+[data-theme="carbon"] .dotline i { border-radius: 0; }
+
+/* ---------- 6. INTERACTION / MOTION: nhanh, trực tiếp, không hiệu ứng vào ---------- */
+[data-theme="carbon"] .modal, [data-theme="carbon"] .drawer { animation: none; }
+[data-theme="carbon"] :focus-visible { outline-offset: 1px; }
