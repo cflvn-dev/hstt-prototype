@@ -7,16 +7,16 @@
   "use strict";
 
   // ---- Nhà máy / kỳ đang làm việc (prototype: end-user chỉ phụ trách 1 NM) ----
-  // Phú Mỹ 1 là nhà máy CHUẨN của bộ trình bày khách hàng (TASK-008): để đứng đầu
-  // bộ chọn. Các màn vòng đời (thu thập/sự kiện/tính toán/hồ sơ) vẫn dùng SAMPLE DATA
-  // nhiệt điện than Vĩnh Tân 2 (chưa có dữ liệu khí cho phần ngoài Pc), nên topbar của
-  // các màn đó giữ nhãn Vĩnh Tân 2 để mỗi màn nhất quán; riêng cụm màn Tính Pc dùng dữ
-  // liệu khảo sát Phú Mỹ nên hiển thị "Phú Mỹ 1" (xem plantForActive()).
-  var PLANT = "Nhiệt điện Vĩnh Tân 2";
+  // Phú Mỹ 1 là nhà máy CHUẨN của bộ trình bày khách hàng (TASK-008/DEC-020): đứng đầu
+  // bộ chọn VÀ là ngữ cảnh mặc định của MỌI màn (SơnNT chốt 2026-07-23).
+  // Lưu ý đã chấp nhận: sample data của các màn vòng đời (thu thập/sự kiện/tính toán/
+  // hồ sơ) vẫn là nhiệt điện than Vĩnh Tân 2 (chưa có dữ liệu khí cho phần ngoài Pc),
+  // nên nhãn topbar không khớp số liệu bên dưới ở các màn đó.
+  var PLANT = "Phú Mỹ 1";
   var PLANTS = ["Phú Mỹ 1", "Phú Mỹ 2.1", "Phú Mỹ 2.1 MR", "Phú Mỹ 4", "Nhiệt điện Vĩnh Tân 2"];
   var PERIOD = "Tháng 05/2026";
-  // Ngữ cảnh nhà máy hiển thị theo màn: cụm Tính Pc (active "pc") dùng dữ liệu Phú Mỹ.
-  function plantForActive() { return App._active === "pc" ? "Phú Mỹ 1" : PLANT; }
+  // Một ngữ cảnh nhà máy duy nhất cho mọi màn (trước đây rẽ nhánh riêng cho cụm Tính Pc).
+  function plantForActive() { return PLANT; }
 
   // ---- THEME REGISTRY (review-only; DEC-005 + DEC-006) ----
   // Điểm quản lý TẬP TRUNG duy nhất của khác biệt cấu trúc giữa các Presentation
@@ -176,10 +176,8 @@
         '<select onchange="App.toast(\'Đã chuyển tháng hồ sơ (prototype)\')"><option>Tháng 05/2026</option><option>Tháng 04/2026</option><option>Tháng 03/2026</option></select>' +
       '</div>' +
       '<div class="topbar__spacer"></div>' +
-      '<div class="topbar__period">' +
-        '<svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>' +
-        PERIOD +
-      '</div>' +
+      // Bỏ badge kỳ tĩnh (.topbar__period): trùng thông tin với bộ chọn "Tháng hồ sơ"
+      // ngay bên trái (FR-047) - bộ chọn vẫn là nơi duy nhất thể hiện/đổi kỳ.
       '<button class="topbar__icon-btn" onclick="App.toast(\'Tìm kiếm (prototype)\')">' + icon('search') + '</button>' +
       '<button class="topbar__icon-btn" onclick="App.toast(\'3 thông báo mới (prototype)\')">' + icon('bell') + '<span class="dot"></span></button>' +
       renderThemeControl() +

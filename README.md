@@ -22,7 +22,7 @@ Sau đăng nhập vào thẳng **Trang chào (Welcome)** ở route `/` = [index.
 Theo thực tế vận hành, mỗi chuyên viên được phân công phụ trách **một nhà máy cụ thể**. Prototype vì vậy được thiết kế **plant-scoped** cho **Nhiệt điện Vĩnh Tân 2** (nhiệt điện than, 2 tổ máy S1/S2 x 622 MW), kỳ thanh toán **Tháng 05/2026**.
 
 - Có màn hình đăng nhập ([dang-nhap.html](dang-nhap.html) - hiện thực hóa [SC-009](../screens/SC-009.md)); cơ chế xác thực (nội bộ hay SSO) **cần xác nhận**. Prototype không chặn truy cập: mở thẳng trang nội dung vẫn vào được, đăng nhập/đăng xuất chỉ để minh họa luồng FL-010.
-- Bộ chọn nhà máy ở topbar minh họa khả năng chuyển ngữ cảnh; **Phú Mỹ 1 đứng đầu bộ chọn** (nhà máy chuẩn của bộ trình bày khách hàng - [DEC-020](../review/decision-log.md#dec-020)). Số liệu **vòng đời** (thu thập/sự kiện/tính toán/hồ sơ) là mẫu **Vĩnh Tân 2** (nhiệt điện than); riêng cụm màn **Tính Pc** dùng **dữ liệu thực cụm Phú Mỹ** ([DEC-019](../review/decision-log.md#dec-019)) nên topbar các màn đó hiển thị **Phú Mỹ 1** (`plantForActive()` trong [assets/app.js](assets/app.js)).
+- Bộ chọn nhà máy ở topbar minh họa khả năng chuyển ngữ cảnh; **Phú Mỹ 1 đứng đầu bộ chọn và là ngữ cảnh mặc định của mọi màn** (nhà máy chuẩn của bộ trình bày khách hàng - [DEC-020](../review/decision-log.md#dec-020), cập nhật 2026-07-23). Số liệu **vòng đời** (thu thập/sự kiện/tính toán/hồ sơ) vẫn là mẫu **Vĩnh Tân 2** (nhiệt điện than, chưa có dữ liệu khí) nên ở các màn đó **nhãn topbar không khớp số liệu bên dưới** - lưu ý khi demo; cụm màn **Tính Pc** dùng **dữ liệu thực cụm Phú Mỹ** ([DEC-019](../review/decision-log.md#dec-019)) nên khớp.
 
 ## Các màn hình (full flow)
 

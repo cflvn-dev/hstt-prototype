@@ -672,8 +672,10 @@ table.tbl { width: 100%; border-collapse: collapse; font-size: var(--fs-md); }
   display: grid; place-items: center;
 }
 
-/* Khu 2 - nội dung dashboard (SC-001), trên surface đặc: không áp gradient vùng đọc số */
-.welcome__content { }
+/* Khu 2 - nội dung dashboard (SC-001), trên surface đặc: không áp gradient vùng đọc số.
+   padding-top tách khu 2 khỏi launcher thành một khối nội dung riêng (padding không bị
+   margin collapse với margin-bottom của .welcome__launcher => cộng dồn thật 32+80=112px). */
+.welcome__content { padding-top: calc(var(--sp-10) * 2); }
 
 @media (max-width: 1024px) { .welcome__launcher { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 640px)  { .welcome__launcher { grid-template-columns: 1fr; }
